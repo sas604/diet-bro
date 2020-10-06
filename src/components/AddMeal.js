@@ -30,7 +30,7 @@ export default function AddMeal({ history }) {
   const getFoodItem = (e) => {
     setFoodItemId(e.target.id);
   };
-  const addMeal = () => {
+  const addMeal = (food) => {
     const stamp = getTime(new Date());
     setUserData({
       ...currentUserData,
@@ -84,13 +84,32 @@ export default function AddMeal({ history }) {
     e.preventDefault();
     setQuery(e.target.value.split(" ").join("%20"));
   };
+  const addManualFoodEntry = (e) => {
+    e.preventDefault();
+
+    addMeal(food);
+  };
+
   if (openAddFood)
     return (
       <>
         <button onClick={() => setOpenAddFood(false)}></button>
-        <form>
-          <input type="text" placeholder="name" />
-          <input type="number" placeholder="KCal" />
+        <form onSubmit={addManualFoodEntry}>
+          <input
+            onChange={(e) => setFood({ ...food, name: e.target.value })}
+            type="text"
+            name="name"
+            placeholder="name"
+            required
+          />
+          <input
+            onChange={(e) => setFood({ ...food, kcal: Number(e.target.value) })}
+            type="number"
+            name="kcal"
+            placeholder="KCal"
+            required
+          />
+          <button> Add</button>
         </form>
       </>
     );
@@ -124,7 +143,7 @@ export default function AddMeal({ history }) {
               </option>
             ))}
           </select>
-          <button onClick={addMeal}> Add +</button>
+          <button onClick={() => addMeal(food)}> Add +</button>
         </div>
       )}
       <h1>Add new meal entry</h1>
