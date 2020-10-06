@@ -44,14 +44,15 @@ export default function Home() {
         </li>
       ))
     : "nothing here";
-
+  const check = (currentUserDate && Object.keys(currentUserDate).length) || 0;
   // calculate consumed callories
   useEffect(() => {
     if (currentUserDate) {
+      console.log("rerender");
       const callorie = Object.keys(currentUserDate).reduce((sum, entry) => {
         return (
-          sum +
-          currentUserDate[entry].portion * (currentUserDate[entry].kcal / 100)
+          sum + currentUserDate[entry].portion ||
+          100 * (currentUserDate[entry].kcal / 100)
         );
       }, 0);
 
@@ -61,8 +62,21 @@ export default function Home() {
       }));
     } else
       setUserData((currentUserData) => ({ ...currentUserData, calories: 0 }));
-  }, [currentUserDate, setUserData]);
+  }, [check]);
 
+  /* useEffect(() => {
+    if (currentUserDate) {
+      console.log(check);
+
+      setUserData({
+        ...currentUserData,
+        calories: Object.keys(currentUserDate).reduce(
+          (sum, el) => sum + currentUserDate[el].kcal,
+          0
+        ),
+      });
+    } else setUserData({ ...currentUserData, calories: 0 });
+  }, [check]);*/
   if (!currentUserData) return <h1>Loading ... </h1>;
   return (
     <div>

@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         if (!snapshot.val() || !snapshot.val()[currentUser.uid]) {
           firebase.update({
             [currentUser.uid]: {
-              calories: 300,
+              calories: 0,
               target: 2000,
             },
           });
