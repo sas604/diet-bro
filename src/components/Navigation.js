@@ -1,28 +1,38 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
+import { AuthContext } from "../Auth";
+import { ReactComponent as HomeSvg } from "../img/home-solid.svg";
+import { ReactComponent as WeightSvg } from "../img/weight-solid.svg";
+import { ReactComponent as GraphSvg } from "../img/chart-line-solid.svg";
+import { ReactComponent as CogSvg } from "../img/cog-solid.svg";
 
-export default function navigation() {
+export default function Navigation() {
+  const { currentUser } = useContext(AuthContext);
+  if (!currentUser) return null;
+
   return (
     <nav className="global-nav">
-      <ul>
+      <ul style={{ display: "flex", listStyleType: "none" }}>
         <li>
-          <Link to={ROUTES.SIGN_IN}>Sign in</Link>
+          <NavLink to={ROUTES.HOME}>
+            <HomeSvg style={{ width: 50 }} />
+          </NavLink>
         </li>
         <li>
-          <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+          <NavLink to={ROUTES.WEIGHT}>
+            <WeightSvg style={{ width: 50 }} />
+          </NavLink>
         </li>
         <li>
-          <Link to={ROUTES.LANDING}>Landing</Link>
+          <NavLink to={ROUTES.STATS}>
+            <GraphSvg style={{ width: 50 }} />
+          </NavLink>
         </li>
         <li>
-          <Link to={ROUTES.HOME}>Home</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.ACCOUNT}>Account</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.PASSWORD_FORGET}>Restore Password</Link>
+          <NavLink to={ROUTES.ACCOUNT}>
+            <CogSvg style={{ width: 50 }} />
+          </NavLink>
         </li>
       </ul>
     </nav>

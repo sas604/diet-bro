@@ -80,6 +80,7 @@ export default function Home() {
   if (!currentUserData) return <h1>Loading ... </h1>;
   return (
     <div>
+      <img src="../img/cog-solid.svg" alt="" />
       <h1>{`Hello ${currentUser.displayName}`} </h1>
       <div>
         <button
