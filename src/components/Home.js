@@ -3,15 +3,15 @@ import base from "./firebase";
 import { AuthContext } from "../Auth";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
-import { parseISO, compareAsc, subDays, format, addDays } from "date-fns";
+import DatePicker from "../components/DatePicker";
 
 export default function Home() {
   // get current user from the context
   const { currentUser, data, dateContext } = useContext(AuthContext);
 
   const [currentUserData, setUserData] = data;
-  const [date, setDate] = dateContext;
-
+  const [date] = dateContext;
+  // set curent date entry in the firebase
   const currentUserDate = currentUserData[date];
 
   const progress = Math.round(
@@ -44,6 +44,7 @@ export default function Home() {
         </li>
       ))
     : "nothing here";
+  // something to chek against in callories otherwise get weird behavior
   const check = (currentUserDate && Object.keys(currentUserDate).length) || 0;
   // calculate consumed callories
   useEffect(() => {
@@ -64,49 +65,12 @@ export default function Home() {
       setUserData((currentUserData) => ({ ...currentUserData, calories: 0 }));
   }, [check]);
 
-  /* useEffect(() => {
-    if (currentUserDate) {
-      console.log(check);
-
-      setUserData({
-        ...currentUserData,
-        calories: Object.keys(currentUserDate).reduce(
-          (sum, el) => sum + currentUserDate[el].kcal,
-          0
-        ),
-      });
-    } else setUserData({ ...currentUserData, calories: 0 });
-  }, [check]);*/
   if (!currentUserData) return <h1>Loading ... </h1>;
   return (
     <div>
-      <img src="../img/cog-solid.svg" alt="" />
       <h1>{`Hello ${currentUser.displayName}`} </h1>
-      <div>
-        <button
-          onClick={() => {
-            setDate(format(subDays(parseISO(date), 1), "yyyy-MM-dd"));
-          }}
-        >
-          -
-        </button>
+      <DatePicker />
 
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => console.log()}
-          max={new Date().toISOString().split("T")[0]}
-        />
-
-        <button
-          onClick={() => {
-            if (compareAsc(addDays(parseISO(date), 1), new Date()) < 0)
-              setDate(format(addDays(parseISO(date), 1), "yyyy-MM-dd"));
-          }}
-        >
-          +
-        </button>
-      </div>
       <h2>Today you have consumed </h2>
       <span
         className="calories"

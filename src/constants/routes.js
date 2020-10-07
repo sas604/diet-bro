@@ -5,3 +5,5 @@ export const HOME = "/home";
 export const ACCOUNT = "/account";
 export const PASSWORD_FORGET = "/pw-forget";
 export const ADD_MEAL = "/add-meal";
+export const WEIGHT = "/weight";
+export const STATS = "/stats";
