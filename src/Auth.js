@@ -32,6 +32,8 @@ export const AuthProvider = ({ children }) => {
             [currentUser.uid]: {
               calories: 0,
               target: 2000,
+              targetWeight: 0,
+              weight: { [date]: 0 },
             },
           });
         } else {
