@@ -11,12 +11,6 @@ export default function Weight() {
   const [currentUserData, setUserData] = data;
   const [date] = dateContext;
 
-  /* useEffect(() => {
-    if (currentUserData.weight) {
-      console.log(currentUserData.weight);
-      console.log(currentUserData.weight[date]);
-    }
-  }, [currentUserData.weight]);*/
   const addWeightEntry = (e) => {
     e.preventDefault();
     setUserData({
