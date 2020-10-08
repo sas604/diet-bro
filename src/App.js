@@ -11,6 +11,7 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import { AuthProvider } from "./Auth";
 import PrivateRoute from "./components/PrivateRoute";
+import AddMeal from "./components/AddMeal";
 
 import Stats from "./components/Stats";
 
@@ -24,6 +25,7 @@ function App() {
           <PrivateRoute path={ROUTES.WEIGHT} component={Weight} />
           <PrivateRoute path={ROUTES.STATS} component={Stats} />
           <PrivateRoute path={ROUTES.ACCOUNT} component={Account} />
+          <PrivateRoute path={ROUTES.ADD_MEAL} component={AddMeal} />
           <Route path={ROUTES.PASSWORD_FORGET} component={PasswordRestore} />
           <Route path={ROUTES.SIGN_IN} component={SignIn} />
           <Route path={ROUTES.SIGN_UP} component={SignUp} />

@@ -52,8 +52,9 @@ export default function Home() {
       console.log("rerender");
       const callorie = Object.keys(currentUserDate).reduce((sum, entry) => {
         return (
-          sum + currentUserDate[entry].portion ||
-          100 * (currentUserDate[entry].kcal / 100)
+          sum +
+            (currentUserDate[entry].portion * currentUserDate[entry].kcal) /
+              100 || currentUserDate[entry].kcal
         );
       }, 0);
 
@@ -63,7 +64,7 @@ export default function Home() {
       }));
     } else
       setUserData((currentUserData) => ({ ...currentUserData, calories: 0 }));
-  }, [check]);
+  }, [currentUserDate]);
 
   if (!currentUserData) return <h1>Loading ... </h1>;
   return (
