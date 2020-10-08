@@ -8,7 +8,16 @@ export default function Account() {
     <div>
       <h1>Account Setings</h1>
 
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          setUserData({
+            ...currentUserData,
+            target: Number(e.target.energy.value),
+          });
+        }}
+      >
         <h2>Your dayly callories intake target is </h2>
         <span>{currentUserData.target} Kcal </span> <br />
         <label>
@@ -17,6 +26,7 @@ export default function Account() {
             onChange={(e) => {
               if (e.target.value > 9999) e.target.value = 9999;
             }}
+            name="energy"
             type="number"
             max="9999"
             required
@@ -30,7 +40,7 @@ export default function Account() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log();
+
           setUserData({
             ...currentUserData,
             targetWeight: Number(e.target.weight.value),
