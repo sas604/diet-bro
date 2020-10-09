@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import base from "./components/firebase";
-import { format, getTime } from "date-fns";
+import { format } from "date-fns";
 
 export const AuthContext = React.createContext();
 
@@ -9,12 +9,18 @@ export const AuthProvider = ({ children }) => {
   const [pending, setPending] = useState(true);
   const [currentUserData, setUserData] = useState({});
   const [date, setDate] = useState(format(new Date(), "yyyy-MM-dd"));
-  useEffect(() => {
-    base.auth().onAuthStateChanged((user) => {
-      setCurrentUser(user);
-      setPending(false);
-    });
-  }, []);
+  const [name, setName] = useState();
+
+  base.auth().onAuthStateChanged((user) => {
+    setCurrentUser(user);
+    setPending(false);
+  });
+
+  base.auth().onAuthStateChanged((user) => {
+    if (user) {
+      setName(user.displayName);
+    }
+  });
 
   useEffect(() => {
     // database path
@@ -43,7 +49,7 @@ export const AuthProvider = ({ children }) => {
     });
     // close conection to database on rerender
     return () => firebase.off();
-  }, [currentUser]);
+  }, [currentUser, date]);
 
   // listen for changes to current user data, and update database if there any
   useEffect(() => {
@@ -60,6 +66,7 @@ export const AuthProvider = ({ children }) => {
         currentUser,
         data: [currentUserData, setUserData],
         dateContext: [date, setDate],
+        name,
       }}
     >
       {children}

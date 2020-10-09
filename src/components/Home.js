@@ -4,10 +4,11 @@ import { AuthContext } from "../Auth";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import DatePicker from "../components/DatePicker";
+import MealHistory from "./MealHistory";
 
 export default function Home() {
   // get current user from the context
-  const { currentUser, data, dateContext } = useContext(AuthContext);
+  const { currentUser, data, dateContext, name } = useContext(AuthContext);
 
   const [currentUserData, setUserData] = data;
   const [date] = dateContext;
@@ -21,31 +22,7 @@ export default function Home() {
   /*  {TODO }
    * refactor this, to make it more readable
    */
-  const deleteEntry = (e) => {
-    setUserData({
-      ...currentUserData,
-      [date]: Object.keys(currentUserData[date]).reduce(
-        (sum, el) =>
-          el !== e.target.id
-            ? { ...sum, [el]: currentUserData[date][el] }
-            : { ...sum },
-        {}
-      ),
-    });
-  };
-  // list of user meals entries
-  const list = currentUserData[date]
-    ? Object.keys(currentUserData[date]).map((entry) => (
-        <li key={entry}>
-          <h4>{currentUserData[date][entry].name}</h4>
-          <button id={entry} onClick={deleteEntry}>
-            Delete
-          </button>
-        </li>
-      ))
-    : "nothing here";
-  // something to chek against in callories otherwise get weird behavior
-  const check = (currentUserDate && Object.keys(currentUserDate).length) || 0;
+
   // calculate consumed callories
   useEffect(() => {
     if (currentUserDate) {
@@ -64,12 +41,13 @@ export default function Home() {
       }));
     } else
       setUserData((currentUserData) => ({ ...currentUserData, calories: 0 }));
-  }, [currentUserDate]);
+  }, [currentUserDate, setUserData]);
+  useEffect(() => {}, [currentUser]);
 
-  if (!currentUserData) return <h1>Loading ... </h1>;
+  if (!currentUserData || name === null) return <h1>Loading ... </h1>;
   return (
     <div>
-      <h1>{`Hello ${currentUser.displayName}`} </h1>
+      <h1>{`Hello ${name}`} </h1>
       <DatePicker />
 
       <h2>Today you have consumed </h2>
@@ -99,8 +77,20 @@ export default function Home() {
         Add Meal
       </Link>
       <br />
-      <ul>{list}</ul>
-      <button onClick={() => base.auth().signOut()}>Sign Out </button>
+      <MealHistory />
+      <button
+        onClick={() =>
+          base
+            .auth()
+            .signOut()
+            .then(
+              () => console.log(),
+              (error) => console.log(error)
+            )
+        }
+      >
+        Sign Out
+      </button>
     </div>
   );
 }

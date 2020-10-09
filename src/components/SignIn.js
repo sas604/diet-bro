@@ -22,19 +22,16 @@ function SignUp({ history }) {
     [history]
   );
   // sign up with github, /// try to figure out why you need a use callback here
-  const handleGitHubLogin = useCallback(
-    async (event) => {
-      event.preventDefault();
+  const handleGitHubLogin = async (event) => {
+    event.preventDefault();
 
-      try {
-        await base.auth().signInWithPopup(provider);
-        history.push("/");
-      } catch (error) {
-        alert(error);
-      }
-    },
-    [history]
-  );
+    try {
+      await base.auth().signInWithPopup(provider);
+      history.push("/");
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const { currentUser } = useContext(AuthContext);
   if (currentUser) {
@@ -60,7 +57,7 @@ function SignUp({ history }) {
 
       <Link to={ROUTES.PASSWORD_FORGET}>Forgot password?</Link>
       <span>
-        No Account?<Link to={ROUTES.ADD_MEAL}>Create One</Link>
+        No Account?<Link to={ROUTES.SIGN_UP}>Create One</Link>
       </span>
     </div>
   );

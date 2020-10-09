@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
-import { withRouter } from "react-router";
+
 import { AuthContext } from "../Auth";
-import { getTime, format } from "date-fns";
-import { Link } from "react-router-dom";
+import { getTime } from "date-fns";
 
 const request = async (url) => {
   const response = await fetch(url);

@@ -11,16 +11,13 @@ function SignUp({ history }) {
         await base
           .auth()
           .createUserWithEmailAndPassword(email.value, password.value);
+        await base
+          .auth()
+          .currentUser.updateProfile({ displayName: name.value });
         history.push("/");
       } catch (error) {
         alert(error);
       }
-      base.auth().onAuthStateChanged((user) => {
-        if (user)
-          user.updateProfile({
-            displayName: name.value,
-          });
-      });
     },
 
     [history]
@@ -30,12 +27,22 @@ function SignUp({ history }) {
       <form onSubmit={handelSingUp}>
         <label>
           email
-          <input name="email" placeholder="email" type="email"></input>
+          <input
+            name="email"
+            placeholder="email"
+            type="email"
+            autoComplete="new-password"
+          ></input>
         </label>
         <hr />
         <label>
           password
-          <input name="password" placeholder="password" type="password"></input>
+          <input
+            name="password"
+            placeholder="password"
+            type="password"
+            autoComplete="new-password"
+          ></input>
         </label>
         <hr />
         <label>
