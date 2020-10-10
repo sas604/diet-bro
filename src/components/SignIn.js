@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import base, { provider } from "./firebase";
 import { AuthContext } from "../Auth";
 import * as ROUTES from "../constants/routes";
+import "../css/signIn.scss";
 
 function SignUp({ history }) {
   const handleLogIn = useCallback(
@@ -38,32 +39,32 @@ function SignUp({ history }) {
     return <Redirect to={"/home"} />;
   }
   return (
-    <>
-      <h1>
-        Welcome to the <strong>DietBro</strong>, an app that keeps an eye on
-        your diet{" "}
-      </h1>
-      <button onClick={handleGitHubLogin}> login With Github </button>
-      <button onClick={handleLogIn} disabled>
-        Login with test user{" "}
+    <div className="wrapper bg-pattern sign-in">
+      <button className="btn bg-green" onClick={handleGitHubLogin}>
+        Login With Github
       </button>
-      <form onSubmit={handleLogIn}>
+      <button className="btn bg-blue" onClick={handleLogIn}>
+        Login With Test User
+      </button>
+      <span className="or">or</span>
+      <form className="login-form" onSubmit={handleLogIn}>
         <label>
-          email
-          <input name="email" placeholder="email" type="email"></input>
+          email:
+          <input name="email" type="email"></input>
         </label>
         <label>
-          password
-          <input name="password" placeholder="password" type="password"></input>
+          password:
+          <input name="password" type="password"></input>
         </label>
-        <button type="submit">Sing in</button>
+        <button className="btn bg-blue" type="submit">
+          Sing in
+        </button>
       </form>
-
       <Link to={ROUTES.PASSWORD_FORGET}>Forgot password?</Link>
-      <span>
-        No Account?<Link to={ROUTES.SIGN_UP}>Create One</Link>
-      </span>
-    </>
+      <p>
+        No Account?<Link to={ROUTES.SIGN_UP}> Create One</Link>
+      </p>
+    </div>
   );
 }
 export default withRouter(SignUp);

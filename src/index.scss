@@ -10,6 +10,7 @@
   --blue: #30a8f2;
   --blue-green: #32bad9;
   --green: #48d9ca;
+  --dark-green: #3fbbaf;
   --white: #fcfcfc;
   --gray: #eeebfc;
   --font: "Quicksand", "Segoe UI", "Helvetica Neue", sans-serif;
@@ -65,6 +66,7 @@ code {
   background-size: 100%;
 }
 .wrapper {
+  min-height: 100vh;
   padding: 2rem 1rem 0rem;
 }
 .bg-green {
@@ -90,10 +92,28 @@ code {
   font-size: 1.5rem;
   transition: all cubic-bezier(0, 0.66, 0.65, 1.51) 300ms;
   &:any-link {
-    text-decoration: none;
+    color: var(--white);
   }
   &:hover {
     transform: scale(1.02);
     box-shadow: 0px 6px 8px -6px rgba(0, 0, 0, 0.57);
   }
+}
+:any-link {
+  color: var(--dark-green);
+  text-decoration: none;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+input {
+  margin-top: 1rem;
+  display: block;
+  border-radius: 3px;
+  font-size: 1.5rem;
+  border: 3px solid var(--purple);
 }

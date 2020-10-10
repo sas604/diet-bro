@@ -1,0 +1,19 @@
+.sign-in {
+  font-size: 1.2rem;
+  a {
+    display: block;
+    margin-top: 1rem;
+  }
+  p {
+    margin-top: 0.5rem;
+    a {
+      display: inline;
+    }
+  }
+}
+.or {
+  font-size: 2rem;
+  text-align: center;
+  display: block;
+  font-weight: var(--bold);
+}
