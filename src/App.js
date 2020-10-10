@@ -20,15 +20,15 @@ function App() {
     <AuthProvider>
       <>
         <Router>
-          <Route exact path={ROUTES.LANDING} component={Landing} />
           <PrivateRoute path={ROUTES.HOME} component={Home} />
           <PrivateRoute path={ROUTES.WEIGHT} component={Weight} />
           <PrivateRoute path={ROUTES.STATS} component={Stats} />
           <PrivateRoute path={ROUTES.ACCOUNT} component={Account} />
           <PrivateRoute path={ROUTES.ADD_MEAL} component={AddMeal} />
           <Route path={ROUTES.PASSWORD_FORGET} component={PasswordRestore} />
-          <Route path={ROUTES.SIGN_IN} component={SignIn} />
+          <Route exact path={"/"} component={Landing} />
           <Route path={ROUTES.SIGN_UP} component={SignUp} />
+          <Route path={ROUTES.SIGN_IN} component={SignIn} />
           <Navigation />
         </Router>
       </>

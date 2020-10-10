@@ -26,14 +26,13 @@ export default function Home() {
   // calculate consumed callories
   useEffect(() => {
     if (currentUserDate) {
-      console.log("rerender");
-      const callorie = Object.keys(currentUserDate).reduce((sum, entry) => {
-        return (
-          sum +
-            (currentUserDate[entry].portion * currentUserDate[entry].kcal) /
-              100 || currentUserDate[entry].kcal
-        );
-      }, 0);
+      const callorie = Object.keys(currentUserDate).reduce(
+        (sum, entry) =>
+          (currentUserDate[entry].portion * currentUserDate[entry].kcal) / 100 +
+            sum || currentUserDate[entry].kcal + sum,
+
+        0
+      );
 
       setUserData((currentUserData) => ({
         ...currentUserData,
@@ -49,7 +48,6 @@ export default function Home() {
     <div>
       <h1>{`Hello ${name}`} </h1>
       <DatePicker />
-
       <h2>Today you have consumed </h2>
       <span
         className="calories"
@@ -62,6 +60,7 @@ export default function Home() {
       >
         {Math.round(currentUserData.calories) + "Kcal"}
       </span>
+      <p> {currentUserData.callories}</p>
       <div style={{ display: "flex", height: 30, position: "relative" }}>
         <span
           style={{ textAlign: "center", width: "100%", position: "absolute" }}
@@ -73,6 +72,7 @@ export default function Home() {
           }}
         ></span>
       </div>
+
       <Link className="add btn" to={ROUTES.ADD_MEAL}>
         Add Meal
       </Link>

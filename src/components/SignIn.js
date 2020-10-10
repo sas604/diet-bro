@@ -38,7 +38,11 @@ function SignUp({ history }) {
     return <Redirect to={"/home"} />;
   }
   return (
-    <div>
+    <>
+      <h1>
+        Welcome to the <strong>DietBro</strong>, an app that keeps an eye on
+        your diet{" "}
+      </h1>
       <button onClick={handleGitHubLogin}> login With Github </button>
       <button onClick={handleLogIn} disabled>
         Login with test user{" "}
@@ -59,7 +63,7 @@ function SignUp({ history }) {
       <span>
         No Account?<Link to={ROUTES.SIGN_UP}>Create One</Link>
       </span>
-    </div>
+    </>
   );
 }
 export default withRouter(SignUp);

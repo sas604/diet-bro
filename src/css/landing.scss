@@ -1,0 +1,19 @@
+.landing-heading {
+  max-width: 75%;
+  margin-top: 0;
+}
+
+.sign-in-section {
+  border: 5px solid var(--purple);
+  border-radius: 3px;
+  padding: 2rem 1rem;
+  background-color: var(--white);
+  position: relative;
+  z-index: 1;
+}
+.user-svg {
+  color: var(--gray);
+  width: 75px;
+  margin: 0 auto;
+  display: block;
+}

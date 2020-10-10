@@ -1,6 +1,8 @@
 import React, { useCallback } from "react";
 import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import base from "./firebase";
+import { SIGN_IN } from "../constants/routes";
 
 function SignUp({ history }) {
   const handelSingUp = useCallback(
@@ -51,6 +53,9 @@ function SignUp({ history }) {
         </label>
         <button type="submit">Submit</button>
       </form>
+      <span>
+        Alredy have account ?<Link to={SIGN_IN}>Sign In</Link>
+      </span>
     </div>
   );
 }
