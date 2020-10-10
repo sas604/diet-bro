@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import base, { provider } from "./firebase";
 import { AuthContext } from "../Auth";
 import * as ROUTES from "../constants/routes";
-import "../css/signIn.scss";
+import "../css/sign.scss";
 
 function SignUp({ history }) {
   const handleLogIn = useCallback(
@@ -50,11 +50,11 @@ function SignUp({ history }) {
       <form className="login-form" onSubmit={handleLogIn}>
         <label>
           email:
-          <input name="email" type="email"></input>
+          <input name="email" type="email" required></input>
         </label>
         <label>
           password:
-          <input name="password" type="password"></input>
+          <input name="password" type="password" required></input>
         </label>
         <button className="btn bg-blue" type="submit">
           Sing in

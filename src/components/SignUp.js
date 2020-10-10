@@ -25,10 +25,10 @@ function SignUp({ history }) {
     [history]
   );
   return (
-    <div>
+    <div className="wrapper bg-pattern sign-in ">
       <form onSubmit={handelSingUp}>
         <label>
-          email
+          Email:
           <input
             name="email"
             placeholder="email"
@@ -36,9 +36,8 @@ function SignUp({ history }) {
             autoComplete="new-password"
           ></input>
         </label>
-        <hr />
         <label>
-          password
+          Password:
           <input
             name="password"
             placeholder="password"
@@ -46,16 +45,17 @@ function SignUp({ history }) {
             autoComplete="new-password"
           ></input>
         </label>
-        <hr />
         <label>
-          Name
+          Name:
           <input name="name" placeholder="Name" type="text" required></input>
         </label>
-        <button type="submit">Submit</button>
+        <button className="btn bg-green" type="submit">
+          Submit
+        </button>
       </form>
-      <span>
-        Alredy have account ?<Link to={SIGN_IN}>Sign In</Link>
-      </span>
+      <p>
+        Alredy have account ?<Link to={SIGN_IN}> Sign In</Link>
+      </p>
     </div>
   );
 }
