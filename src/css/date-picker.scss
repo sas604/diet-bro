@@ -1,0 +1,21 @@
+.date-picker {
+  display: flex;
+  justify-content: center;
+
+  .date-picker-btn {
+    touch-action: manipulation;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    font-size: 2rem;
+    line-height: 2rem;
+  }
+  input {
+    border: none;
+    line-height: 2rem;
+    margin: 0;
+    background: transparent;
+
+    font-weight: var(--bold);
+  }
+}
