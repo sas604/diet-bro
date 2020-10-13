@@ -37,3 +37,25 @@
     }
   }
 }
+
+.add {
+  background-color: var(--gray);
+  position: relative;
+  font-size: 1.5rem;
+
+  * {
+    margin: 0;
+  }
+
+  .plus {
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    font-size: 3rem;
+    color: var(--purple);
+  }
+  &.btn:any-link {
+    color: black;
+    font-weight: var(--bold);
+  }
+}

@@ -78,9 +78,9 @@ export default function Home() {
       </div>
 
       <Link className="add btn" to={ROUTES.ADD_MEAL}>
-        Add Meal
+        <span className="plus">+</span> <p>Add Meal</p>
       </Link>
-      <br />
+
       <MealHistory />
       <button
         onClick={() =>
