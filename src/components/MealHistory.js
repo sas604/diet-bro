@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Auth";
+import Meal from "./Meal";
 export default function MealHistory() {
   const { data, dateContext } = useContext(AuthContext);
   const [currentUserData, setUserData] = data;
@@ -19,20 +20,20 @@ export default function MealHistory() {
   };
   // list of user meals entries
   return (
-    <section className="meal-history">
+    <div className="meal-history">
       <h3>Meal History</h3>
       <ul className="meal-history-list">
         {currentUserData[date]
           ? Object.keys(currentUserData[date]).map((entry) => (
-              <li key={entry} className="meal-history-list-item">
-                <h4>{currentUserData[date][entry].name}</h4>
-                <button id={entry} onClick={deleteEntry}>
-                  Delete
-                </button>
-              </li>
+              <Meal
+                key={entry}
+                name={currentUserData[date][entry].name}
+                id={entry}
+                onClick={deleteEntry}
+              />
             ))
           : "nothing here"}
       </ul>
-    </section>
+    </div>
   );
 }
