@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Auth";
-
+import base from "./firebase";
 export default function Account() {
   const { data } = useContext(AuthContext);
   const [currentUserData, setUserData] = data;
@@ -60,6 +60,19 @@ export default function Account() {
         </label>
         <button>Set</button>
       </form>
+      <button
+        onClick={() =>
+          base
+            .auth()
+            .signOut()
+            .then(
+              () => console.log(),
+              (error) => console.log(error)
+            )
+        }
+      >
+        Sign Out
+      </button>
     </div>
   );
 }
