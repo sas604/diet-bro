@@ -1,0 +1,21 @@
+.global-nav {
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0.5em 0;
+
+  background-color: var(--gray);
+
+  svg {
+    width: 2rem;
+  }
+  a {
+    margin: 0;
+    &.active {
+      color: var(--purple);
+    }
+  }
+}
