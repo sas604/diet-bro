@@ -41,15 +41,8 @@ export default function Home() {
   if (!currentUserData || name === null) return <h1>Loading ... </h1>;
   return (
     <div className="wrapper bg-pattern home">
-      <h1>
-        Hello <strong>{name}</strong>!
-      </h1>
+      <h1>Hello {name}!</h1>
       <DatePicker />
-      {callories > 0 ? (
-        <h2> You have consumed </h2>
-      ) : (
-        <h2>No entries for this date</h2>
-      )}
       <span
         className="calories"
         style={{
@@ -61,6 +54,12 @@ export default function Home() {
       >
         {Math.round(callories)} <strong>Kcal</strong>
       </span>
+      {callories > 0 ? (
+        <p className="entry-msg"> You have consumed </p>
+      ) : (
+        <p className="entry-msg">No entries for this date</p>
+      )}
+
       <div className="progress-bar-wrapper">
         <p className="progress-bar-text">{`${progress}% of your daily goal`}</p>
         <div className="progress-bar">

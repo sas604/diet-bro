@@ -17,6 +17,8 @@
   --bold: 700;
   --regular: 500;
   --light: 300;
+  --border-black: 3px solid black;
+  --radius: 3px;
 }
 h1,
 h2,
@@ -55,7 +57,7 @@ div.diagonal::before {
 }
 h1 {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: var(--bold);
 }
 strong {
