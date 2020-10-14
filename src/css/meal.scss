@@ -1,0 +1,31 @@
+.meal-history-list-item {
+  border: 3px solid black;
+  border-radius: 3px;
+
+  padding: 1em 0.5rem;
+  background-color: var(--white);
+
+  * {
+    margin: 0;
+  }
+  .name {
+    padding: 0 1rem;
+  }
+  :nth-child(3) {
+    margin-left: auto;
+    margin-right: 1rem;
+
+    white-space: nowrap;
+  }
+  text-align: left;
+  display: flex;
+  .del-btn {
+    background-color: transparent;
+    border: none;
+    //margin-left: auto;
+  }
+  .trash-btn {
+    color: red;
+    width: 1rem;
+  }
+}

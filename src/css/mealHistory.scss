@@ -1,0 +1,15 @@
+.meal-history {
+  max-height: 300px;
+  overflow-x: scroll;
+}
+
+.meal-history-list {
+  padding: 0;
+
+  li + li {
+    margin-top: 1rem;
+  }
+  li:last-of-type {
+    margin-bottom: 3rem;
+  }
+}

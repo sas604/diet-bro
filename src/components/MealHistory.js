@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Auth";
 import Meal from "./Meal";
+import "../css/mealHistory.scss";
 export default function MealHistory() {
   const { data, dateContext } = useContext(AuthContext);
   const [currentUserData, setUserData] = data;
@@ -29,6 +30,11 @@ export default function MealHistory() {
                 key={entry}
                 name={currentUserData[date][entry].name}
                 id={entry}
+                calories={
+                  (currentUserData[date][entry].kcal / 100) *
+                    currentUserData[date][entry].portion ||
+                  currentUserData[date][entry].kcal
+                }
                 onClick={deleteEntry}
               />
             ))
