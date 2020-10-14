@@ -1,23 +1,21 @@
 import React, { useContext, useEffect } from "react";
-import base from "./firebase";
 import { AuthContext } from "../Auth";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import DatePicker from "../components/DatePicker";
 import MealHistory from "./MealHistory";
 import "../css/home.scss";
+import { useState } from "react";
 export default function Home() {
   // get current user from the context
-  const { currentUser, data, dateContext, name } = useContext(AuthContext);
-
+  const { data, dateContext, name } = useContext(AuthContext);
+  const [callories, setCallories] = useState(0);
   const [currentUserData, setUserData] = data;
   const [date] = dateContext;
   // set curent date entry in the firebase
   const currentUserDate = currentUserData[date];
 
-  const progress = Math.round(
-    (currentUserData.calories / currentUserData.target) * 100
-  );
+  const progress = Math.round((callories / currentUserData.target) * 100);
   // handle entry delete from list
   /*  {TODO }
    * refactor this, to make it more readable
@@ -25,23 +23,20 @@ export default function Home() {
 
   // calculate consumed callories
   useEffect(() => {
-    if (currentUserDate) {
-      const callorie = Object.keys(currentUserDate).reduce(
+    if (!currentUserDate) {
+      setCallories(0);
+      return;
+    }
+    setCallories(
+      Object.keys(currentUserDate).reduce(
         (sum, entry) =>
           (currentUserDate[entry].portion * currentUserDate[entry].kcal) / 100 +
             sum || currentUserDate[entry].kcal + sum,
 
         0
-      );
-
-      setUserData((currentUserData) => ({
-        ...currentUserData,
-        calories: callorie,
-      }));
-    } else
-      setUserData((currentUserData) => ({ ...currentUserData, calories: 0 }));
+      )
+    );
   }, [currentUserDate, setUserData]);
-  useEffect(() => {}, [currentUser]);
 
   if (!currentUserData || name === null) return <h1>Loading ... </h1>;
   return (
@@ -50,7 +45,7 @@ export default function Home() {
         Hello <strong>{name}</strong>!
       </h1>
       <DatePicker />
-      {currentUserData.calories > 0 ? (
+      {callories > 0 ? (
         <h2> You have consumed </h2>
       ) : (
         <h2>No entries for this date</h2>
@@ -64,7 +59,7 @@ export default function Home() {
           display: "block",
         }}
       >
-        {Math.round(currentUserData.calories)} <strong>Kcal</strong>
+        {Math.round(callories)} <strong>Kcal</strong>
       </span>
       <div className="progress-bar-wrapper">
         <p className="progress-bar-text">{`${progress}% of your daily goal`}</p>
@@ -82,19 +77,6 @@ export default function Home() {
       </Link>
 
       <MealHistory />
-      <button
-        onClick={() =>
-          base
-            .auth()
-            .signOut()
-            .then(
-              () => console.log(),
-              (error) => console.log(error)
-            )
-        }
-      >
-        Sign Out
-      </button>
     </div>
   );
 }
