@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Auth";
 import base from "./firebase";
+import { format } from "date-fns";
 export default function Account() {
-  const { data } = useContext(AuthContext);
+  const { data, dateContext } = useContext(AuthContext);
   const [currentUserData, setUserData] = data;
+  const [, setDate] = dateContext;
   return (
     <div>
       <h1>Account Setings</h1>
@@ -65,9 +67,8 @@ export default function Account() {
           base
             .auth()
             .signOut()
-            .then(
-              () => console.log(),
-              (error) => console.log(error)
+            .then(setDate(format(new Date(), "yyyy-MM-dd")), (error) =>
+              console.log(error)
             )
         }
       >
