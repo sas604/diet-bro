@@ -6,6 +6,7 @@ import DatePicker from "../components/DatePicker";
 import MealHistory from "./MealHistory";
 import "../css/home.scss";
 import { useState } from "react";
+import FoodSearch from "./FoodSearch";
 export default function Home() {
   // get current user from the context
   const { data, dateContext, name } = useContext(AuthContext);
