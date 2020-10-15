@@ -1,4 +1,3 @@
-import { set } from "date-fns/esm/fp";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -7,9 +6,9 @@ import { useFetch } from "./hooks";
 
 export default function FoodModal({ handleClick, foodId, returnData }) {
   const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208`;
-  const [status, data] = useFetch(url);
+  const [, data] = useFetch(url);
   const [foodNutrients, setFoodNutrients] = useState(null);
-  console.log();
+
   useEffect(() => {
     if (data) {
       setFoodNutrients({

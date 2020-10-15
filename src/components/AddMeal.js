@@ -1,23 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 
 import { AuthContext } from "../Auth";
-import { getTime, set } from "date-fns";
+import { getTime } from "date-fns";
 import FoodSearch from "./FoodSearch";
 import FoodModal from "./FoodModal";
-
-const request = async (url) => {
-  const response = await fetch(url);
-  if (!response.ok) {
-    const message = `An error has occured: ${response.status}`;
-    throw new Error(message);
-  }
-  const res = response.json();
-  return res;
-};
+import ManualFoodEntry from "./ManualFoodEntry";
 
 export default function AddMeal({ history }) {
   const [foodItemId, setFoodItemId] = useState(null);
-  const [food, setFood] = useState(null);
   const { data, dateContext } = useContext(AuthContext);
   const [openAddFood, setOpenAddFood] = useState(false);
   const [currentDate] = dateContext;
@@ -35,40 +25,21 @@ export default function AddMeal({ history }) {
         [stamp]: food,
       },
     });
-    setFood(null);
     history.push("/home");
   };
 
-  const addManualFoodEntry = (e) => {
-    e.preventDefault();
-    addMeal(food);
-  };
+  const addManualFoodEntry = (food) => addMeal(food);
+
   const updateFoodState = (data) => {
     addMeal(data);
   };
 
   if (openAddFood)
     return (
-      <>
-        <button onClick={() => setOpenAddFood(false)}></button>
-        <form onSubmit={addManualFoodEntry}>
-          <input
-            onChange={(e) => setFood({ ...food, name: e.target.value })}
-            type="text"
-            name="name"
-            placeholder="name"
-            required
-          />
-          <input
-            onChange={(e) => setFood({ ...food, kcal: Number(e.target.value) })}
-            type="number"
-            name="kcal"
-            placeholder="KCal"
-            required
-          />
-          <button> Add</button>
-        </form>
-      </>
+      <ManualFoodEntry
+        handleSubmit={addManualFoodEntry}
+        handleClick={() => setOpenAddFood(false)}
+      />
     );
 
   return (
