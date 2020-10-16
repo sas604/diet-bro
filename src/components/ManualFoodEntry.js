@@ -1,11 +1,14 @@
 import React from "react";
 import { useState } from "react";
+import { TiTimes } from "react-icons/ti";
 
 export default function ManualFoodEntry({ handleSubmit, handleClick }) {
   const [food, setFood] = useState(null);
   return (
-    <>
-      <button onClick={handleClick}></button>
+    <div className="wrapper bg-pattern">
+      <button className="close-btn" onClick={handleClick}>
+        <TiTimes />
+      </button>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -28,6 +31,6 @@ export default function ManualFoodEntry({ handleSubmit, handleClick }) {
         />
         <button> Add</button>
       </form>
-    </>
+    </div>
   );
 }

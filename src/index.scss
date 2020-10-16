@@ -2,7 +2,14 @@
 //@import-normalize;
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap");
 /* stylelint-enable*/
-
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
 /* variables*/
 :root {
   --dark-purple: #9163f2;
@@ -13,6 +20,7 @@
   --dark-green: #3fbbaf;
   --white: #fcfcfc;
   --gray: #eeebfc;
+  --red: #e61616;
   --font: "Quicksand", "Segoe UI", "Helvetica Neue", sans-serif;
   --bold: 700;
   --regular: 500;
@@ -74,6 +82,7 @@ code {
   background-size: 100%;
 }
 .wrapper {
+  margin: 0;
   height: 100%;
   padding: 2.5rem 1rem 0rem;
 }
@@ -111,6 +120,31 @@ code {
 :any-link {
   color: var(--dark-green);
   text-decoration: none;
+}
+
+.close-btn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-left: auto;
+  display: block;
+  border: none;
+  padding: 0;
+  line-height: 1.5rem;
+  width: 1.5rem;
+  background-color: transparent;
+  appearance: none;
+  font-size: 1.5rem;
+
+  transform-origin: 0.75rem 0.75rem;
+  transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
+  &:hover,
+  &:focus {
+    color: var(--red);
+    cursor: pointer;
+    transform: rotate(180deg) scale(1.2);
+    border: none;
+    outline: none;
+  }
 }
 label {
   display: flex;
