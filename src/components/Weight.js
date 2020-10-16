@@ -21,7 +21,7 @@ export default function Weight() {
       },
     });
   };
-  if (!currentUserData.hasOwnProperty("calories")) return null;
+  if (!currentUserData.hasOwnProperty("target")) return null;
   return (
     <>
       <h1> Your last recorded weight is</h1>
