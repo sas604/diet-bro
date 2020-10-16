@@ -3,11 +3,18 @@ import { useFetch } from "./hooks";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import SearchResult from "./SearchResult";
+import "../css/foodSearch.scss";
+import { TiTimes } from "react-icons/ti";
+import { useRef } from "react";
+import FocusTrap from "focus-trap-react";
 
 export default function FoodSearch({ handleClick }) {
   const [query, setQuery] = useState(null);
   const [url, setUrl] = useState("");
   const [pendingFetch, searchData] = useFetch(url);
+  const [openSearch, setOpenSearch] = useState(false);
+  const inputValue = useRef(null);
+
   useEffect(() => {
     if (!query) {
       setUrl(null);
@@ -22,22 +29,44 @@ export default function FoodSearch({ handleClick }) {
     const query = e.target.value.trim();
     setQuery(query.split(" ").join("%20"));
   };
-
+  useEffect(() => {
+    if (query) {
+      setOpenSearch(true);
+    } else {
+      setOpenSearch(false);
+    }
+  }, [query]);
   return (
-    <div className="search">
-      <span>Search for food</span>
+    <div className={`search ${openSearch && "open-search"}`}>
       <form onSubmit={(e) => e.preventDefault()}>
-        <input
-          onChange={handleSearch}
-          type="text"
-          placeholder="search food"
-        ></input>
+        <label>
+          Start typing food name:
+          <input
+            ref={inputValue}
+            onChange={handleSearch}
+            type="text"
+            placeholder="search"
+          ></input>
+        </label>
       </form>
       <ul className="search-list">
+        {openSearch && (
+          <button
+            className="close-btn search-modal"
+            onClick={() => {
+              inputValue.current.value = "";
+              setOpenSearch(false);
+              setQuery(null);
+            }}
+          >
+            <TiTimes />
+          </button>
+        )}
         {pendingFetch ? (
           <Loader
+            className="loader"
             type="Puff"
-            color="#00BFFF"
+            color={"#9163f2"}
             height={100}
             width={100}
             timeout={3000} //3 secs
