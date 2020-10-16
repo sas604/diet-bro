@@ -6,7 +6,7 @@ export default function ManualFoodEntry({ handleSubmit, handleClick }) {
   const [food, setFood] = useState(null);
   return (
     <div className="wrapper bg-pattern">
-      <button className="close-btn" onClick={handleClick}>
+      <button className="close-btn " onClick={handleClick}>
         <TiTimes />
       </button>
       <form
@@ -15,21 +15,29 @@ export default function ManualFoodEntry({ handleSubmit, handleClick }) {
           handleSubmit(food);
         }}
       >
-        <input
-          onChange={(e) => setFood({ ...food, name: e.target.value })}
-          type="text"
-          name="name"
-          placeholder="name"
-          required
-        />
-        <input
-          onChange={(e) => setFood({ ...food, kcal: Number(e.target.value) })}
-          type="number"
-          name="kcal"
-          placeholder="KCal"
-          required
-        />
-        <button> Add</button>
+        <label>
+          Food name:
+          <input
+            onChange={(e) => setFood({ ...food, name: e.target.value })}
+            type="text"
+            name="name"
+            placeholder="name"
+            required
+          />
+        </label>
+        <label>
+          Food Energy
+          <input
+            onChange={(e) => setFood({ ...food, kcal: Number(e.target.value) })}
+            type="number"
+            name="kcal"
+            placeholder="Kcal"
+            required
+          />
+        </label>
+        <button className="btn bg-green">
+          {`Add ${(food ? food.kcal : "") || 0} Kcal `}{" "}
+        </button>
       </form>
     </div>
   );
