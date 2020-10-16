@@ -51,11 +51,14 @@ export default function AddMeal({ history }) {
           foodId={foodItemId}
         />
       )}
-      <h1>Add new meal entry</h1>
-      <FoodSearch handleClick={getFoodItem} />
-      <span> or add food manually</span>
-      <br />
-      <button onClick={() => setOpenAddFood(true)}>Add food +</button>
+      <div className="wrapper bg-pattern">
+        <h1>Add new meal entry</h1>
+        <FoodSearch handleClick={getFoodItem} />
+        <span className="or">or</span>
+        <button className="btn bg-green" onClick={() => setOpenAddFood(true)}>
+          Add Food Manually
+        </button>
+      </div>
     </>
   );
 }
