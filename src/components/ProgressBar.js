@@ -1,6 +1,7 @@
 import React from "react";
 
-const ProgressBar = ({ progress = 0, target = 0 }) => {
+const ProgressBar = ({ progress = 1, target }) => {
+  if (!target) return null;
   const result = Math.round((progress / target) * 100);
   return (
     <div style={{ display: "flex", height: 30, position: "relative" }}>

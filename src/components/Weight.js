@@ -2,14 +2,36 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Auth";
 import DatePicker from "./DatePicker";
-import ProgressBar from "./ProgressBar";
 import { ACCOUNT } from "../constants/routes";
+import Loader from "react-loader-spinner";
 
 export default function Weight() {
   // get current user from context
   const { data, dateContext } = useContext(AuthContext);
   const [currentUserData, setUserData] = data;
   const [date] = dateContext;
+
+  if (!currentUserData.weight) return <Loader />;
+
+  const weightFunc = (weight, target) => {
+    if (!weight || !target) return { progress: null, toTarget: null };
+
+    if (target > weight) {
+      return {
+        progress: (weight / target) * 100,
+        toTarget: Math.abs(target - weight),
+      };
+    }
+    return {
+      progress: Math.round((target / weight) * 100),
+      toTarget: Math.abs(target - weight),
+    };
+  };
+
+  const progress = weightFunc(
+    currentUserData.weight[date],
+    currentUserData.targetWeight
+  );
 
   const addWeightEntry = (e) => {
     e.preventDefault();
@@ -21,40 +43,57 @@ export default function Weight() {
       },
     });
   };
-  if (!currentUserData.hasOwnProperty("target")) return null;
+
   return (
-    <>
+    <div className="wrapper bg-pattern">
       <h1> Your last recorded weight is</h1>
       <DatePicker />
-      <span>
-        {(currentUserData.weight && currentUserData.weight[date]) || `No entry`}
-      </span>
-      {currentUserData.targetWeight === 0 ? (
-        <Link to={ACCOUNT}>Set your weigth goal </Link>
-      ) : (
-        currentUserData.weight[date] && (
-          <div>
-            <ProgressBar
-              progress={currentUserData.targetWeight}
-              target={currentUserData.weight[date]}
-            />
-            <span>
-              {currentUserData.targetWeight - currentUserData.weight[date]}Lb to
-              your goal
+
+      {currentUserData.weight ? (
+        currentUserData.weight[date] ? (
+          <>
+            <span className="calories">
+              {currentUserData.weight[date]}
+              <strong> Lbs</strong>
             </span>
-          </div>
+            <div className="progress-bar-wrapper">
+              <p className="progress-bar-text">{`${progress.progress}% of your goal`}</p>
+              <div className="progress-bar">
+                <span
+                  style={{
+                    width: `${progress.progress}%`,
+                  }}
+                ></span>
+              </div>
+            </div>
+          </>
+        ) : (
+          `No entries for this date `
         )
+      ) : (
+        `No entries for this date `
       )}
-      <br></br>
+      {!currentUserData.targetWeight ? (
+        <div>
+          <p>
+            `You didn't set your target weight,
+            <Link to={ACCOUNT}> Set your target weight </Link>
+          </p>
+        </div>
+      ) : (
+        <p>
+          {" "}
+          {`${progress.toTarget} Lb to your target weight ${currentUserData.targetWeight} Lbs`}{" "}
+        </p>
+      )}
+
       <form onSubmit={addWeightEntry}>
-        <input
-          type="number"
-          name="weight"
-          required
-          placeholder="inter weight"
-        />
-        <button>Add Entry+</button>
+        <label>
+          Enter Weight:
+          <input type="number" name="weight" required />
+        </label>
+        <button className="btn bg-green">Add Entry+</button>
       </form>
-    </>
+    </div>
   );
 }

@@ -18,7 +18,7 @@ export default function DatePicker() {
 
       <input
         type="date"
-        defaultValue={date}
+        value={date}
         onChange={(e) => setDate(e.target.value)}
         max={new Date().toISOString().split("T")[0]}
       />

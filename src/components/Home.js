@@ -43,15 +43,7 @@ export default function Home() {
     <div className="wrapper bg-pattern home">
       <h1>Hello {name}!</h1>
       <DatePicker />
-      <span
-        className="calories"
-        style={{
-          fontSize: "3rem",
-          fontWeight: "bold",
-          textAlign: "center",
-          display: "block",
-        }}
-      >
+      <span className="calories">
         {Math.round(callories)} <strong>Kcal</strong>
       </span>
       {callories > 0 ? (

@@ -155,8 +155,25 @@ label {
 
 input {
   margin-top: 0.5rem;
-
+  padding: 0.7em 0.3em;
   border-radius: 3px;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   border: 3px solid var(--purple);
+}
+.calories {
+  font-size: 3rem;
+  font-weight: var(--bold);
+  text-align: center;
+  display: block;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

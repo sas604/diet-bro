@@ -38,7 +38,6 @@ export const AuthProvider = ({ children }) => {
             [currentUser.uid]: {
               target: 2000,
               targetWeight: 0,
-              weight: { [date]: 0 },
             },
           });
         } else {

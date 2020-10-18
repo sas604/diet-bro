@@ -6,7 +6,6 @@ import SearchResult from "./SearchResult";
 import "../css/foodSearch.scss";
 import { TiTimes } from "react-icons/ti";
 import { useRef } from "react";
-import FocusTrap from "focus-trap-react";
 
 export default function FoodSearch({ handleClick }) {
   const [query, setQuery] = useState(null);
