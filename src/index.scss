@@ -83,8 +83,9 @@ code {
 }
 .wrapper {
   margin: 0;
-  height: 100%;
-  padding: 2.5rem 1rem 0rem;
+  min-height: 100%;
+  padding: 2.5rem 1rem 3rem;
+  margin-bottom: 3rem;
 }
 .bg-green {
   background-color: var(--green);

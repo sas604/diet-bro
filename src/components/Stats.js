@@ -2,10 +2,10 @@ import React from "react";
 
 export default function Stats() {
   return (
-    <div>
+    <div className="wrapper bg-pattern">
       <h1>Your Statistic </h1>
 
-      <p>Sorry this section is under development </p>
+      <p>Sorry, this section is still under development </p>
     </div>
   );
 }

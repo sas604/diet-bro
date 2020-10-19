@@ -6,6 +6,8 @@ import DatePicker from "../components/DatePicker";
 import MealHistory from "./MealHistory";
 import "../css/home.scss";
 import { useState } from "react";
+import AnimatedNumber from "animated-number-react";
+
 export default function Home() {
   // get current user from the context
   const { data, dateContext, name } = useContext(AuthContext);
@@ -44,7 +46,11 @@ export default function Home() {
       <h1>Hello {name}!</h1>
       <DatePicker />
       <span className="calories">
-        {Math.round(callories)} <strong>Kcal</strong>
+        <AnimatedNumber
+          value={Math.round(callories)}
+          formatValue={(value) => Math.ceil(value)}
+        />{" "}
+        <strong>Kcal</strong>
       </span>
       {callories > 0 ? (
         <p className="entry-msg"> You have consumed </p>

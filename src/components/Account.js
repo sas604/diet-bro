@@ -7,9 +7,8 @@ export default function Account() {
   const [currentUserData, setUserData] = data;
   const [, setDate] = dateContext;
   return (
-    <div>
+    <div className="wrapper bg-pattern ">
       <h1>Account Setings</h1>
-
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -21,7 +20,7 @@ export default function Account() {
         }}
       >
         <h2>Your dayly callories intake target is </h2>
-        <span>{currentUserData.target} Kcal </span> <br />
+        <span className="calories">{currentUserData.target} Kcal </span>
         <label>
           Set your dayly callories intake target
           <input
@@ -35,10 +34,8 @@ export default function Account() {
             defaultValue={currentUserData.target}
           />
         </label>
-        <button>Set</button>
+        <button className="btn bg-green">Set</button>
       </form>
-
-      <br />
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -50,7 +47,7 @@ export default function Account() {
         }}
       >
         <h2>Your target weight is </h2>
-        <span>{currentUserData.targetWeight} lbs </span> <br />
+        <span className="calories"> {currentUserData.targetWeight} lbs </span>
         <label>
           Set your weight target
           <input
@@ -60,9 +57,10 @@ export default function Account() {
             defaultValue={currentUserData.targetWeight}
           />
         </label>
-        <button>Set</button>
-      </form>
+        <button className="btn bg-green">Set</button>
+      </form>{" "}
       <button
+        className=" btn bg-purple "
         onClick={() =>
           base
             .auth()
