@@ -14,7 +14,7 @@ export default function Weight() {
   if (!currentUserData.weight) return <Loader />;
 
   const weightFunc = (weight, target) => {
-    if (!weight || !target) return { progress: null, toTarget: null };
+    if (!weight || !target) return { progress: 0, toTarget: 0 };
 
     if (target > weight) {
       return {
@@ -83,7 +83,7 @@ export default function Weight() {
       ) : (
         <p>
           {" "}
-          {`${progress.toTarget} Lb to your target weight ${currentUserData.targetWeight} Lbs`}{" "}
+          {`${progress.toTarget} Lb to your target weight ${currentUserData.targetWeight} Lbs`}
         </p>
       )}
 
