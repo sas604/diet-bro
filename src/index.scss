@@ -28,6 +28,7 @@ html {
   --regular: 500;
   --light: 300;
   --border-black: 3px solid black;
+  --border-purple: 3px solid var(--purple);
   --radius: 3px;
 }
 h1,
@@ -89,9 +90,11 @@ code {
   margin: 0;
   min-height: 100%;
   padding: 2.5rem 1rem 3rem;
+  min-height: 100vh;
   margin-bottom: 3rem;
   @include media($medium) {
     overflow: hidden;
+    margin-bottom: 0;
   }
 }
 .bg-green {
