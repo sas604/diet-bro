@@ -2,6 +2,8 @@
 //@import-normalize;
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap");
 /* stylelint-enable*/
+@import "./css/mq";
+
 html {
   box-sizing: border-box;
 }
@@ -48,17 +50,19 @@ body {
 }
 #root {
   margin: 0;
-  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
 }
 div.diagonal::before {
   content: "";
   position: absolute;
-  height: 50vh;
+  height: 60vh;
   width: 100%;
   display: block;
   background: #8480f2;
   background: linear-gradient(16deg, #8480f2 0%, #48d9ca 100%);
-  bottom: -20%;
+  bottom: -30%;
   left: 0;
   transform: rotate(-15deg);
   transform: skewY(-15deg);
@@ -86,6 +90,9 @@ code {
   min-height: 100%;
   padding: 2.5rem 1rem 3rem;
   margin-bottom: 3rem;
+  @include media($medium) {
+    overflow: hidden;
+  }
 }
 .bg-green {
   background-color: var(--green);

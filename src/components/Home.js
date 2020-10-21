@@ -46,10 +46,13 @@ export default function Home() {
       <h1>Hello {name}!</h1>
       <DatePicker />
       <span className="calories">
-        <AnimatedNumber
-          value={Math.round(callories)}
-          formatValue={(value) => Math.ceil(value)}
-        />{" "}
+        {callories && (
+          <AnimatedNumber
+            value={Math.round(callories)}
+            formatValue={(value) => Math.ceil(value)}
+            duration="300ms"
+          />
+        )}
         <strong>Kcal</strong>
       </span>
       {callories > 0 ? (
