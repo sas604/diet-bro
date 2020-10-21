@@ -1,29 +1,15 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext } from "react";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import { AuthContext } from "../Auth";
-import base from "./firebase";
+
 import "../css/landing.scss";
 import { ReactComponent as UserSvg } from "../img/user-regular.svg";
+import { useHandleLogInTestUser } from "./hooks";
 
 function Landing({ history }) {
   const { currentUser } = useContext(AuthContext);
-
-  const handleLogInTestUser = useCallback(
-    async (event) => {
-      event.preventDefault();
-
-      try {
-        await base
-          .auth()
-          .signInWithEmailAndPassword("test@tagunovdesign.com", "123456");
-        history.push("/");
-      } catch (error) {
-        alert(error);
-      }
-    },
-    [history]
-  );
+  const logInWithTest = useHandleLogInTestUser(history);
   if (currentUser) {
     return <Redirect to={"/home"} />;
   }
@@ -39,7 +25,7 @@ function Landing({ history }) {
         <Link className="bg-green btn  " to={ROUTES.SIGN_IN}>
           Sign In
         </Link>
-        <button className="bg-blue btn  " onClick={handleLogInTestUser}>
+        <button className="bg-blue btn  " onClick={logInWithTest}>
           Login With Test User
         </button>
         <Link className="btn bg-purple" to={ROUTES.SIGN_UP}>

@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import base from "./firebase";
 
 export const useFetch = (url) => {
   const [pendingFetch, setPending] = useState(false);
@@ -36,3 +37,20 @@ export const useFetch = (url) => {
 
   return [pendingFetch, data];
 };
+
+export const useHandleLogInTestUser = (history) =>
+  useCallback(
+    async (event) => {
+      event.preventDefault();
+
+      try {
+        await base
+          .auth()
+          .signInWithEmailAndPassword("test@tagunovdesign.com", "123456");
+        history.push("/");
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [history]
+  );

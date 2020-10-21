@@ -5,8 +5,10 @@ import base, { provider } from "./firebase";
 import { AuthContext } from "../Auth";
 import * as ROUTES from "../constants/routes";
 import "../css/sign.scss";
+import { useHandleLogInTestUser } from "./hooks";
 
 function SignUp({ history }) {
+  const logWithTest = useHandleLogInTestUser(history);
   const handleLogIn = useCallback(
     async (event) => {
       event.preventDefault();
@@ -40,30 +42,32 @@ function SignUp({ history }) {
   }
   return (
     <div className="wrapper bg-pattern sign-in">
-      <button className="btn bg-green" onClick={handleGitHubLogin}>
-        Login With Github
-      </button>
-      <button className="btn bg-blue" onClick={handleLogIn}>
-        Login With Test User
-      </button>
-      <span className="or">or</span>
-      <form className="login-form" onSubmit={handleLogIn}>
-        <label>
-          email:
-          <input name="email" type="email" required></input>
-        </label>
-        <label>
-          password:
-          <input name="password" type="password" required></input>
-        </label>
-        <button className="btn bg-blue" type="submit">
-          Sing in
+      <div className="container">
+        <button className="btn bg-green" onClick={handleGitHubLogin}>
+          Login With Github
         </button>
-      </form>
-      <Link to={ROUTES.PASSWORD_FORGET}>Forgot password?</Link>
-      <p>
-        No Account?<Link to={ROUTES.SIGN_UP}> Create One</Link>
-      </p>
+        <button className="btn bg-blue" onClick={logWithTest}>
+          Login With Test User
+        </button>
+        <span className="or">or</span>
+        <form className="login-form" onSubmit={handleLogIn}>
+          <label>
+            email:
+            <input name="email" type="email" required></input>
+          </label>
+          <label>
+            password:
+            <input name="password" type="password" required></input>
+          </label>
+          <button className="btn bg-blue" type="submit">
+            Sing in
+          </button>
+        </form>
+        <Link to={ROUTES.PASSWORD_FORGET}>Forgot password?</Link>
+        <p>
+          No Account?<Link to={ROUTES.SIGN_UP}> Create One</Link>
+        </p>
+      </div>
     </div>
   );
 }
