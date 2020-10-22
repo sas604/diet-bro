@@ -7,6 +7,10 @@
   grid-column: 2/3;
   @include media($large) {
     margin-top: 0;
+    background-color: var(--white);
+    box-shadow: var(--light-shadow);
+    border-radius: 3px;
+    margin: 1rem 0;
   }
 
   .date-picker-btn {

@@ -1,11 +1,20 @@
 @import "./mq";
 .meal-history-heading {
   margin: 0;
+  grid-row: 1;
+  grid-column: 3/4;
+  align-self: center;
+  @include media($large) {
+    font-size: 2rem;
+  }
 }
 .meal-history {
   max-height: 300px;
   @include media($large) {
-    max-height: 60vh;
+    margin-top: 0;
+    max-height: 70vh;
+    grid-row: 2/4;
+    grid-column: 3/4;
   }
   overflow-y: scroll;
   &::-webkit-scrollbar {

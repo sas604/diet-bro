@@ -75,9 +75,8 @@ export default function Home() {
           <span className="plus">+</span> <p>Add Meal</p>
         </Link>
       </div>
-      <div className="meal-display-tile">
-        <MealHistory />
-      </div>
+
+      <MealHistory />
     </div>
   );
 }
