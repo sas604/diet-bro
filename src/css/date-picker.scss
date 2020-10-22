@@ -1,7 +1,13 @@
+@import "./mq";
+
 .date-picker {
   margin-top: 3rem;
   display: flex;
   justify-content: center;
+  grid-column: 2/3;
+  @include media($large) {
+    margin-top: 0;
+  }
 
   .date-picker-btn {
     touch-action: manipulation;

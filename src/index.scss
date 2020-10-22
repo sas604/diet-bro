@@ -28,7 +28,7 @@ html {
   --regular: 500;
   --light: 300;
   --border-black: 3px solid black;
-  --border-purple: 3px solid var(--purple);
+  --border-purple: 5px solid var(--purple);
   --radius: 3px;
 }
 h1,
@@ -95,6 +95,13 @@ code {
   @include media($medium) {
     overflow: hidden;
     margin-bottom: 0;
+  }
+  @include media($large) {
+    padding: 2.5rem 0;
+    display: grid;
+    align-content: baseline;
+    grid-template-columns: 16% 1fr 1fr;
+    row-gap: 2rem;
   }
 }
 .bg-green {

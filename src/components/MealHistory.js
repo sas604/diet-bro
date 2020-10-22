@@ -22,31 +22,33 @@ export default function MealHistory() {
   };
   // list of user meals entries
   return (
-    <div className="meal-history">
-      <h3>Meal History</h3>
-      <ul className="meal-history-list">
-        {currentUserData[date] ? (
-          Object.keys(currentUserData[date]).map((entry) => (
-            <Meal
-              key={entry}
-              name={currentUserData[date][entry].name}
-              id={entry}
-              calories={
-                (currentUserData[date][entry].kcal / 100) *
-                  currentUserData[date][entry].portion ||
-                currentUserData[date][entry].kcal
-              }
-              onClick={deleteEntry}
-            />
-          ))
-        ) : (
-          <h4>
-            {" "}
-            No entries for this date,{" "}
-            <Link to={"/add-meal"}>try to add a meal </Link>
-          </h4>
-        )}
-      </ul>
-    </div>
+    <>
+      <h3 className="meal-history-heading">Meal History</h3>
+      <div className="meal-history">
+        <ul className="meal-history-list">
+          {currentUserData[date] ? (
+            Object.keys(currentUserData[date]).map((entry) => (
+              <Meal
+                key={entry}
+                name={currentUserData[date][entry].name}
+                id={entry}
+                calories={
+                  (currentUserData[date][entry].kcal / 100) *
+                    currentUserData[date][entry].portion ||
+                  currentUserData[date][entry].kcal
+                }
+                onClick={deleteEntry}
+              />
+            ))
+          ) : (
+            <h4>
+              {" "}
+              No entries for this date,{" "}
+              <Link to={"/add-meal"}>try to add a meal </Link>
+            </h4>
+          )}
+        </ul>
+      </div>
+    </>
   );
 }

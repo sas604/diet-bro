@@ -43,40 +43,41 @@ export default function Home() {
   if (!currentUserData || name === null) return <h1>Loading ... </h1>;
   return (
     <div className="wrapper bg-pattern home">
-      <h1>Hello {name}!</h1>
+      <h1 className="hello">Hello {name}!</h1>
       <DatePicker />
-      <span className="calories">
-        {callories && (
-          <AnimatedNumber
-            value={Math.round(callories)}
-            formatValue={(value) => Math.ceil(value)}
-            duration="300ms"
-          />
+      <div className="calories-display-tile">
+        {callories > 0 ? (
+          <p className="entry-msg"> You have consumed </p>
+        ) : (
+          <p className="entry-msg">No entries for this date</p>
         )}
-        <strong>Kcal</strong>
-      </span>
-      {callories > 0 ? (
-        <p className="entry-msg"> You have consumed </p>
-      ) : (
-        <p className="entry-msg">No entries for this date</p>
-      )}
-
-      <div className="progress-bar-wrapper">
-        <p className="progress-bar-text">{`${progress}% of your daily goal`}</p>
-        <div className="progress-bar">
-          <span
-            style={{
-              width: `${progress}%`,
-            }}
-          ></span>
+        <span className="calories">
+          {callories && (
+            <AnimatedNumber
+              value={Math.round(callories)}
+              formatValue={(value) => Math.ceil(value)}
+              duration="300ms"
+            />
+          )}
+          <strong>Kcal</strong>
+        </span>
+        <div className="progress-bar-wrapper">
+          <p className="progress-bar-text">{`${progress}% of your daily goal`}</p>
+          <div className="progress-bar">
+            <span
+              style={{
+                width: `${progress}%`,
+              }}
+            ></span>
+          </div>
         </div>
+        <Link className="add btn" to={ROUTES.ADD_MEAL}>
+          <span className="plus">+</span> <p>Add Meal</p>
+        </Link>
       </div>
-
-      <Link className="add btn" to={ROUTES.ADD_MEAL}>
-        <span className="plus">+</span> <p>Add Meal</p>
-      </Link>
-
-      <MealHistory />
+      <div className="meal-display-tile">
+        <MealHistory />
+      </div>
     </div>
   );
 }
