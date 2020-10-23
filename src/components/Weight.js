@@ -4,6 +4,8 @@ import { AuthContext } from "../Auth";
 import DatePicker from "./DatePicker";
 import { ACCOUNT } from "../constants/routes";
 import Loader from "react-loader-spinner";
+import AnimatedNumber from "animated-number-react";
+import "../css/weight.scss";
 
 export default function Weight() {
   // get current user from context
@@ -46,47 +48,52 @@ export default function Weight() {
 
   return (
     <div className="wrapper bg-pattern">
-      <h1> Your last recorded weight is</h1>
+      <h1>Weight Data</h1>
       <DatePicker />
-
-      {currentUserData.weight ? (
-        currentUserData.weight[date] ? (
-          <>
-            <span className="calories">
-              {currentUserData.weight[date]}
-              <strong> Lbs</strong>
-            </span>
-            <div className="progress-bar-wrapper">
-              <p className="progress-bar-text">{`${progress.progress}% of your goal`}</p>
-              <div className="progress-bar">
-                <span
-                  style={{
-                    width: `${progress.progress}%`,
-                  }}
-                ></span>
+      <div className="weight-container">
+        <h3>Your last recorded weight is</h3>
+        {currentUserData.weight ? (
+          currentUserData.weight[date] ? (
+            <>
+              <span className="calories">
+                <AnimatedNumber
+                  value={currentUserData.weight[date]}
+                  formatValue={(value) => Math.ceil(value)}
+                  duration="300ms"
+                />
+                <strong> Lbs</strong>
+              </span>
+              <div className="progress-bar-wrapper">
+                <p className="progress-bar-text">{`${progress.progress}% of your goal`}</p>
+                <div className="progress-bar">
+                  <span
+                    style={{
+                      width: `${progress.progress}%`,
+                    }}
+                  ></span>
+                </div>
               </div>
-            </div>
-          </>
+            </>
+          ) : (
+            `No entries for this date `
+          )
         ) : (
           `No entries for this date `
-        )
-      ) : (
-        `No entries for this date `
-      )}
-      {!currentUserData.targetWeight ? (
-        <div>
+        )}
+        {!currentUserData.targetWeight ? (
+          <div>
+            <p>
+              `You didn't set your target weight,
+              <Link to={ACCOUNT}> Set your target weight </Link>
+            </p>
+          </div>
+        ) : (
           <p>
-            `You didn't set your target weight,
-            <Link to={ACCOUNT}> Set your target weight </Link>
+            {" "}
+            {`${progress.toTarget} Lb to your target weight ${currentUserData.targetWeight} Lbs`}
           </p>
-        </div>
-      ) : (
-        <p>
-          {" "}
-          {`${progress.toTarget} Lb to your target weight ${currentUserData.targetWeight} Lbs`}
-        </p>
-      )}
-
+        )}
+      </div>
       <form onSubmit={addWeightEntry}>
         <label>
           Enter Weight:
