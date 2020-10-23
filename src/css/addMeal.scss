@@ -1,0 +1,32 @@
+@import "./mq";
+.or {
+  grid-row: 1;
+  grid-column: 4/3;
+  align-self: start;
+  margin-top: 0;
+}
+.back-link {
+  grid-row: 1;
+  font-size: 1.3rem;
+  text-align: center;
+  align-self: center;
+  z-index: 999;
+  align-self: start;
+  color: var(--dark-green);
+  cursor: pointer;
+}
+.add-meal {
+  grid-row: 1;
+  grid-column: 3/4;
+  align-self: start;
+
+  @include media($large) {
+    margin-top: 3rem;
+  }
+}
+.add-tile {
+  @include desktop-tile;
+  grid-column: 2/4;
+  justify-self: center;
+  min-width: 450px;
+}

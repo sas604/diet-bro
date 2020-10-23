@@ -5,6 +5,9 @@ import { getTime } from "date-fns";
 import FoodSearch from "./FoodSearch";
 import FoodModal from "./FoodModal";
 import ManualFoodEntry from "./ManualFoodEntry";
+import { Link } from "react-router-dom";
+import { TiArrowLeftThick } from "react-icons/ti";
+import "../css/addMeal.scss";
 
 export default function AddMeal({ history }) {
   const [foodItemId, setFoodItemId] = useState(null);
@@ -52,10 +55,15 @@ export default function AddMeal({ history }) {
         />
       )}
       <div className="wrapper bg-pattern">
-        <h1>Add new meal entry</h1>
+        <Link className="back-link" to={"/"}>
+          <TiArrowLeftThick /> Back to home
+        </Link>
         <FoodSearch handleClick={getFoodItem} />
         <span className="or">or</span>
-        <button className="btn bg-green" onClick={() => setOpenAddFood(true)}>
+        <button
+          className="btn bg-green add-meal"
+          onClick={() => setOpenAddFood(true)}
+        >
           Add Food Manually
         </button>
       </div>

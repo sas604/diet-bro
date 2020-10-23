@@ -1,3 +1,5 @@
+@import "./mq";
+
 .search {
   position: relative;
   padding-top: 1rem;
@@ -5,20 +7,31 @@
   input {
     padding: 0.5em 0.3em;
   }
+  @include media($large) {
+    @include desktop-tile;
+    height: 85vh;
+    grid-column: 2/3;
+    grid-row: 1/3;
+  }
+  form {
+    padding: 0 1em;
+  }
 }
 .open-search {
   position: absolute;
   background-color: var(--white);
   left: 0;
   height: 80vh;
+  @include media($large) {
+    @include desktop-tile;
+    position: relative;
+    height: 85vh;
+  }
 
   .search-modal {
     position: absolute;
     top: 0;
     right: 1rem;
-  }
-  form {
-    padding: 0 1em;
   }
 
   .search-list {
