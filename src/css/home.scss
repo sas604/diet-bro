@@ -6,24 +6,26 @@
     z-index: 300;
     font-size: 1.5rem;
     text-align: center;
-    &:before {
-      content: " ";
+    @include media($large) {
+      &:before {
+        content: " ";
 
-      overflow: hidden;
-      background: url("../img/user-regular.svg");
-      background-size: 50%;
-      background-repeat: no-repeat;
-      background-position: center;
-      width: 50px;
-      height: 50px;
-      display: block;
-      background-color: #9163f23b;
-      padding: 2rem;
-      clip-path: circle();
-      margin: 0 auto;
+        overflow: hidden;
+        background: url("../img/user-regular.svg");
+        background-size: 50%;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 50px;
+        height: 50px;
+        display: block;
+        background-color: #9163f23b;
+        padding: 2rem;
+        clip-path: circle();
+        margin: 0 auto;
 
-      font-size: 5rem;
-      z-index: 299;
+        font-size: 5rem;
+        z-index: 299;
+      }
     }
   }
   .entry-msg {
