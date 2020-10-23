@@ -2,14 +2,17 @@ import React, { useContext } from "react";
 import { AuthContext } from "../Auth";
 import base from "./firebase";
 import { format } from "date-fns";
+import "../css/settings.scss";
+
 export default function Account() {
   const { data, dateContext } = useContext(AuthContext);
   const [currentUserData, setUserData] = data;
   const [, setDate] = dateContext;
   return (
     <div className="wrapper bg-pattern ">
-      <h1>Account Setings</h1>
+      <h1 className="settings-header">Account Setings</h1>
       <form
+        className="settings-form"
         onSubmit={(e) => {
           e.preventDefault();
 
@@ -37,6 +40,7 @@ export default function Account() {
         <button className="btn bg-green">Set</button>
       </form>
       <form
+        className="settings-form"
         onSubmit={(e) => {
           e.preventDefault();
 
@@ -60,7 +64,7 @@ export default function Account() {
         <button className="btn bg-green">Set</button>
       </form>{" "}
       <button
-        className=" btn bg-purple "
+        className=" btn bg-purple sign-out"
         onClick={() =>
           base
             .auth()

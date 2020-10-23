@@ -1,0 +1,18 @@
+@import "./mq";
+
+.settings-form {
+  label {
+    font-size: 1.3rem;
+    input {
+      margin-top: 1rem;
+    }
+  }
+  @include desktop-tile;
+}
+.settings-header {
+  align-self: start;
+}
+
+.sign-out {
+  grid-column: 2/3;
+}
