@@ -7,3 +7,11 @@ $large: 1000px;
     @content;
   }
 }
+
+@mixin desktop-tile {
+  margin: 0;
+  border-radius: var(--radius);
+  box-shadow: var(--light-shadow);
+  background-color: var(--white);
+  padding: 2rem 1rem;
+}

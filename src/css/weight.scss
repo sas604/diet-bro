@@ -1,0 +1,12 @@
+@import "./mq";
+
+.weight-container {
+  @include media($large) {
+    @include desktop-tile;
+    grid-column: 2/3;
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 0;
+    }
+  }
+}
