@@ -7,6 +7,7 @@ import MealHistory from "./MealHistory";
 import "../css/home.scss";
 import { useState } from "react";
 import AnimatedNumber from "animated-number-react";
+import Loader from "react-loader-spinner";
 
 export default function Home() {
   // get current user from the context
@@ -40,7 +41,19 @@ export default function Home() {
     );
   }, [currentUserDate, setUserData]);
 
-  if (!currentUserData || name === null) return <h1>Loading ... </h1>;
+  if (!currentUserData || name === null)
+    return (
+      <h1>
+        <Loader
+          className="loader"
+          type="Puff"
+          color={"#9163f2"}
+          height={100}
+          width={100}
+          timeout={3000} //3 secs
+        />{" "}
+      </h1>
+    );
   return (
     <div className="wrapper bg-pattern home">
       <h1 className="hello">Hello {name}!</h1>
