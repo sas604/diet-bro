@@ -20,7 +20,7 @@ export default function Weight() {
 
     if (target > weight) {
       return {
-        progress: (weight / target) * 100,
+        progress: Math.round((weight / target) * 100),
         toTarget: Math.abs(target - weight),
       };
     }
