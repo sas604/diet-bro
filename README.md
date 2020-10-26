@@ -1,12 +1,12 @@
 # [Diet Bro]
 
-Diet bro is a single page calorie counter web app built with React, React router, and Firebase.
+Diet bro is a single page calorie counter web app built with React, React router, and Fgit irebase.
 
 ## Features
 
-*Search for food in the FDA database
-*Adding a specific portion to user daily meal history
-*Manual meal entry
-*All entries stored in the database, users can go back in time to add or remove entries
-*Daily calories intake goal
-*Weight tracking. Users can set weight target and make daily entries to track progress
+- Search for food in the FDA database
+- Adding a specific portion to user daily meal history
+- Manual meal entry
+- All entries stored in the database, users can go back in time to add or remove entries
+- Daily calories intake goal
+- Weight tracking. Users can set weight target and make daily entries to track progress
