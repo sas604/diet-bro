@@ -69,8 +69,9 @@ export default function Account() {
           base
             .auth()
             .signOut()
-            .then(setDate(format(new Date(), "yyyy-MM-dd")), (error) =>
-              console.log(error)
+            .then(
+              setDate(format(new Date(), "yyyy-MM-dd"), setUserData({})),
+              (error) => console.log(error)
             )
         }
       >
