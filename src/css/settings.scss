@@ -1,13 +1,15 @@
 @import "./mq";
 
 .settings-form {
-  label {
-    font-size: 1.3rem;
-    input {
-      margin-top: 1rem;
+  @include media($large) {
+    label {
+      font-size: 1.3rem;
+      input {
+        margin-top: 1rem;
+      }
     }
+    @include desktop-tile;
   }
-  @include desktop-tile;
 }
 .settings-header {
   align-self: start;
