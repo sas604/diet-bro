@@ -90,7 +90,9 @@ export default function Weight() {
         ) : (
           <p>
             {" "}
-            {`${progress.toTarget} Lb to your target weight ${currentUserData.targetWeight} Lbs`}
+            {`${progress.toTarget} Lb to your target weight ${Math.round(
+              currentUserData.targetWeight
+            )} Lbs`}
           </p>
         )}
       </div>

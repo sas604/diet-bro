@@ -10,7 +10,7 @@ export default function Account() {
   const [, setDate] = dateContext;
   return (
     <div className="wrapper bg-pattern ">
-      <h1 className="settings-header">Account Setings</h1>
+      <h1 className="settings-header">Account Settings</h1>
       <form
         className="settings-form"
         onSubmit={(e) => {
@@ -22,10 +22,10 @@ export default function Account() {
           });
         }}
       >
-        <h2>Your dayly callories intake target is </h2>
+        <h2>Your daily callories intake target is </h2>
         <span className="calories">{currentUserData.target} Kcal </span>
         <label>
-          Set your dayly callories intake target
+          Set your daily callories intake target
           <input
             onChange={(e) => {
               if (e.target.value > 9999) e.target.value = 9999;
