@@ -41,7 +41,7 @@ function SignUp({ history }) {
     return <Redirect to={"/home"} />;
   }
   return (
-    <div className="wrapper bg-pattern sign-in">
+    <div className="wrapper bg-pattern sign-in no-grid">
       <div className="container">
         <button className="btn bg-green" onClick={handleGitHubLogin}>
           Login With Github

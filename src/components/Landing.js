@@ -15,7 +15,7 @@ function Landing({ history }) {
   }
 
   return (
-    <div className="wrapper bg-pattern diagonal">
+    <div className="wrapper bg-pattern diagonal no-grid">
       <h1 className="landing-heading">
         Welcome to the <strong>DietBro</strong>, an app that keeps an eye on
         your diet.

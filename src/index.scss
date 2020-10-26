@@ -113,6 +113,9 @@ code {
     column-gap: 2rem;
   }
 }
+.no-grid {
+  display: block;
+}
 .bg-green {
   background-color: var(--green);
 }

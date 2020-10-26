@@ -25,7 +25,7 @@ function SignUp({ history }) {
     [history]
   );
   return (
-    <div className="wrapper bg-pattern sign-in ">
+    <div className="wrapper bg-pattern sign-in no-grid">
       <div className="container">
         <form onSubmit={handelSingUp}>
           <label>
