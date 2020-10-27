@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     setPending(false);
   });
 
-  base.auth().onAuthStateChanged((user) => {
+  base.auth().onAuthStateChanged(function (user) {
     if (user) {
       setName(user.displayName);
     }
