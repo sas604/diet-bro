@@ -11,10 +11,11 @@ import Loader from "react-loader-spinner";
 
 export default function Home() {
   // get current user from the context
-  const { data, dateContext, name } = useContext(AuthContext);
+  const { data, dateContext, currentUser } = useContext(AuthContext);
   const [callories, setCallories] = useState(0);
   const [currentUserData, setUserData] = data;
   const [date] = dateContext;
+
   // set curent date entry in the firebase
   const currentUserDate = currentUserData[date];
 
@@ -41,7 +42,7 @@ export default function Home() {
     );
   }, [currentUserDate, setUserData]);
 
-  if (!currentUserData || name === null)
+  if (!currentUserData)
     return (
       <h1>
         <Loader
@@ -56,7 +57,7 @@ export default function Home() {
     );
   return (
     <div className="wrapper bg-pattern home">
-      <h1 className="hello">Hello {name}!</h1>
+      <h1 className="hello">Hello {currentUser.displayName}!</h1>
       <DatePicker />
       <div className="calories-display-tile">
         {callories > 0 ? (

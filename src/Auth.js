@@ -9,17 +9,9 @@ export const AuthProvider = ({ children }) => {
   const [pending, setPending] = useState(true);
   const [currentUserData, setUserData] = useState({});
   const [date, setDate] = useState(format(new Date(), "yyyy-MM-dd"));
-  const [name, setName] = useState();
-
   base.auth().onAuthStateChanged((user) => {
     setCurrentUser(user);
     setPending(false);
-  });
-
-  base.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      setName(user.displayName);
-    }
   });
 
   useEffect(() => {
@@ -62,9 +54,9 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         currentUser,
+        setCurrentUser,
         data: [currentUserData, setUserData],
         dateContext: [date, setDate],
-        name,
       }}
     >
       {children}

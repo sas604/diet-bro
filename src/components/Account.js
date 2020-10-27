@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import "../css/settings.scss";
 
 export default function Account() {
-  const { data, dateContext } = useContext(AuthContext);
+  const { data, dateContext, setCurrentUser } = useContext(AuthContext);
   const [currentUserData, setUserData] = data;
   const [, setDate] = dateContext;
   return (
@@ -70,6 +70,7 @@ export default function Account() {
             .auth()
             .signOut()
             .then(
+              setCurrentUser(null),
               setDate(format(new Date(), "yyyy-MM-dd"), setUserData({})),
               (error) => console.log(error)
             )
