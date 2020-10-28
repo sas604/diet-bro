@@ -28,5 +28,7 @@
   @include desktop-tile;
   grid-column: 2/4;
   justify-self: center;
-  min-width: 450px;
+  @include media($large) {
+    min-width: 450px;
+  }
 }
