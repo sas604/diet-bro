@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import base from "./components/firebase";
 import { format } from "date-fns";
+import Loader from "react-loader-spinner";
 
 export const AuthContext = React.createContext();
 
@@ -50,7 +51,21 @@ export const AuthProvider = ({ children }) => {
     }
   }, [currentUserData, currentUser]);
 
-  if (pending) return <h1>Loading...</h1>;
+  if (pending)
+    return (
+      <div className="wrapper bg-pattern">
+        <Loader
+          className="loader"
+          type="Puff"
+          color={"#9163f2"}
+          height={100}
+          width={100}
+          style={{ margin: "10rem auto", textAlign: "center" }}
+          timeout={11000} //3 secs
+        />{" "}
+      </div>
+    );
+
   return (
     <AuthContext.Provider
       value={{

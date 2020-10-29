@@ -13,7 +13,18 @@ export default function Weight() {
   const [currentUserData, setUserData] = data;
   const [date] = dateContext;
 
-  if (!currentUserData.weight) return <Loader />;
+  if (!currentUserData.weight)
+    return (
+      <Loader
+        className="loader"
+        type="Puff"
+        color={"#9163f2"}
+        height={100}
+        width={100}
+        style={{ margin: "10rem auto", textAlign: "center" }}
+        timeout={11000} //3 secs
+      />
+    );
 
   const weightFunc = (weight, target) => {
     if (!weight || !target) return { progress: 0, toTarget: 0 };
