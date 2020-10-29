@@ -1,6 +1,6 @@
-# [Diet Bro]
+# [Diet Bro](https://diet-bro.vercel.app)
 
-Diet bro is a single page calorie counter web app built with React, React router, and Fgit irebase.
+Diet bro is a single page calorie counter web app built with React, React router, and Firebase.
 
 ## Features
 
