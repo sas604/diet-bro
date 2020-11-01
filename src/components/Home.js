@@ -51,6 +51,7 @@ export default function Home() {
           color={"#9163f2"}
           height={100}
           width={100}
+          style={{ margin: "10rem auto", textAlign: "center" }}
           timeout={3000} //3 secs
         />{" "}
       </h1>
