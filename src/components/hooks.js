@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import base from "./firebase";
+import { subDays, format } from "date-fns";
+import { days, restD } from "./testDataFile";
 
 export const useFetch = (url) => {
   const [pendingFetch, setPending] = useState(false);
@@ -54,3 +56,30 @@ export const useHandleLogInTestUser = (history) =>
     },
     [history]
   );
+
+export const useTestData = () => {
+  const makeWeek = () => {
+    const week = [];
+
+    const date = new Date();
+    while (week.length < 7) {
+      week.push(format(subDays(date, week.length), "yyyy-MM-dd"));
+    }
+    return week;
+  };
+  const week = makeWeek();
+  const mapedWeek = week.reduce((sum, day, i) => {
+    return { ...sum, [day]: days[i] };
+  }, {});
+  const weight = week.reduce((sum, day, i) => {
+    return { ...sum, [day]: restD.weight[i] };
+  }, {});
+
+  const testData = {
+    ...mapedWeek,
+    weight,
+    target: restD.target,
+    targetWeight: restD.targetWeight,
+  };
+  return testData;
+};

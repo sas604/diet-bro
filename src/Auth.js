@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import base from "./components/firebase";
 import { format } from "date-fns";
 import Loader from "react-loader-spinner";
+import { useTestData } from "./components/hooks";
 
 export const AuthContext = React.createContext();
 
@@ -10,10 +11,22 @@ export const AuthProvider = ({ children }) => {
   const [pending, setPending] = useState(true);
   const [currentUserData, setUserData] = useState({});
   const [date, setDate] = useState(format(new Date(), "yyyy-MM-dd"));
+
+  const testData = useTestData();
   base.auth().onAuthStateChanged((user) => {
     setCurrentUser(user);
     setPending(false);
   });
+
+  /// use test data for demo
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser.uid === "ByJmvpz9vOfdXvtl3Ma3lwDW3jo2") {
+        setUserData(testData);
+      }
+    }
+    // eslint-disable-next-line
+  }, [currentUser]);
 
   useEffect(() => {
     // database path
