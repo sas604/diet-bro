@@ -6,8 +6,8 @@ import DatePicker from "../components/DatePicker";
 import MealHistory from "./MealHistory";
 import "../css/home.scss";
 import { useState } from "react";
-import AnimatedNumber from "animated-number-react";
 import Loader from "react-loader-spinner";
+import { useSpring, animated } from "react-spring";
 
 export default function Home() {
   // get current user from the context
@@ -18,6 +18,7 @@ export default function Home() {
 
   // set curent date entry in the firebase
   const currentUserDate = currentUserData[date];
+  const props = useSpring({ number: callories, from: { number: 0 } });
 
   const progress = Math.round((callories / currentUserData.target) * 100);
   // handle entry delete from list
@@ -68,11 +69,9 @@ export default function Home() {
         )}
         <span className="calories">
           {callories && (
-            <AnimatedNumber
-              value={Math.round(callories)}
-              formatValue={(value) => Math.ceil(value)}
-              duration="300ms"
-            />
+            <animated.span>
+              {props.number.interpolate((x) => Math.floor(x))}
+            </animated.span>
           )}
           <strong>Kcal</strong>
         </span>

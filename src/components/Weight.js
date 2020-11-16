@@ -4,14 +4,18 @@ import { AuthContext } from "../Auth";
 import DatePicker from "./DatePicker";
 import { ACCOUNT } from "../constants/routes";
 import Loader from "react-loader-spinner";
-import AnimatedNumber from "animated-number-react";
 import "../css/weight.scss";
+import { useSpring, animated } from "react-spring";
 
 export default function Weight() {
   // get current user from context
   const { data, dateContext } = useContext(AuthContext);
   const [currentUserData, setUserData] = data;
   const [date] = dateContext;
+  const props = useSpring({
+    number: currentUserData.weight[date],
+    from: { number: 0 },
+  });
 
   if (!currentUserData.weight)
     return (
@@ -67,11 +71,9 @@ export default function Weight() {
           currentUserData.weight[date] ? (
             <>
               <span className="calories">
-                <AnimatedNumber
-                  value={currentUserData.weight[date]}
-                  formatValue={(value) => Math.ceil(value)}
-                  duration="300ms"
-                />
+                <animated.span>
+                  {props.number.interpolate((x) => Math.floor(x))}
+                </animated.span>
                 <strong> Lbs</strong>
               </span>
               <div className="progress-bar-wrapper">
