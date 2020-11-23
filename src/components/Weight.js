@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Auth";
 import DatePicker from "./DatePicker";
@@ -12,11 +12,16 @@ export default function Weight() {
   const { data, dateContext } = useContext(AuthContext);
   const [currentUserData, setUserData] = data;
   const [date] = dateContext;
+  const [animatedNumber, setAnimatedNumber] = useState(0);
   const props = useSpring({
-    number: currentUserData.weight[date],
+    number: animatedNumber,
     from: { number: 0 },
   });
-
+  useEffect(() => {
+    if (currentUserData.weight[date]) {
+      setAnimatedNumber(currentUserData.weight[date]);
+    }
+  }, [currentUserData.weight, date]);
   if (!currentUserData.weight)
     return (
       <Loader
