@@ -71,6 +71,7 @@ export default function Account() {
             .signOut()
             .then(
               setCurrentUser(null),
+              setUserData({}),
               setDate(format(new Date(), "yyyy-MM-dd"), setUserData({})),
               (error) => console.log(error)
             )
