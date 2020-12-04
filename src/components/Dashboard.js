@@ -6,6 +6,7 @@ import Navigation from "./Navigation";
 import Weight from "./Weight";
 import { StateProvider } from "./StateProvider";
 import Stats from "./Stats";
+import CaloriesDisplay from "./CaloriesDisplay";
 
 export default function Dashboard() {
   const path = "/dashboard";
@@ -14,7 +15,7 @@ export default function Dashboard() {
       <Switch>
         <Route exact path={path}>
           <DatePicker></DatePicker>
-          <p> it is home page </p>
+          <CaloriesDisplay />
           <Link to={`${path}/account`}> link </Link>
         </Route>
         <Route path={`${path}/stats`}>

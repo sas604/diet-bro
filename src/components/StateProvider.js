@@ -80,7 +80,9 @@ export const StateProvider = ({ children }) => {
         history: (snapshot.val() && snapshot.val()[state.date]) || {},
       });
     });
+    return () => firebase.off();
   }, [currentUser, state.date]);
+
   useEffect(() => {
     if (currentUser) {
       const firebase = base.database().ref(`users/${currentUser.uid}`);
