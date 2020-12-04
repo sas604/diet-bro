@@ -8,6 +8,7 @@ import SignUp from "./components/SignUp";
 import { AuthProvider } from "./Auth";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
+import { StateProvider } from "./components/StateProvider";
 
 function App() {
   return (

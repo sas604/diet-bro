@@ -5,30 +5,24 @@ import { getTime } from "date-fns";
 import FoodSearch from "./FoodSearch";
 import FoodModal from "./FoodModal";
 import ManualFoodEntry from "./ManualFoodEntry";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { TiArrowLeftThick } from "react-icons/ti";
 import "../css/addMeal.scss";
+import { StateContext } from "./StateProvider";
 
-export default function AddMeal({ history }) {
+export default function AddMeal() {
   const [foodItemId, setFoodItemId] = useState(null);
-  const { data, dateContext } = useContext(AuthContext);
-  const [openAddFood, setOpenAddFood] = useState(false);
-  const [currentDate] = dateContext;
-  const [currentUserData, setUserData] = data;
 
+  const [openAddFood, setOpenAddFood] = useState(false);
+
+  const { state, dispatch } = useContext(StateContext);
+  const history = useHistory();
   const getFoodItem = (e) => {
     setFoodItemId(e.target.id);
   };
   const addMeal = (food) => {
-    const stamp = getTime(new Date());
-    setUserData({
-      ...currentUserData,
-      [currentDate]: {
-        ...currentUserData[currentDate],
-        [stamp]: food,
-      },
-    });
-    history.push("/home");
+    dispatch({ type: "addMeal", food: food });
+    history.push("/dashboard");
   };
 
   const addManualFoodEntry = (food) => addMeal(food);

@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { StateContext } from "./StateProvider";
 
 export default function CaloriesDisplay() {
-  const { state } = useContext(StateContext);
+  const { state, dispatch } = useContext(StateContext);
   return (
     <div>
-      <p>{state.date}</p>
+      <p> you consumed </p>
     </div>
   );
 }

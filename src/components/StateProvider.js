@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, getTime } from "date-fns";
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 import { AuthContext } from "../Auth";
 import base from "./firebase";
@@ -7,90 +7,106 @@ const initialState = {
   date: format(new Date(), "yyyy-MM-dd"),
 
   data: {
-    targetEnergy: 2000,
+    targetEnergy: 2001,
     targetWeight: 0,
     weigtht: {},
   },
-  mealHistory: {
-    "2020-12-03": 5,
-  },
+  mealHistory: {},
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "setDate":
       return { ...state, date: action.date };
-
-    case "updateState":
+    case "test":
       return {
         ...state,
-        data: { ...action.payload },
+        data: { ...state.data, targetEnergy: state.data.targetEnergy++ },
       };
+
+    case "updateState":
+      console.log(`running update state with `, action.payload.mealHistory);
+      return {
+        ...state,
+        data: { ...action.payload.data },
+        mealHistory: action.payload.mealHistory
+          ? { [state.date]: { ...action.payload.mealHistory[state.date] } }
+          : {},
+      };
+
     case "setInitialData":
       return {
         ...initialState,
-        data: { ...initialState.data, name: action.name },
+        data: {
+          ...initialState.data,
+        }, // to prevent the load of empty state
       };
-    case "setHistory":
-      return { ...state, mealHistory: action.history };
+
+    case "addMeal":
+      const stamp = getTime(new Date());
+      return {
+        ...state,
+        mealHistory: {
+          ...state.mealHistory,
+          [state.date]: {
+            ...state.mealHistory[state.date],
+            [stamp]: action.food,
+          },
+        },
+      };
     default:
       return { ...initialState, data: { ...initialState.data } };
   }
 };
-const getDataFromFirebase = (data, user) => {};
 export const StateContext = createContext();
 
 export const StateProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { currentUser } = useContext(AuthContext);
-
   // load data from the firebase
   useEffect(() => {
     const firebase = base.database().ref("users");
     firebase.on("value", (snapshot) => {
       // check if there user is logged in
-      if (currentUser) {
+      if (!!currentUser) {
         // if logged dose he has data and update state
-        if (snapshot.val() || snapshot.val()[currentUser.uid]) {
+        if (!snapshot.val() || !snapshot.val()[currentUser.uid]) {
           // get user info
-          const data = snapshot.val()[currentUser.uid].data;
-          if (!data) {
-            dispatch({ type: "setInitialData", name: currentUser.displayName });
-          } else {
-            dispatch({ type: "updateState", payload: { ...data } });
-          }
+          console.log("initial");
+          base
+            .database()
+            .ref(`users/${currentUser.uid}`)
+            .set({
+              data: {
+                ...state.data,
+                name: currentUser.displayName,
+                id: currentUser.uid,
+              },
+            });
+          dispatch({
+            type: "setInitialData",
+          });
+        } else {
+          const data = snapshot.val()[currentUser.uid];
+          dispatch({ type: "updateState", payload: { ...data } });
         }
       }
     });
     // close conection to database on rerender
     return () => firebase.off();
-  }, [currentUser]);
-
-  // load meal history from fire base for selected date
-
-  useEffect(() => {
-    if (!currentUser) return;
-    const firebase = base
-      .database()
-      .ref(`users/${currentUser.uid}/mealHistory`);
-
-    firebase.on("value", (snapshot) => {
-      dispatch({
-        type: "setHistory",
-        history: (snapshot.val() && snapshot.val()[state.date]) || {},
-      });
-    });
-    return () => firebase.off();
   }, [currentUser, state.date]);
 
+  //  state data updater
   useEffect(() => {
-    if (currentUser) {
-      const firebase = base.database().ref(`users/${currentUser.uid}`);
-      firebase.update({
-        data: { ...state.data },
-        mealHistory: { ...state.mealHistory },
-      });
+    //if (!state.data.loaded) return;
+    const firebase = base.database().ref(`users/${currentUser.uid}`);
+    const updates = {};
+
+    updates[`/data`] = state.data;
+    if (state.mealHistory[state.date]) {
+      updates[`/mealHistory/${state.date}`] = state.mealHistory[state.date];
     }
+    firebase.update(updates);
   }, [state, currentUser]);
 
   return (
