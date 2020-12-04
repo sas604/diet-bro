@@ -1,32 +1,27 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import * as ROUTES from "../constants/routes";
-import { AuthContext } from "../Auth";
 import { ReactComponent as HomeSvg } from "../img/home-solid.svg";
 import { ReactComponent as WeightSvg } from "../img/weight-solid.svg";
 import { ReactComponent as GraphSvg } from "../img/chart-line-solid.svg";
 import { ReactComponent as CogSvg } from "../img/cog-solid.svg";
 import "../css/nav.scss";
 
-export default function Navigation() {
-  const { currentUser } = useContext(AuthContext);
-  if (!currentUser) return null;
-
+export default function Navigation({ path }) {
   return (
     <nav className="global-nav">
-      <NavLink to={ROUTES.HOME}>
+      <NavLink exact to={path} to={`${path}`}>
         <HomeSvg />
       </NavLink>
 
-      <NavLink to={ROUTES.WEIGHT}>
+      <NavLink to={`${path}/weight`}>
         <WeightSvg />
       </NavLink>
 
-      <NavLink to={ROUTES.STATS}>
+      <NavLink to={`${path}/stats`}>
         <GraphSvg />
       </NavLink>
 
-      <NavLink to={ROUTES.ACCOUNT}>
+      <NavLink to={`${path}/account`}>
         <CogSvg />
       </NavLink>
     </nav>

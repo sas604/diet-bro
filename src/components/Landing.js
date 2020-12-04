@@ -11,7 +11,7 @@ function Landing({ history }) {
   const { currentUser } = useContext(AuthContext);
   const logInWithTest = useHandleLogInTestUser(history);
   if (currentUser) {
-    return <Redirect to={"/home"} />;
+    return <Redirect to={"/dashboard"} />;
   }
 
   return (

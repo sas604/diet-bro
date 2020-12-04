@@ -63,7 +63,6 @@ export const AuthProvider = ({ children }) => {
   //     firebase.update(currentUserData);
   //   }
   // }, [currentUserData, currentUser]);
-  if (!currentUser) return null;
   return (
     <AuthContext.Provider
       value={{
