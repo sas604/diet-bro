@@ -1,6 +1,5 @@
 import React from "react";
 import { ReactComponent as Trash } from "../img/trash-solid.svg";
-import "../css/meal.scss";
 
 export default function Meal({ calories, name, id, onClick }) {
   return (

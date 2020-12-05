@@ -3,7 +3,6 @@ import { useFetch } from "./hooks";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import SearchResult from "./SearchResult";
-import "../css/foodSearch.scss";
 import { TiTimes } from "react-icons/ti";
 import { useRef } from "react";
 

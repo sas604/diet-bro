@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import { AuthContext } from "../Auth";
-
-import "../css/landing.scss";
 import { ReactComponent as UserSvg } from "../img/user-regular.svg";
 import { useHandleLogInTestUser } from "./hooks";
 

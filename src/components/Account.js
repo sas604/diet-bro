@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { AuthContext } from "../Auth";
 import base from "./firebase";
 import { format } from "date-fns";
-import "../css/settings.scss";
 
 export default function Account() {
   return (

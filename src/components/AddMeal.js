@@ -7,7 +7,6 @@ import FoodModal from "./FoodModal";
 import ManualFoodEntry from "./ManualFoodEntry";
 import { Link, useHistory } from "react-router-dom";
 import { TiArrowLeftThick } from "react-icons/ti";
-import "../css/addMeal.scss";
 import { StateContext } from "./StateProvider";
 
 export default function AddMeal() {

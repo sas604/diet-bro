@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import DatePicker from "../components/DatePicker";
 import MealHistory from "./MealHistory";
-import "../css/home.scss";
 import { useState } from "react";
 import Loader from "react-loader-spinner";
 import { useSpring, animated } from "react-spring";

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import base, { provider } from "./firebase";
 import { AuthContext } from "../Auth";
 import * as ROUTES from "../constants/routes";
-import "../css/sign.scss";
 import { useHandleLogInTestUser } from "./hooks";
 
 function SignUp({ history }) {

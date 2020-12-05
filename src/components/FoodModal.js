@@ -5,23 +5,29 @@ import Loader from "react-loader-spinner";
 import { useFetch } from "./hooks";
 import FocusTrap from "focus-trap-react";
 import { TiTimes } from "react-icons/ti";
-import "../css/modal.scss";
+
+const convertToOzAndRound = (gramms) => {
+  const total = gramms / 28.3495;
+  return Math.round(total * 10) / 10;
+};
 
 export default function FoodModal({ handleClick, foodId, returnData }) {
   const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208`;
   const [, data] = useFetch(url);
   const [foodNutrients, setFoodNutrients] = useState(null);
+  const [select, setSelect] = useState(true);
 
   useEffect(() => {
     if (data) {
+      const portions = data.foodPortions.filter(
+        (el) => el.portionDescription !== "Quantity not specified"
+      );
       setFoodNutrients({
         kcal: data.foodNutrients[0].amount,
 
-        portions: data.foodPortions.filter(
-          (el) => el.portionDescription !== "Quantity not specified"
-        ),
+        portions: portions,
         name: data.description,
-        portion: 100,
+        portion: portions[0].gramWeight,
       });
     }
   }, [data]);
@@ -44,33 +50,72 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
     <div className="modal-wrapper">
       <FocusTrap>
         <div className="modal">
-          <button className="close-btn" onClick={handleClick}>
+          <button
+            className="close-btn"
+            onClick={() => {
+              setFoodNutrients(null);
+              handleClick();
+            }}
+          >
             {" "}
             <TiTimes />
           </button>
           <h2 className="modal-heading">{foodNutrients.name}</h2>
-
-          <label className="modal-select">
-            Quantity
-            <select
-              onChange={(e) =>
-                setFoodNutrients({
-                  ...foodNutrients,
-                  portion: Math.round(parseInt(e.target.value)),
-                })
-              }
-              defaultValue="100"
-            >
-              <option key="100" value="100">
-                100g
-              </option>
-              {foodNutrients.portions.map((el) => (
-                <option key={el.id} value={el.gramWeight}>
-                  {el.portionDescription}
-                </option>
-              ))}
-            </select>
+          <p> please select portion or enter the exact weight</p>
+          <label>
+            <input
+              type="radio"
+              value="Portion"
+              name="input option"
+              checked={select}
+              onChange={() => setSelect(true)}
+            />{" "}
+            Select portion
           </label>
+          <label>
+            <input
+              type="radio"
+              value="Weight"
+              name="input option"
+              checked={!select}
+              onChange={() => setSelect(false)}
+            />{" "}
+            Enter Weight
+          </label>
+          {select ? (
+            <label className="modal-select">
+              Portion
+              <select
+                onChange={(e) =>
+                  setFoodNutrients({
+                    ...foodNutrients,
+                    portion: +e.target.value,
+                  })
+                }
+                defaultValue={foodNutrients.portion}
+              >
+                {foodNutrients.portions.map((el, i) => (
+                  <option key={el.id} value={el.gramWeight}>
+                    {el.portionDescription}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : (
+            <label>
+              Weight in OZ
+              <input
+                onChange={(e) =>
+                  setFoodNutrients({
+                    ...foodNutrients,
+                    portion: +e.target.value * 28,
+                  })
+                }
+                type="number"
+                defaultValue={convertToOzAndRound(foodNutrients.portion)}
+              />
+            </label>
+          )}
 
           <button
             className="btn bg-green"

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../Auth";
 import Meal from "./Meal";
-import "../css/mealHistory.scss";
 import { Link } from "react-router-dom";
 export default function MealHistory() {
   const { data, dateContext } = useContext(AuthContext);

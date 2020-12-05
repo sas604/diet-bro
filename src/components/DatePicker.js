@@ -1,13 +1,40 @@
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../Auth";
+import React, { useContext } from "react";
 import { parseISO, compareAsc, subDays, format, addDays } from "date-fns";
-import "../css/date-picker.scss";
 import { StateContext } from "./StateProvider";
+import CardStyles from "../styles/CardStyles";
+import styled from "styled-components";
+
+const PickerStyle = styled(CardStyles)`
+  display: flex;
+  justify-content: center;
+  :hover {
+    color: var(--purple);
+  }
+  .date-picker-btn {
+    touch-action: manipulation;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    font-size: 2rem;
+    line-height: 2rem;
+    cursor: pointer;
+    &:hover {
+      color: var(--purple);
+    }
+  }
+  input {
+    border: none;
+    line-height: 2rem;
+    margin: 0;
+    background: transparent;
+    font-weight: var(--bold);
+  }
+`;
 export default function DatePicker() {
   const { state, dispatch } = useContext(StateContext);
 
   return (
-    <div className="date-picker">
+    <PickerStyle>
       <button
         className="date-picker-btn"
         onClick={() => {
@@ -39,6 +66,6 @@ export default function DatePicker() {
       >
         <strong>&gt;</strong>
       </button>
-    </div>
+    </PickerStyle>
   );
 }

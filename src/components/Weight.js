@@ -4,7 +4,6 @@ import { AuthContext } from "../Auth";
 import DatePicker from "./DatePicker";
 import { ACCOUNT } from "../constants/routes";
 import Loader from "react-loader-spinner";
-import "../css/weight.scss";
 import { useSpring, animated } from "react-spring";
 
 export default function Weight() {
