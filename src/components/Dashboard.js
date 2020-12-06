@@ -10,7 +10,6 @@ import CaloriesDisplay from "./CaloriesDisplay";
 import { AuthContext } from "../Auth";
 import AddMeal from "./AddMeal";
 import styled from "styled-components";
-import CardStyles from "../styles/CardStyles";
 
 const DashStyles = styled.div`
   min-height: 99.7vh;
@@ -40,7 +39,6 @@ const DashStyles = styled.div`
 export default function Dashboard() {
   const path = "/dashboard";
   const { currentUser } = useContext(AuthContext);
-
   return (
     <DashStyles className="dashboard">
       <StateProvider>
@@ -48,10 +46,8 @@ export default function Dashboard() {
           <Route exact path={path}>
             <h2 className="head">Welcome {currentUser.displayName}</h2>
             <DatePicker />
-            <CardStyles className="display">
-              <CaloriesDisplay />
-              <Link to={`${path}/addmeal`}>Add meal </Link>
-            </CardStyles>
+
+            <CaloriesDisplay />
           </Route>
           <Route path={`${path}/addmeal`}>
             <AddMeal />

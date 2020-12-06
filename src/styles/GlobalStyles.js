@@ -42,5 +42,7 @@ html{
     border-radius: 6px;
     border: 3px solid var(--white);
   }
-
+ :any-link{
+   text-decoration:none;
+ }
 `;

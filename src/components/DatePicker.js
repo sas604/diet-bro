@@ -15,7 +15,8 @@ const PickerStyle = styled(CardStyles)`
     margin: 0;
     border: 0;
     background: transparent;
-    font-size: 2rem;
+
+    font-size: clamp(1rem 5vw 2rem);
     line-height: 2rem;
     cursor: pointer;
     &:hover {

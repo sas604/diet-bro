@@ -5,7 +5,7 @@ import base from "./firebase";
 
 const initialState = {
   date: format(new Date(), "yyyy-MM-dd"),
-
+  loading: true,
   data: {
     targetEnergy: 2001,
     targetWeight: 0,
@@ -26,8 +26,10 @@ const reducer = (state, action) => {
 
     case "updateState":
       console.log(`running update state with `, action.payload.mealHistory);
+
       return {
         ...state,
+        loading: false,
         data: { ...action.payload.data },
         mealHistory: action.payload.mealHistory
           ? { [state.date]: { ...action.payload.mealHistory[state.date] } }
@@ -37,6 +39,7 @@ const reducer = (state, action) => {
     case "setInitialData":
       return {
         ...initialState,
+        loading: false,
         data: {
           ...initialState.data,
         }, // to prevent the load of empty state
