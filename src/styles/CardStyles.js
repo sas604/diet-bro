@@ -2,13 +2,19 @@ import styled from "styled-components";
 
 const CardStyles = styled.div`
   border-radius: 5px;
-  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+  box-shadow: var(--light-shadow);
 `;
 
 export const DisplayStyles = styled.div`
   border-radius: 5px;
-  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.2);
-  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: var(--light-shadow);
+  padding: 2rem 1.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
@@ -18,7 +24,7 @@ export const DisplayStyles = styled.div`
     display: flex;
     flex-direction: column;
     font-weight: 400;
-    font-size: clamp(0.5rem, 2vw, 20px);
+    font-size: clamp(1rem, 2vw, 20px);
 
     grid-row: 1;
     grid-column: 1/-1;
@@ -27,7 +33,7 @@ export const DisplayStyles = styled.div`
   }
   .number {
     font-weight: 800;
-    font-size: clamp(1.5rem, 4vw, 40px);
+    font-size: clamp(2rem, 4vw, 40px);
     color: var(--dark-purple);
   }
   p {
@@ -36,8 +42,8 @@ export const DisplayStyles = styled.div`
   }
 
   .number-small {
-    font-weight: 800;
-    font-size: clamp(1rem, 3vw, 3rem);
+    font-weight: 600;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
   }
   a {
     grid-column: span 2;
@@ -45,14 +51,16 @@ export const DisplayStyles = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    width: 70%;
     font-weight: 600;
     text-transform: uppercase;
     border-radius: 5px;
     background-color: var(--green);
     color: var(--white);
     font-size: 1.3rem;
+    font-size: clamp(1rem, 3vw, 1.5rem);
     margin-top: 0.5rem;
+    padding: 0.5em;
+    align-self: center;
     &:hover,
     &:focus {
       transform: scale(1.05);

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Account from "./Account";
 import DatePicker from "./DatePicker";
 import Navigation from "./Navigation";
@@ -10,19 +10,21 @@ import CaloriesDisplay from "./CaloriesDisplay";
 import { AuthContext } from "../Auth";
 import AddMeal from "./AddMeal";
 import styled from "styled-components";
+import MealHistory from "./MealHistory";
 
 const DashStyles = styled.div`
   min-height: 99.7vh;
   display: grid;
-  gap: 2rem;
-  grid-template-columns: 50px repeat(2, minmax(200px, 400px));
-  grid-template-rows: 4rem 3rem auto;
+  gap: 1rem 2rem;
+  grid-template-columns: 50px repeat(2, minmax(300px, 450px));
+  grid-template-rows: 3rem 3rem auto auto 2rem;
   grid-template-areas:
     "nav header header"
     "nav  date  . "
     "nav  display  history"
     "nav   display history"
-    "nav    .      history";
+    "nav . .";
+
   nav {
     grid-area: nav;
   }
@@ -33,6 +35,17 @@ const DashStyles = styled.div`
   }
   .display {
     grid-area: display;
+  }
+
+  .history {
+    grid-area: history;
+  }
+  @media (max-width: 830px) {
+    > * {
+      margin-top: 1rem;
+    }
+    display: block;
+    padding: 2rem 1rem;
   }
 `;
 
@@ -46,8 +59,8 @@ export default function Dashboard() {
           <Route exact path={path}>
             <h2 className="head">Welcome {currentUser.displayName}</h2>
             <DatePicker />
-
             <CaloriesDisplay />
+            <MealHistory />
           </Route>
           <Route path={`${path}/addmeal`}>
             <AddMeal />

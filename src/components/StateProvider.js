@@ -57,6 +57,14 @@ const reducer = (state, action) => {
           },
         },
       };
+    case "del":
+      return {
+        ...state,
+        mealHistory: {
+          ...state.mealHistory,
+          [state.date]: { ...action.state },
+        },
+      };
     default:
       return { ...initialState, data: { ...initialState.data } };
   }

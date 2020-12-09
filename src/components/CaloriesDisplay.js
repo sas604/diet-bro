@@ -10,6 +10,7 @@ const StyledPath = styled.svg`
   stroke-miterlimit: 10;
   grid-column: 1/-1;
   grid-row: 1;
+  max-width: 325px;
   color: var(--dark-purple);
   filter: drop-shadow(0px 2px 2px rgba(50, 50, 0, 0.3));
   .cls-2 {
@@ -18,7 +19,7 @@ const StyledPath = styled.svg`
   }
   .cls-1 {
     --progress: 220;
-    --progress: ${(props) => props.progress};
+    --progress: ${(props) => (props.progress <= 0 ? 0 : props.progress)};
     stroke: var(--dark-purple);
     stroke-width: 6px;
     stroke-dasharray: 220;
@@ -59,11 +60,11 @@ export default function CaloriesDisplay() {
       >
         <g id="Layer_1-2" data-name="Layer 1">
           <path
-            class="cls-2"
+            className="cls-2"
             d="M26,85A43,43,0,1,1,94,50c0,14.67-8.78,28.24-20,36"
           />
           <path
-            class="cls-1"
+            className="cls-1"
             d="M26,85A43,43,0,1,1,94,50c0,14.67-8.78,28.24-20,36"
           />
         </g>

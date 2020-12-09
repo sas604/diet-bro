@@ -20,7 +20,8 @@ export default function AddMeal() {
     setFoodItemId(e.target.id);
   };
   const addMeal = (food) => {
-    const energy = food.portion && (food.kcal / 100) * food.portion;
+    const energy =
+      Math.round(food.portion && (food.kcal / 100) * food.portion * 10) / 10;
     dispatch({
       type: "addMeal",
       food: { name: food.name, energy: energy || food.kcal },
