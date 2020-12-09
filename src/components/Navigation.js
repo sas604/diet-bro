@@ -1,10 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { ReactComponent as HomeSvg } from "../img/home-solid.svg";
-import { ReactComponent as WeightSvg } from "../img/weight-solid.svg";
-import { ReactComponent as GraphSvg } from "../img/chart-line-solid.svg";
-import { ReactComponent as CogSvg } from "../img/cog-solid.svg";
-import { GoSignOut } from "react-icons/go";
+import { GoSignOut, GoGear, GoGraph, GoHome } from "react-icons/go";
+import { FaWeight } from "react-icons/fa";
 import styled from "styled-components";
 import base from "./firebase";
 
@@ -17,10 +14,16 @@ const NavStyles = styled.nav`
   background-color: var(--gray);
 
   a {
+    font-size: 30px;
     color: #737179;
     display: block;
     margin-top: 1rem;
+    &:hover {
+      transform: scale(1.1);
+      color: var(--purple);
+    }
   }
+
   a.active {
     color: var(--dark-purple);
   }
@@ -39,6 +42,17 @@ const NavStyles = styled.nav`
     font-size: 30px;
     text-align: center;
   }
+  @media (max-width: 830px) {
+    flex-direction: row;
+    align-items: center;
+    a,
+    a:first-of-type,
+    button {
+      margin: 0;
+    }
+    padding: 0.7rem 0;
+    justify-content: space-evenly;
+  }
 `;
 
 export default function Navigation({ path }) {
@@ -46,19 +60,19 @@ export default function Navigation({ path }) {
     <>
       <NavStyles className="global-nav">
         <NavLink exact to={path}>
-          <HomeSvg />
+          <GoHome />
         </NavLink>
 
         <NavLink to={`${path}/weight`}>
-          <WeightSvg />
+          <FaWeight />
         </NavLink>
 
         <NavLink to={`${path}/stats`}>
-          <GraphSvg />
+          <GoGraph />
         </NavLink>
 
         <NavLink to={`${path}/account`}>
-          <CogSvg />
+          <GoGear />
         </NavLink>
         <button type="button" onClick={() => base.auth().signOut()}>
           <GoSignOut />

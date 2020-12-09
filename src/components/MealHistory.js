@@ -55,17 +55,15 @@ const MealHistoryStyles = styled(CardStyles)`
   li + li {
     border-top: 3px solid var(--gray);
   }
-
+  .icon {
+    margin-right: 1rem;
+  }
   p + p {
     font-size: 1.3rem;
     color: var(--dark-purple);
-    min-width: 8ch;
   }
   .number {
     font-size: 1.2em;
-  }
-  .icon {
-    margin-right: 1rem;
   }
   button {
     margin-left: auto;

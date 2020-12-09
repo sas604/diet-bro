@@ -14,6 +14,7 @@ import MealHistory from "./MealHistory";
 
 const DashStyles = styled.div`
   min-height: 99.7vh;
+  position: relative;
   display: grid;
   gap: 1rem 2rem;
   grid-template-columns: 50px repeat(2, minmax(300px, 450px));
@@ -46,6 +47,12 @@ const DashStyles = styled.div`
     }
     display: block;
     padding: 2rem 1rem;
+    nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+    }
   }
 `;
 
