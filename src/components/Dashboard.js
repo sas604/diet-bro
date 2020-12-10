@@ -72,6 +72,11 @@ export default function Dashboard() {
           <Route path={`${path}/addmeal`}>
             <AddMeal />
           </Route>
+          <Route path={`${path}/weight`}>
+            <h2 className="head">Weight screen </h2>
+            <DatePicker />
+            <Weight />
+          </Route>
           <Route path={`${path}/stats`}>
             <Stats />
           </Route>

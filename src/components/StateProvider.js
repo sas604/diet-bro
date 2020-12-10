@@ -9,30 +9,27 @@ const initialState = {
   data: {
     targetEnergy: 2001,
     targetWeight: 0,
-    weigtht: {},
   },
   mealHistory: {},
+  weight: {},
 };
 
 const reducer = (state, action) => {
+  const stamp = getTime(new Date());
   switch (action.type) {
     case "setDate":
       return { ...state, date: action.date };
-    case "test":
-      return {
-        ...state,
-        data: { ...state.data, targetEnergy: state.data.targetEnergy++ },
-      };
 
     case "updateState":
-      console.log(`running update state with `, action.payload.mealHistory);
-
       return {
         ...state,
         loading: false,
         data: { ...action.payload.data },
         mealHistory: action.payload.mealHistory
           ? { [state.date]: { ...action.payload.mealHistory[state.date] } }
+          : {},
+        weight: action.payload.weight
+          ? { [state.date]: { ...action.payload.weight[state.date] } }
           : {},
       };
 
@@ -46,7 +43,6 @@ const reducer = (state, action) => {
       };
 
     case "addMeal":
-      const stamp = getTime(new Date());
       return {
         ...state,
         mealHistory: {
@@ -63,6 +59,15 @@ const reducer = (state, action) => {
         mealHistory: {
           ...state.mealHistory,
           [state.date]: { ...action.state },
+        },
+      };
+
+    case "setWeight":
+      return {
+        ...state,
+        weight: {
+          ...state.weight,
+          [state.date]: { ...state.weight[state.date], [stamp]: action.weight },
         },
       };
     default:
@@ -107,13 +112,16 @@ export const StateProvider = ({ children }) => {
     return () => firebase.off();
   }, [currentUser, state.date]);
 
-  //  state data updater
+  //  firebase  data updater
   useEffect(() => {
     //if (!state.data.loaded) return;
     const firebase = base.database().ref(`users/${currentUser.uid}`);
     const updates = {};
 
     updates[`/data`] = state.data;
+    if (state.weight[state.date]) {
+      updates[`/weight/${state.date}`] = state.weight[state.date];
+    }
     if (state.mealHistory[state.date]) {
       updates[`/mealHistory/${state.date}`] = state.mealHistory[state.date];
     }

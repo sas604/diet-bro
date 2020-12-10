@@ -1,7 +1,5 @@
 import React, { useState, useContext } from "react";
 
-import { AuthContext } from "../Auth";
-import { getTime } from "date-fns";
 import FoodSearch from "./FoodSearch";
 import FoodModal from "./FoodModal";
 import ManualFoodEntry from "./ManualFoodEntry";
@@ -14,7 +12,7 @@ export default function AddMeal() {
 
   const [openAddFood, setOpenAddFood] = useState(false);
 
-  const { state, dispatch } = useContext(StateContext);
+  const { dispatch } = useContext(StateContext);
   const history = useHistory();
   const getFoodItem = (e) => {
     setFoodItemId(e.target.id);
