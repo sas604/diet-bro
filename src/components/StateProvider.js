@@ -59,6 +59,13 @@ const reducer = (state, action) => {
           [state.date]: { ...action.state },
         },
       };
+    case "delWeight":
+      return {
+        ...state,
+        weight: {
+          ...action.weight,
+        },
+      };
 
     case "setWeight":
       return {

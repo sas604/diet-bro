@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
 import Account from "./Account";
 import DatePicker from "./DatePicker";
 import Navigation from "./Navigation";
@@ -13,12 +13,16 @@ import styled from "styled-components";
 import MealHistory from "./MealHistory";
 import WeightDisplay from "./WeightDisplay";
 import WeightHistory from "./WeightHistory";
+import { TiArrowLeftThick } from "react-icons/ti";
+import ManualFoodEntry from "./ManualFoodEntry";
 
 const DashStyles = styled.div`
   min-height: 99.7vh;
   position: relative;
   display: grid;
   gap: 1rem 2rem;
+  padding-right: 1rem;
+
   h2 {
     margin-top: 2rem;
   }
@@ -34,6 +38,7 @@ const DashStyles = styled.div`
   nav {
     grid-area: nav;
   }
+
   .head {
     grid-area: header;
     margin: 0;
@@ -45,6 +50,9 @@ const DashStyles = styled.div`
 
   .history {
     grid-area: history;
+    @media (max-width: 700px) {
+      margin-bottom: 3rem;
+    }
   }
   @media (max-width: 700px) {
     > * {
@@ -76,6 +84,9 @@ export default function Dashboard() {
             <MealHistory />
           </Route>
           <Route path={`${path}/addmeal`}>
+            <Link className="head" to={"/"}>
+              <TiArrowLeftThick /> Back to home
+            </Link>
             <AddMeal />
           </Route>
           <Route path={`${path}/weight`}>

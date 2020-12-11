@@ -3,9 +3,13 @@ import React, { useState, useContext } from "react";
 import FoodSearch from "./FoodSearch";
 import FoodModal from "./FoodModal";
 import ManualFoodEntry from "./ManualFoodEntry";
-import { Link, useHistory } from "react-router-dom";
-import { TiArrowLeftThick } from "react-icons/ti";
+import { useHistory } from "react-router-dom";
+
 import { StateContext } from "./StateProvider";
+import styled from "styled-components";
+import CardStyles from "../styles/CardStyles";
+
+const AddFoodStyles = styled(CardStyles)``;
 
 export default function AddMeal() {
   const [foodItemId, setFoodItemId] = useState(null);
@@ -34,14 +38,6 @@ export default function AddMeal() {
     addMeal(data);
   };
 
-  if (openAddFood)
-    return (
-      <ManualFoodEntry
-        handleSubmit={addManualFoodEntry}
-        handleClick={() => setOpenAddFood(false)}
-      />
-    );
-
   return (
     <>
       {foodItemId && (
@@ -51,10 +47,7 @@ export default function AddMeal() {
           foodId={foodItemId}
         />
       )}
-      <div className="wrapper bg-pattern">
-        <Link className="back-link" to={"/"}>
-          <TiArrowLeftThick /> Back to home
-        </Link>
+      <AddFoodStyles className="display">
         <FoodSearch handleClick={getFoodItem} />
         <span className="or">or</span>
         <button
@@ -63,7 +56,11 @@ export default function AddMeal() {
         >
           Add Food Manually
         </button>
-      </div>
+        <ManualFoodEntry
+          handleSubmit={addManualFoodEntry}
+          handleClick={() => setOpenAddFood(false)}
+        />
+      </AddFoodStyles>
     </>
   );
 }

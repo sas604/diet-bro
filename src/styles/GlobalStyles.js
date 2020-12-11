@@ -39,7 +39,7 @@ html {
   }
   html, ul {
     scrollbar-width: thin;
-    scrollbar-color: var(--purple) var(--white);
+    scrollbar-color: var(--purple) ;
   }
   body::-webkit-scrollbar-track, ul::-webkit-scrollbar-track {
     background: var(--white);
