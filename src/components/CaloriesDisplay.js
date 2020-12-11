@@ -10,7 +10,7 @@ const StyledPath = styled.svg`
   stroke-miterlimit: 10;
   grid-column: 1/-1;
   grid-row: 1;
-  max-width: 325px;
+  max-width: 250px;
   color: var(--dark-purple);
   filter: drop-shadow(0px 2px 2px rgba(50, 50, 0, 0.3));
   .cls-2 {

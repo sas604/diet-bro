@@ -11,14 +11,19 @@ import { AuthContext } from "../Auth";
 import AddMeal from "./AddMeal";
 import styled from "styled-components";
 import MealHistory from "./MealHistory";
+import WeightDisplay from "./WeightDisplay";
+import WeightHistory from "./WeightHistory";
 
 const DashStyles = styled.div`
   min-height: 99.7vh;
   position: relative;
   display: grid;
   gap: 1rem 2rem;
+  h2 {
+    margin-top: 2rem;
+  }
   grid-template-columns: 50px repeat(2, minmax(300px, 450px));
-  grid-template-rows: 3rem 3rem auto auto 2rem;
+  grid-template-rows: auto 2.5rem minmax(50px, 200px) minmax(50px, 180px) 1rem;
   grid-template-areas:
     "nav header header"
     "nav  date  . "
@@ -41,7 +46,7 @@ const DashStyles = styled.div`
   .history {
     grid-area: history;
   }
-  @media (max-width: 830px) {
+  @media (max-width: 700px) {
     > * {
       margin-top: 1rem;
     }
@@ -59,6 +64,7 @@ const DashStyles = styled.div`
 export default function Dashboard() {
   const path = "/dashboard";
   const { currentUser } = useContext(AuthContext);
+
   return (
     <DashStyles className="dashboard">
       <StateProvider>
@@ -75,7 +81,8 @@ export default function Dashboard() {
           <Route path={`${path}/weight`}>
             <h2 className="head">Weight screen </h2>
             <DatePicker />
-            <Weight />
+            <WeightDisplay />
+            <WeightHistory />
           </Route>
           <Route path={`${path}/stats`}>
             <Stats />

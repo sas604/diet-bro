@@ -28,9 +28,7 @@ const reducer = (state, action) => {
         mealHistory: action.payload.mealHistory
           ? { [state.date]: { ...action.payload.mealHistory[state.date] } }
           : {},
-        weight: action.payload.weight
-          ? { [state.date]: { ...action.payload.weight[state.date] } }
-          : {},
+        weight: { ...action.payload.weight } || {},
       };
 
     case "setInitialData":
@@ -66,10 +64,10 @@ const reducer = (state, action) => {
       return {
         ...state,
         weight: {
-          ...state.weight,
-          [state.date]: { ...state.weight[state.date], [stamp]: action.weight },
+          [state.date]: action.weight,
         },
       };
+
     default:
       return { ...initialState, data: { ...initialState.data } };
   }

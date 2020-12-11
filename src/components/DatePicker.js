@@ -5,6 +5,7 @@ import CardStyles from "../styles/CardStyles";
 import styled from "styled-components";
 
 const PickerStyle = styled(CardStyles)`
+  padding: 0;
   display: flex;
   justify-content: center;
   :hover {

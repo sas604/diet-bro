@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
   // const testData = useTestData();
 
-  base.auth().onAuthStateChanged((user) => {
+  const unsubcribe = base.auth().onAuthStateChanged((user) => {
     setCurrentUser(user);
   });
 
@@ -68,6 +68,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         currentUser,
         setCurrentUser,
+        unsubcribe,
       }}
     >
       {children}

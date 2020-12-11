@@ -1,20 +1,19 @@
 import styled from "styled-components";
 
 const CardStyles = styled.div`
+  padding: 2rem 1.5rem;
   border-radius: 5px;
   max-width: 500px;
   margin: 0 auto;
   width: 100%;
   box-shadow: var(--light-shadow);
+  @media (max-width: 700px) {
+    padding: 1rem;
+  }
 `;
 
-export const DisplayStyles = styled.div`
-  border-radius: 5px;
-  max-width: 500px;
-  width: 100%;
-  margin: 0 auto;
+export const DisplayStyles = styled(CardStyles)`
   box-shadow: var(--light-shadow);
-  padding: 2rem 1.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
@@ -24,7 +23,7 @@ export const DisplayStyles = styled.div`
     display: flex;
     flex-direction: column;
     font-weight: 400;
-    font-size: clamp(1rem, 2vw, 20px);
+    font-size: clamp(1rem, 2vw, 18px);
 
     grid-row: 1;
     grid-column: 1/-1;
@@ -57,7 +56,7 @@ export const DisplayStyles = styled.div`
     background-color: var(--green);
     color: var(--white);
     font-size: 1.3rem;
-    font-size: clamp(1rem, 3vw, 1.5rem);
+    font-size: clamp(1rem, 3vw, 1.3rem);
     margin-top: 0.5rem;
     padding: 0.5em;
     align-self: center;
