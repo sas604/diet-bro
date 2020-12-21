@@ -86,31 +86,27 @@ export const StateProvider = ({ children }) => {
   const { currentUser } = useContext(AuthContext);
   // load data from the firebase
   useEffect(() => {
-    const firebase = base.database().ref("users");
+    const firebase = base.database().ref(`users/${currentUser.uid}`);
     firebase.on("value", (snapshot) => {
       // check if there user is logged in
-      if (!!currentUser) {
-        // if logged dose he has data and update state
-        if (!snapshot.val() || !snapshot.val()[currentUser.uid]) {
-          // get user info
-          console.log("initial");
-          base
-            .database()
-            .ref(`users/${currentUser.uid}`)
-            .set({
-              data: {
-                ...state.data,
-                name: currentUser.displayName,
-                id: currentUser.uid,
-              },
-            });
-          dispatch({
-            type: "setInitialData",
-          });
-        } else {
-          const data = snapshot.val()[currentUser.uid];
-          dispatch({ type: "updateState", payload: { ...data } });
-        }
+
+      console.log(!snapshot.val());
+      if (!snapshot.val()) {
+        // get user info
+        console.log("initial");
+        firebase.set({
+          data: {
+            ...state.data,
+            name: currentUser.displayName,
+            id: currentUser.uid,
+          },
+        });
+        dispatch({
+          type: "setInitialData",
+        });
+      } else {
+        const data = snapshot.val();
+        dispatch({ type: "updateState", payload: { ...data } });
       }
     });
     // close conection to database on rerender

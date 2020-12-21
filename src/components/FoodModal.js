@@ -5,7 +5,49 @@ import Loader from "react-loader-spinner";
 import { useFetch } from "./hooks";
 import FocusTrap from "focus-trap-react";
 import { TiTimes } from "react-icons/ti";
+import styled from "styled-components";
+import CardStyles, { ButtonStyle, TabsStyle } from "../styles/CardStyles";
+import ControledInput from "./ControledInput";
 
+const ModalWrapperStyles = styled.div`
+  top: 0;
+  left: 0;
+  z-index: 5;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #000000db;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const ModalStyles = styled(CardStyles)`
+  position: relative;
+  label {
+    display: block;
+  }
+  .close-btn {
+    position: absolute;
+    top: 6px;
+    right: 0;
+    line-height: 1.3;
+    font-size: 1.5rem;
+    appearance: none;
+    border: none;
+    background: transparent;
+    &:hover {
+      color: var(--red);
+    }
+  }
+  display: flex;
+  flex-direction: column;
+
+  button {
+    margin-top: 1rem;
+    max-width: 200px;
+    align-self: center;
+  }
+`;
 const convertToOzAndRound = (gramms) => {
   const total = gramms / 28.3495;
   return Math.round(total * 10) / 10;
@@ -34,22 +76,23 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
 
   if (!foodNutrients)
     return (
-      <div className="modal-wrapper">
-        <div className="modal">
+      <ModalWrapperStyles className="modal-wrapper">
+        <ModalStyles className="modal">
           <Loader
             type="Puff"
             color="#00BFFF"
             height={100}
             width={100}
-            timeout={3000} //3 secs
+            timeout={5000}
           />
-        </div>
-      </div>
+          <p>Sometimes it can take a vile hold on </p>
+        </ModalStyles>
+      </ModalWrapperStyles>
     );
   return (
-    <div className="modal-wrapper">
+    <ModalWrapperStyles className="modal-wrapper">
       <FocusTrap>
-        <div className="modal">
+        <ModalStyles className="modal">
           <button
             className="close-btn"
             onClick={() => {
@@ -60,32 +103,35 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             {" "}
             <TiTimes />
           </button>
-          <h2 className="modal-heading">{foodNutrients.name}</h2>
-          <p> please select portion or enter the exact weight</p>
-          <label>
+          <h3 className="modal-heading">{foodNutrients.name}</h3>
+          <TabsStyle>
             <input
+              id="portion"
               type="radio"
               value="Portion"
-              name="input option"
+              name="measure option"
               checked={select}
               onChange={() => setSelect(true)}
-            />{" "}
-            Select portion
-          </label>
-          <label>
+            />
+            <label htmlFor="portion">Select portion</label>
+
             <input
+              id="weight"
               type="radio"
               value="Weight"
-              name="input option"
-              checked={!select}
+              name="measure option"
               onChange={() => setSelect(false)}
-            />{" "}
-            Enter Weight
-          </label>
+            />
+            <label htmlFor="weight">Enter Exact Weight</label>
+          </TabsStyle>
           {select ? (
-            <label className="modal-select">
-              Portion
+            <>
+              <label htmlFor="portion-select" className="modal-select">
+                Portion
+              </label>
               <select
+                name="portion-select"
+                id="portion-select"
                 onChange={(e) =>
                   setFoodNutrients({
                     ...foodNutrients,
@@ -100,24 +146,22 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
                   </option>
                 ))}
               </select>
-            </label>
+            </>
           ) : (
-            <label>
-              Weight in OZ
-              <input
-                onChange={(e) =>
-                  setFoodNutrients({
-                    ...foodNutrients,
-                    portion: +e.target.value * 28,
-                  })
-                }
-                type="number"
-                defaultValue={convertToOzAndRound(foodNutrients.portion)}
-              />
-            </label>
+            <ControledInput
+              label={"weight in OZ"}
+              type={"number"}
+              suffix={"OZ"}
+              handeler={(e) =>
+                setFoodNutrients({
+                  ...foodNutrients,
+                  portion: +e.target.value * 28,
+                })
+              }
+            />
           )}
 
-          <button
+          <ButtonStyle
             className="btn bg-green"
             tabIndex="1"
             onClick={() => {
@@ -125,14 +169,14 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
               handleClick();
             }}
           >
-            <p className="modal-calories-dislpay">
+            <span className="modal-calories-dislpay">
               Add{" "}
               {Math.round(foodNutrients.kcal * (foodNutrients.portion / 100))}
               Kcal
-            </p>
-          </button>
-        </div>
+            </span>
+          </ButtonStyle>
+        </ModalStyles>
       </FocusTrap>
-    </div>
+    </ModalWrapperStyles>
   );
 }

@@ -1,6 +1,23 @@
 import styled from "styled-components";
 
+export const ButtonStyle = styled.button`
+  border-radius: 3px;
+  border: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: var(--purple);
+  color: var(--white);
+  padding: 0.5em;
+  cursor: pointer;
+  &:hover,
+  &:focus {
+    transform: scale(1.05);
+    background-color: var(--dark-purple);
+  }
+`;
+
 const CardStyles = styled.div`
+  background: var(--white);
   padding: 2rem 1.5rem;
   border-radius: 5px;
   max-width: 500px;
@@ -52,7 +69,7 @@ export const DisplayStyles = styled(CardStyles)`
     align-items: center;
     font-weight: 600;
     text-transform: uppercase;
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: var(--green);
     color: var(--white);
     font-size: 1.3rem;
@@ -68,6 +85,32 @@ export const DisplayStyles = styled(CardStyles)`
   }
   .icon {
     margin-right: 0.5rem;
+  }
+`;
+
+export const TabsStyle = styled.div`
+  display: flex;
+  background: var(--gray);
+
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  [type="radio"] {
+    display: none;
+  }
+
+  label {
+    text-align: center;
+    flex: 1;
+    cursor: pointer;
+    padding: 0.7em;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  [type="radio"]:checked + label {
+    background: var(--purple);
+    border-bottom: 1px solid white;
+    color: var(--white);
+    z-index: 2;
   }
 `;
 

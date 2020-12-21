@@ -3,7 +3,7 @@ import { StateContext } from "./StateProvider";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { DisplayStyles } from "../styles/CardStyles";
-import { GoPlus } from "react-icons/go";
+import { FaPlus } from "react-icons/fa";
 const StyledPath = styled.svg`
   fill: none;
   stroke-linecap: round;
@@ -91,7 +91,7 @@ export default function CaloriesDisplay() {
       </span>
       <Link to={`dashboard/addmeal`}>
         {" "}
-        <GoPlus className="icon" />
+        <FaPlus className="icon" />
         Add meal{" "}
       </Link>
     </DisplayStyles>

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
+import ControledInput from "./ControledInput";
 import { StateContext } from "./StateProvider";
 
 const AddWeightStyle = styled.div`
@@ -19,49 +20,6 @@ const AddWeightStyle = styled.div`
     font-weight: 600;
     flex: 1;
     margin-left: 1rem;
-  }
-`;
-
-const FieldStyles = styled.div`
-  position: relative;
-  display: flex;
-  width: 70%;
-  margin: 0 auto;
-
-  input {
-    text-indent: 10px;
-    font-size: 1.4rem;
-    line-height: 2rem;
-    padding: 0.5rem 0;
-    border: none;
-    flex: 1;
-    min-width: 0;
-    border-radius: 3px;
-    border: 1px solid var(--dark-purple);
-  }
-  .suffix {
-    position: absolute;
-    right: 18px;
-    top: 16px;
-  }
-  label {
-    padding: 0.2em;
-    color: var(--blue);
-    position: absolute;
-    left: 10px;
-    top: -10px;
-    transition: 0.1s ease-in;
-    background-color: white;
-  }
-
-  .empty {
-    left: 10px;
-    top: 14px;
-  }
-
-  input:focus + p + label {
-    top: -10px;
-    transform: scale(0.9);
   }
 `;
 
@@ -92,21 +50,14 @@ export default function Weight() {
   return (
     <AddWeightStyle>
       <form onSubmit={addWeightEntry}>
-        <FieldStyles>
-          <input
-            id="weight"
-            type="number"
-            name="weight"
-            required
+        {
+          <ControledInput
+            handeler={handleInput}
+            suffix="Lbs"
             value={weight}
-            max={1000}
-            onChange={(e) => handleInput(e)}
+            label="weight"
           />
-          <p className={`suffix`}>Lbs</p>
-          <label className={weight ? null : "empty"} htmlFor="weight">
-            Weight
-          </label>
-        </FieldStyles>
+        }
 
         <button type="submit" className="btn bg-green">
           Add{" "}

@@ -15,6 +15,7 @@ import WeightDisplay from "./WeightDisplay";
 import WeightHistory from "./WeightHistory";
 import { TiArrowLeftThick } from "react-icons/ti";
 import ManualFoodEntry from "./ManualFoodEntry";
+import SearchResult from "./SearchResult";
 
 const DashStyles = styled.div`
   min-height: 99.7vh;
@@ -47,7 +48,10 @@ const DashStyles = styled.div`
   .display {
     grid-area: display;
   }
-
+  .search {
+    grid-row: span 3;
+    grid-column: span 2;
+  }
   .history {
     grid-area: history;
     @media (max-width: 700px) {

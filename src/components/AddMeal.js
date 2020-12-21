@@ -8,19 +8,32 @@ import { useHistory } from "react-router-dom";
 import { StateContext } from "./StateProvider";
 import styled from "styled-components";
 import CardStyles from "../styles/CardStyles";
+import { TabsStyle } from "../styles/CardStyles";
 
-const AddFoodStyles = styled(CardStyles)``;
+const AddFoodStyles = styled(CardStyles)`
+  max-width: 600px;
+  margin: 0;
+  input {
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 700px) {
+    margin-top: 1rem;
+    min-height: 70vh;
+    align-items: flex-start;
+  }
+`;
 
 export default function AddMeal() {
   const [foodItemId, setFoodItemId] = useState(null);
-
   const [openAddFood, setOpenAddFood] = useState(false);
-
+  const [select, setSelect] = useState(true);
   const { dispatch } = useContext(StateContext);
   const history = useHistory();
+
   const getFoodItem = (e) => {
     setFoodItemId(e.target.id);
   };
+
   const addMeal = (food) => {
     const energy =
       Math.round(food.portion && (food.kcal / 100) * food.portion * 10) / 10;
@@ -47,19 +60,36 @@ export default function AddMeal() {
           foodId={foodItemId}
         />
       )}
-      <AddFoodStyles className="display">
-        <FoodSearch handleClick={getFoodItem} />
-        <span className="or">or</span>
-        <button
-          className="btn bg-green add-meal"
-          onClick={() => setOpenAddFood(true)}
-        >
-          Add Food Manually
-        </button>
-        <ManualFoodEntry
-          handleSubmit={addManualFoodEntry}
-          handleClick={() => setOpenAddFood(false)}
-        />
+      <AddFoodStyles className="search">
+        <TabsStyle>
+          <input
+            id="search"
+            type="radio"
+            value="Search"
+            name="input option"
+            checked={select}
+            onChange={() => setSelect(true)}
+          />
+          <label htmlFor="search">Search Database</label>
+
+          <input
+            id="manual"
+            type="radio"
+            value="manual"
+            name="input option"
+            checked={!select}
+            onChange={() => setSelect(false)}
+          />
+          <label htmlFor="manual">Type manualy</label>
+        </TabsStyle>
+        {select ? (
+          <FoodSearch handleClick={getFoodItem} />
+        ) : (
+          <ManualFoodEntry
+            handleSubmit={addManualFoodEntry}
+            handleClick={() => setOpenAddFood(false)}
+          />
+        )}
       </AddFoodStyles>
     </>
   );
