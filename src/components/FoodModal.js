@@ -47,11 +47,14 @@ const ModalStyles = styled(CardStyles)`
     max-width: 200px;
     align-self: center;
   }
+  @media (max-width: 700px) {
+    margin: 0 1rem;
+  }
 `;
-const convertToOzAndRound = (gramms) => {
-  const total = gramms / 28.3495;
-  return Math.round(total * 10) / 10;
-};
+// const convertToOzAndRound = (gramms) => {
+//   const total = gramms / 28.3495;
+//   return Math.round(total * 10) / 10;
+// };
 
 export default function FoodModal({ handleClick, foodId, returnData }) {
   const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208`;

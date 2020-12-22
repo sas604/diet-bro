@@ -53,19 +53,20 @@ export default function ControledInput({
   style = {},
   inputStyle = {},
   required = false,
+  max = null,
+  min = null,
 }) {
   return (
     <FieldStyles style={style}>
       <input
         id={label}
         type={type}
-        name="weight"
+        name={label.toLowerCase()}
         required
         value={value}
-        max={1000}
+        max={max}
         onChange={(e) => handeler(e)}
         style={inputStyle}
-        required={required}
       />
       <p className={`suffix`}>{suffix}</p>
       <label className={value ? null : "empty"} htmlFor="weight">

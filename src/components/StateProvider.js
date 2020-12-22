@@ -74,7 +74,12 @@ const reducer = (state, action) => {
           [state.date]: action.weight,
         },
       };
-
+    case "updateSettings":
+      console.log(action);
+      return {
+        ...state,
+        data: { ...state.data, [action.field]: action.value },
+      };
     default:
       return { ...initialState, data: { ...initialState.data } };
   }
@@ -89,8 +94,6 @@ export const StateProvider = ({ children }) => {
     const firebase = base.database().ref(`users/${currentUser.uid}`);
     firebase.on("value", (snapshot) => {
       // check if there user is logged in
-
-      console.log(!snapshot.val());
       if (!snapshot.val()) {
         // get user info
         console.log("initial");

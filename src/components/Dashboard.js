@@ -14,8 +14,6 @@ import MealHistory from "./MealHistory";
 import WeightDisplay from "./WeightDisplay";
 import WeightHistory from "./WeightHistory";
 import { TiArrowLeftThick } from "react-icons/ti";
-import ManualFoodEntry from "./ManualFoodEntry";
-import SearchResult from "./SearchResult";
 
 const DashStyles = styled.div`
   min-height: 99.7vh;
@@ -28,7 +26,7 @@ const DashStyles = styled.div`
     margin-top: 2rem;
   }
   grid-template-columns: 50px repeat(2, minmax(300px, 450px));
-  grid-template-rows: auto 2.5rem minmax(50px, 200px) minmax(50px, 180px) 1rem;
+  grid-template-rows: 4rem 2.5rem minmax(50px, 200px) minmax(50px, 180px) auto;
   grid-template-areas:
     "nav header header"
     "nav  date  . "
