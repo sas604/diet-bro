@@ -17,6 +17,7 @@ export const ButtonStyle = styled.button`
 `;
 
 const CardStyles = styled.div`
+  position: relative;
   background: var(--white);
   padding: 2rem 1.5rem;
   border-radius: 5px;

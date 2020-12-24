@@ -21,6 +21,7 @@ const reducer = (state, action) => {
       return { ...state, date: action.date };
 
     case "updateState":
+      console.log(action.payload.data);
       return {
         ...state,
         loading: false,
@@ -32,6 +33,7 @@ const reducer = (state, action) => {
       };
 
     case "setInitialData":
+      console.log("initial");
       return {
         ...initialState,
         loading: false,
@@ -118,10 +120,11 @@ export const StateProvider = ({ children }) => {
 
   //  firebase  data updater
   useEffect(() => {
-    //if (!state.data.loaded) return;
+    if (state.loading) return;
+
     const firebase = base.database().ref(`users/${currentUser.uid}`);
     const updates = {};
-
+    console.log("updating", state.data);
     updates[`/data`] = state.data;
     if (state.weight[state.date]) {
       updates[`/weight/${state.date}`] = state.weight[state.date];

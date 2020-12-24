@@ -15,6 +15,7 @@ const NavStyles = styled.nav`
   background-color: var(--gray);
 
   a {
+    flex: 1;
     font-size: 30px;
     color: #737179;
     display: block;
@@ -35,6 +36,8 @@ const NavStyles = styled.nav`
     width: 30px;
   }
   button {
+    flex: 1;
+    appearance: none;
     margin-top: auto;
     border: none;
     background-color: transparent;
@@ -50,9 +53,9 @@ const NavStyles = styled.nav`
     a:first-of-type,
     button {
       margin: 0;
+      padding: 0;
     }
     padding: 0.7rem 0;
-    justify-content: space-evenly;
   }
 `;
 

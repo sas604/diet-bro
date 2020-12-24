@@ -15,6 +15,7 @@ const FieldStyles = styled.div`
     min-width: 0;
     border-radius: 3px;
     border: 1px solid var(--dark-purple);
+    background-color: var(--white);
   }
   .suffix {
     position: absolute;
@@ -29,7 +30,8 @@ const FieldStyles = styled.div`
     left: 10px;
     top: -0.8em;
     transition: 0.1s ease-in;
-    background-color: white;
+    /* background-color: white; */
+    background-color: var(--white);
     pointer-events: none;
   }
 
@@ -47,7 +49,7 @@ const FieldStyles = styled.div`
 export default function ControledInput({
   handeler,
   value,
-  label,
+  label = "label",
   suffix = null,
   type,
   style = {},

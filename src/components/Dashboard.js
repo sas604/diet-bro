@@ -56,6 +56,10 @@ const DashStyles = styled.div`
       margin-bottom: 3rem;
     }
   }
+  .account {
+    grid-row: 1/5;
+  }
+
   @media (max-width: 700px) {
     > * {
       margin-top: 1rem;
@@ -73,7 +77,7 @@ const DashStyles = styled.div`
 
 export default function Dashboard() {
   const path = "/dashboard";
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, updateName } = useContext(AuthContext);
 
   return (
     <DashStyles className="dashboard">
@@ -104,7 +108,7 @@ export default function Dashboard() {
             <Weight />
           </Route>
           <Route path={`${path}/account`}>
-            <Account />
+            <Account name={currentUser.displayName} updateName={updateName} />
           </Route>
         </Switch>
         <Navigation path={path} />
