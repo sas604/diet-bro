@@ -7,7 +7,7 @@ export const ButtonStyle = styled.button`
   text-transform: uppercase;
   background-color: var(--purple);
   color: var(--white);
-  padding: 0.5em;
+  padding: 0.8em;
   cursor: pointer;
   &:hover,
   &:focus {

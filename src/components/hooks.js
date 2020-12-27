@@ -3,6 +3,22 @@ import base from "./firebase";
 import { subDays, format } from "date-fns";
 import { days, restD } from "./testDataFile";
 
+export function useForm(defaults) {
+  const [values, setValues] = useState(defaults);
+
+  function updateValue(e) {
+    // check if its a number
+    let { value } = e.target;
+    if (e.target.type === "number") {
+      value = +value;
+    }
+    setValues({
+      ...values,
+      [e.target.name]: value,
+    });
+  }
+  return { values, updateValue };
+}
 export const useFetch = (url) => {
   const [pendingFetch, setPending] = useState(false);
   const [data, setData] = useState(null);

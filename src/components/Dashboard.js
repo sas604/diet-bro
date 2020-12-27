@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import Account from "./Account";
 import DatePicker from "./DatePicker";
@@ -17,6 +17,7 @@ import { TiArrowLeftThick } from "react-icons/ti";
 
 const DashStyles = styled.div`
   min-height: 99.7vh;
+  background-image: var(--pattern);
   position: relative;
   display: grid;
   gap: 1.5rem 2rem;

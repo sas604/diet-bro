@@ -1,27 +1,43 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { Redirect, withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import base, { provider } from "./firebase";
 import { AuthContext } from "../Auth";
 import * as ROUTES from "../constants/routes";
-import { useHandleLogInTestUser } from "./hooks";
+import { useForm, useHandleLogInTestUser } from "./hooks";
+import { LandingStyles, SignIn } from "../styles/SignInStyles";
+import { ButtonStyle } from "../styles/CardStyles";
+import styled from "styled-components";
+import ControledInput from "./ControledInput";
+
+const SignInStyles = styled(SignIn)`
+  label {
+    margin: 0;
+  }
+  button + button {
+    background-color: var(--green);
+  }
+`;
 
 function SignUp({ history }) {
   const logWithTest = useHandleLogInTestUser(history);
+  const { values, updateValue } = useForm({
+    email: "",
+    password: "",
+  });
   const handleLogIn = useCallback(
     async (event) => {
       event.preventDefault();
-      const { email, password } = event.target.elements;
       try {
         await base
           .auth()
-          .signInWithEmailAndPassword(email.value, password.value);
+          .signInWithEmailAndPassword(values.email, values.password);
         history.push("/");
       } catch (error) {
         alert(error);
       }
     },
-    [history]
+    [history, values.email, values.password]
   );
   // sign up with github, /// try to figure out why you need a use callback here
   const handleGitHubLogin = async (event) => {
@@ -31,7 +47,7 @@ function SignUp({ history }) {
       await base.auth().signInWithPopup(provider);
       history.push("/");
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 
@@ -40,34 +56,46 @@ function SignUp({ history }) {
     return <Redirect to={"/home"} />;
   }
   return (
-    <div className="wrapper bg-pattern sign-in no-grid">
-      <div className="container">
-        <button className="btn bg-green" onClick={handleGitHubLogin}>
+    <LandingStyles>
+      <SignInStyles className="container">
+        <ButtonStyle className="btn bg-green" onClick={handleGitHubLogin}>
           Login With Github
-        </button>
-        <button className="btn bg-blue" onClick={logWithTest}>
+        </ButtonStyle>
+        <ButtonStyle className="btn bg-blue" onClick={logWithTest}>
           Login With Test User
-        </button>
+        </ButtonStyle>
         <span className="or">or</span>
         <form className="login-form" onSubmit={handleLogIn}>
-          <label>
+          {/* <label>
             email:
             <input name="email" type="email" required></input>
-          </label>
-          <label>
+          </label> */}
+          <ControledInput
+            label="Email"
+            value={values.email}
+            handeler={updateValue}
+            type="email"
+            required
+          />
+          <ControledInput
+            label="Password"
+            value={values.password}
+            handeler={updateValue}
+            type="password"
+            required
+          />
+          {/* <label>
             password:
             <input name="password" type="password" required></input>
-          </label>
-          <button className="btn bg-blue" type="submit">
-            Sing in
-          </button>
+          </label> */}
+          <ButtonStyle type="submit">Sign in</ButtonStyle>
         </form>
         <Link to={ROUTES.PASSWORD_FORGET}>Forgot password?</Link>
         <p>
           No Account?<Link to={ROUTES.SIGN_UP}> Create One</Link>
         </p>
-      </div>
-    </div>
+      </SignInStyles>
+    </LandingStyles>
   );
 }
 export default withRouter(SignUp);
