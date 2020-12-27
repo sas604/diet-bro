@@ -6,9 +6,11 @@ import ControledInput from "./ControledInput";
 import styled from "styled-components";
 import PopUp from "./PopUp";
 
-const AccountStyle = styled(CardStyles)`
-  margin-top: 2rem;
-  max-width: 350px;
+const AccountStyle = styled.div`
+  form {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray);
+  }
   form + form {
     margin-top: 1.5rem;
   }
@@ -17,12 +19,6 @@ const AccountStyle = styled(CardStyles)`
   }
   p {
     margin: 0;
-  }
-  hr {
-    margin-top: 1rem;
-    background-color: var(--gray);
-    border: none;
-    height: 3px;
   }
 `;
 
@@ -104,7 +100,7 @@ export default function Account({ name, updateName }) {
           />
           <ButtonStyle>Set Target Energy</ButtonStyle>
         </form>
-        <hr></hr>
+
         <ButtonStyle
           className=" btn bg-purple sign-out"
           onClick={() => base.auth().signOut()}

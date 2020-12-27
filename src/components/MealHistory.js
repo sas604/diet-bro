@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { StateContext } from "./StateProvider";
 import { FaRegTrashAlt } from "react-icons/fa";
-import CardStyles from "../styles/CardStyles";
 import HistoryListStyles from "../styles/HistoryList";
 
 const emoji = [

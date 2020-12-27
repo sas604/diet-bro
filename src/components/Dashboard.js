@@ -19,14 +19,14 @@ const DashStyles = styled.div`
   min-height: 99.7vh;
   position: relative;
   display: grid;
-  gap: 1rem 2rem;
+  gap: 1.5rem 2rem;
   padding-right: 1rem;
 
   h2 {
     margin-top: 2rem;
   }
   grid-template-columns: 50px repeat(2, minmax(300px, 450px));
-  grid-template-rows: 4rem 2.5rem minmax(50px, 200px) minmax(50px, 180px) auto;
+  grid-template-rows: 4rem 2.5rem minmax(50px, 250px) minmax(50px, 250px) auto;
   grid-template-areas:
     "nav header header"
     "nav  date  . "
@@ -57,7 +57,7 @@ const DashStyles = styled.div`
     }
   }
   .account {
-    grid-row: 1/5;
+    grid-row: 3/5;
   }
 
   @media (max-width: 700px) {
@@ -96,7 +96,7 @@ export default function Dashboard() {
             <AddMeal />
           </Route>
           <Route path={`${path}/weight`}>
-            <h2 className="head">Weight screen </h2>
+            <h2 className="head">Weight Tracking</h2>
             <DatePicker />
             <WeightDisplay />
             <WeightHistory />
@@ -108,6 +108,7 @@ export default function Dashboard() {
             <Weight />
           </Route>
           <Route path={`${path}/account`}>
+            <h2 className="head">Account Settings </h2>
             <Account name={currentUser.displayName} updateName={updateName} />
           </Route>
         </Switch>

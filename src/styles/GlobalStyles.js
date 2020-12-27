@@ -25,6 +25,7 @@ export const GlobalStyles = createGlobalStyle`
 
 html{
   font-size:16px;
+  background-color: var(--white);
 }
 html {
   box-sizing: border-box;
@@ -36,6 +37,7 @@ html {
  /* Scrollbar Styles */
  body::-webkit-scrollbar , ul::-webkit-scrollbar {
     width: 12px;
+
   }
   html, ul {
     scrollbar-width: thin;

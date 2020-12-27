@@ -9,7 +9,7 @@ import {
   FaSortDown,
 } from "react-icons/fa";
 import styled from "styled-components";
-import CardStyles from "../styles/CardStyles";
+
 import HistoryListStyles from "../styles/HistoryList";
 import { StateContext } from "./StateProvider";
 

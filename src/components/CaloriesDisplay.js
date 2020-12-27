@@ -6,6 +6,7 @@ import { DisplayStyles } from "../styles/CardStyles";
 import { FaPlus } from "react-icons/fa";
 const StyledPath = styled.svg`
   fill: none;
+  padding-top: 2em;
   stroke-linecap: round;
   stroke-miterlimit: 10;
   grid-column: 1/-1;
@@ -25,13 +26,10 @@ const StyledPath = styled.svg`
     stroke-dasharray: 220;
     stroke-dashoffset: var(--progress);
     transition: 400ms ease-out;
-    animation: dash 400ms ease-out;
+    animation: dash 400ms ease-out alternate;
   }
 
   @keyframes dash {
-    from {
-      stroke-dashoffset: -100;
-    }
     to {
       stroke-dashoffset: var(--progress);
     }

@@ -5,7 +5,7 @@ const HistoryListStyles = styled(CardStyles)`
   * {
     margin: 0;
   }
-
+  align-self: start;
   h3 {
     margin-bottom: 1em;
   }

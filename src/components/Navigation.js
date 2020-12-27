@@ -15,7 +15,6 @@ const NavStyles = styled.nav`
   background-color: var(--gray);
 
   a {
-    flex: 1;
     font-size: 30px;
     color: #737179;
     display: block;
@@ -36,7 +35,6 @@ const NavStyles = styled.nav`
     width: 30px;
   }
   button {
-    flex: 1;
     appearance: none;
     margin-top: auto;
     border: none;
@@ -52,6 +50,7 @@ const NavStyles = styled.nav`
     a,
     a:first-of-type,
     button {
+      flex: 1;
       margin: 0;
       padding: 0;
     }
@@ -64,22 +63,23 @@ export default function Navigation({ path }) {
   return (
     <>
       <NavStyles className="global-nav">
-        <NavLink exact to={path}>
+        <NavLink title="Home" exact to={path}>
           <GoHome />
         </NavLink>
 
-        <NavLink to={`${path}/weight`}>
+        <NavLink title="weight tracker" to={`${path}/weight`}>
           <FaWeight />
         </NavLink>
 
-        <NavLink to={`${path}/stats`}>
+        <NavLink title="statistics" to={`${path}/stats`}>
           <GoGraph />
         </NavLink>
 
-        <NavLink to={`${path}/account`}>
+        <NavLink title="account settings" to={`${path}/account`}>
           <GoGear />
         </NavLink>
         <button
+          title="signout"
           type="button"
           onClick={() => {
             unsubcribe();
