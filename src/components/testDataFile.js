@@ -1,7 +1,7 @@
 export const days = [
   {
     1603926359168: {
-      kcal: 242,
+      energy: 242,
       name: "Burrito with chicken",
       portion: 386,
       portions: [
@@ -80,7 +80,7 @@ export const days = [
       ],
     },
     1603926381188: {
-      kcal: 52,
+      energy: 52,
       name: "Apple, raw",
       portion: 223,
       portions: [
@@ -219,7 +219,7 @@ export const days = [
       ],
     },
     1603926623313: {
-      kcal: 250,
+      energy: 250,
       name: "Meat spread or potted meat sandwich",
       portion: 107,
       portions: [
@@ -238,7 +238,7 @@ export const days = [
       ],
     },
     1603926640954: {
-      kcal: 89,
+      energy: 89,
       name: "Banana, raw",
       portion: 118,
       portions: [
@@ -379,7 +379,7 @@ export const days = [
   },
   {
     1604007760273: {
-      kcal: 282,
+      energy: 282,
       name:
         "Double cheeseburger, 2 small patties, with condiments, on bun, from fast food / restaurant (McDonald's Double Cheeseburger)",
       portion: 100,
@@ -401,7 +401,7 @@ export const days = [
   },
   {
     1604264978426: {
-      kcal: 264,
+      energy: 264,
       name: "Bagel",
       portion: 100,
       portions: [
@@ -468,11 +468,11 @@ export const days = [
       ],
     },
     1604265032859: {
-      kcal: 600,
+      energy: 600,
       name: "Breakfast ",
     },
     1604343362825: {
-      kcal: 52,
+      energy: 52,
       name: "Apple, raw",
       portion: 242,
       portions: [
@@ -565,7 +565,7 @@ export const days = [
   },
   {
     1604264700582: {
-      kcal: 283,
+      energy: 283,
       name: "Egg, Benedict",
       portion: 155,
       portions: [
@@ -584,7 +584,7 @@ export const days = [
       ],
     },
     1604264731313: {
-      kcal: 48,
+      energy: 48,
       name: "Orange juice, 100%, NFS",
       portion: 209,
       portions: [
@@ -663,11 +663,11 @@ export const days = [
       ],
     },
     1604264762464: {
-      kcal: 750,
+      energy: 750,
       name: "Lunch ",
     },
     1604264840314: {
-      kcal: 168,
+      energy: 168,
       name: "Potato salad, made with mayonnaise",
       portion: 275,
       portions: [
@@ -688,7 +688,7 @@ export const days = [
   },
   {
     1604264614072: {
-      kcal: 42,
+      energy: 42,
       name: "Peach, raw",
       portion: 150,
       portions: [
@@ -731,7 +731,7 @@ export const days = [
       ],
     },
     1604264676783: {
-      kcal: 174,
+      energy: 174,
       name: "Rice, fried, NFS",
       portion: 198,
       portions: [
@@ -750,7 +750,7 @@ export const days = [
       ],
     },
     1604287332049: {
-      kcal: 52,
+      energy: 52,
       name: "Apple, raw",
       portion: 200,
       portions: [
@@ -843,7 +843,7 @@ export const days = [
   },
   {
     1604331166306: {
-      kcal: 233,
+      energy: 233,
       name: "Egg and ham on biscuit",
       portion: 138,
       portions: [
@@ -874,7 +874,7 @@ export const days = [
       ],
     },
     1604331182025: {
-      kcal: 32,
+      energy: 32,
       name: "Wonton soup",
       portion: 241,
       portions: [
@@ -893,7 +893,7 @@ export const days = [
       ],
     },
     1604331205755: {
-      kcal: 254,
+      energy: 254,
       name: "Hamburger (Burger King)",
       portion: 100,
       portions: [
@@ -912,7 +912,7 @@ export const days = [
       ],
     },
     1604331236385: {
-      kcal: 196,
+      energy: 196,
       name: "Potato, french fries, from fresh, fried",
       portion: 60,
       portions: [
@@ -1063,7 +1063,7 @@ export const days = [
       ],
     },
     1604342681719: {
-      kcal: 52,
+      energy: 52,
       name: "Apple, raw",
       portion: 242,
       portions: [
@@ -1156,7 +1156,7 @@ export const days = [
   },
   {
     1604331166306: {
-      kcal: 233,
+      energy: 233,
       name: "Egg and ham on biscuit",
       portion: 138,
       portions: [
@@ -1187,7 +1187,7 @@ export const days = [
       ],
     },
     1604331182025: {
-      kcal: 32,
+      energy: 32,
       name: "Wonton soup",
       portion: 241,
       portions: [
@@ -1206,7 +1206,7 @@ export const days = [
       ],
     },
     1604331205755: {
-      kcal: 254,
+      energy: 254,
       name: "Hamburger (Burger King)",
       portion: 100,
       portions: [
@@ -1225,7 +1225,7 @@ export const days = [
       ],
     },
     1604331236385: {
-      kcal: 196,
+      energy: 196,
       name: "Potato, french fries, from fresh, fried",
       portion: 60,
       portions: [
@@ -1376,7 +1376,7 @@ export const days = [
       ],
     },
     1604342681719: {
-      kcal: 52,
+      energy: 52,
       name: "Apple, raw",
       portion: 242,
       portions: [

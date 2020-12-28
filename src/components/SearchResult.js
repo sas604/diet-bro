@@ -6,6 +6,10 @@ import { ButtonStyle } from "../styles/CardStyles";
 
 const AddButtonStyle = styled(ButtonStyle)`
   width: 2rem;
+  padding: 0.5em;
+  svg {
+    pointer-events: none;
+  }
 `;
 
 export default function SearchResult({ id, handleClick, name, calories }) {

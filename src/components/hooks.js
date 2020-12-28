@@ -92,10 +92,12 @@ export const useTestData = () => {
   }, {});
 
   const testData = {
-    ...mapedWeek,
+    mapedWeek,
     weight,
-    target: restD.target,
-    targetWeight: restD.targetWeight,
+    data: {
+      targetEnergy: restD.target,
+      targetWeight: restD.targetWeight,
+    },
   };
   return testData;
 };

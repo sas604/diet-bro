@@ -70,7 +70,10 @@ export default function WeightDisplay() {
         To meet your goal you need to{" "}
         {state.data.targetWeight > state.weight[latestWeightDate]
           ? `gain ${state.data.targetWeight - state.weight[latestWeightDate]}`
-          : `loose${state.weight[latestWeightDate] - state.data.targetWeight}`}
+          : `loose${
+              state.weight[latestWeightDate] - state.data.targetWeight
+            }`}{" "}
+        Lbs
       </p>
     );
   };
@@ -78,7 +81,7 @@ export default function WeightDisplay() {
   ///console.log(state.data.targetWeight > state.weight[latestWeightDate]);
   return (
     <WeightDisplayStyles className="display">
-      <h3>Weight Progress</h3>
+      <h3>Current Weight</h3>
       {latestWeightDate ? (
         <div className="wrap">
           <p>

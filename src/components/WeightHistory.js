@@ -1,13 +1,7 @@
 import { format } from "date-fns";
 import { parseISO } from "date-fns/esm";
 import React, { useContext } from "react";
-import {
-  FaRegTrashAlt,
-  FaWeight,
-  FaSortUp,
-  FaMinus,
-  FaSortDown,
-} from "react-icons/fa";
+import { FaRegTrashAlt, FaSortUp, FaSortDown } from "react-icons/fa";
 import styled from "styled-components";
 
 import HistoryListStyles from "../styles/HistoryList";
@@ -92,6 +86,7 @@ export default function WeightHistory() {
 
   return (
     <WeightHistoryStyles className="history">
+      <h3>Weight History</h3>
       <ul>{weightHistoryList}</ul>
     </WeightHistoryStyles>
   );

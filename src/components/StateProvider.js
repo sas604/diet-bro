@@ -2,6 +2,7 @@ import { format, getTime } from "date-fns";
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 import { AuthContext } from "../Auth";
 import base from "./firebase";
+import { useTestData } from "./hooks";
 
 const initialState = {
   date: format(new Date(), "yyyy-MM-dd"),
@@ -77,10 +78,18 @@ const reducer = (state, action) => {
         },
       };
     case "updateSettings":
-      console.log(action);
       return {
         ...state,
         data: { ...state.data, [action.field]: action.value },
+      };
+    case "testUser":
+      console.log(action.payload);
+      return {
+        ...state,
+        loading: false,
+        data: { ...action.payload.data },
+        weight: { ...action.payload.weight },
+        mealHistory: { ...action.payload.mapedWeek },
       };
     default:
       return { ...initialState, data: { ...initialState.data } };
@@ -89,6 +98,7 @@ const reducer = (state, action) => {
 export const StateContext = createContext();
 
 export const StateProvider = ({ children }) => {
+  const testUserData = useTestData();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { currentUser } = useContext(AuthContext);
   // load data from the firebase
@@ -109,6 +119,8 @@ export const StateProvider = ({ children }) => {
         dispatch({
           type: "setInitialData",
         });
+      } else if (currentUser.uid === "ByJmvpz9vOfdXvtl3Ma3lwDW3jo2") {
+        dispatch({ type: "testUser", payload: testUserData });
       } else {
         const data = snapshot.val();
         dispatch({ type: "updateState", payload: { ...data } });

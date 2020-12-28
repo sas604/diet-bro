@@ -26,7 +26,6 @@ const emoji = [
 ];
 
 const randomEmoji = () => emoji[Math.floor(Math.random() * emoji.length)];
-console.log(randomEmoji());
 const MealHistoryStyles = styled(HistoryListStyles)``;
 
 export default function MealHistory() {
