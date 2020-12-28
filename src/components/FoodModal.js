@@ -51,10 +51,6 @@ const ModalStyles = styled(CardStyles)`
     margin: 0 1rem;
   }
 `;
-// const convertToOzAndRound = (gramms) => {
-//   const total = gramms / 28.3495;
-//   return Math.round(total * 10) / 10;
-// };
 
 export default function FoodModal({ handleClick, foodId, returnData }) {
   const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208`;
@@ -88,7 +84,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             width={100}
             timeout={5000}
           />
-          <p>Sometimes this API is very slow wait for it to respond</p>
+          <p>Sometimes this API is very slow, wait for it to respond.</p>
         </ModalStyles>
       </ModalWrapperStyles>
     );
@@ -125,7 +121,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
               name="measure option"
               onChange={() => setSelect(false)}
             />
-            <label htmlFor="weight">Enter Exact Weight</label>
+            <label htmlFor="weight">Enter exact weight</label>
           </TabsStyle>
           {select ? (
             <>

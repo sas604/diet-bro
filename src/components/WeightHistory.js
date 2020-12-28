@@ -81,7 +81,7 @@ export default function WeightHistory() {
         );
       })
   ) : (
-    <li>No Weight entries</li>
+    <li>No weight entries</li>
   );
 
   return (

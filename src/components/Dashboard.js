@@ -85,7 +85,7 @@ export default function Dashboard() {
       <StateProvider>
         <Switch>
           <Route exact path={path}>
-            <h2 className="head">Welcome {currentUser.displayName}</h2>
+            <h2 className="head">Welcome, {currentUser.displayName}</h2>
             <DatePicker />
             <CaloriesDisplay />
             <MealHistory />

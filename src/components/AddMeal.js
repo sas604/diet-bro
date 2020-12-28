@@ -70,7 +70,7 @@ export default function AddMeal() {
             checked={select}
             onChange={() => setSelect(true)}
           />
-          <label htmlFor="search">Search Database</label>
+          <label htmlFor="search">Search database</label>
 
           <input
             id="manual"

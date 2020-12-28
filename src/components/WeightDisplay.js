@@ -63,7 +63,7 @@ export default function WeightDisplay() {
 
   const weightResult = () => {
     if (state.data.targetWeight - state.weight[latestWeightDate] === 0)
-      return <p>Congratulation you've meet your target weight</p>;
+      return <p>Congratulation you've meet your target weight.</p>;
 
     return (
       <p>
@@ -73,7 +73,7 @@ export default function WeightDisplay() {
           : `loose${
               state.weight[latestWeightDate] - state.data.targetWeight
             }`}{" "}
-        Lbs
+        Lbs.
       </p>
     );
   };
@@ -87,7 +87,7 @@ export default function WeightDisplay() {
           <p>
             Your last recorded weight is
             <span className="number">
-              {state.weight[latestWeightDate]} lbs.
+              {state.weight[latestWeightDate]} lbs
             </span>{" "}
             on <span className="number-small">{latestWeightDate}</span>
           </p>
@@ -107,7 +107,7 @@ export default function WeightDisplay() {
         </div>
       ) : (
         <p className="notice">
-          You haven't recorded anything yet, try to add weight entry{" "}
+          You haven't recorded anything yet, try to make weight entry.
         </p>
       )}
       <Weight />
