@@ -88,7 +88,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             width={100}
             timeout={5000}
           />
-          <p>Sometimes it can take a vile hold on </p>
+          <p>Sometimes this API is very slow wait for it to respond</p>
         </ModalStyles>
       </ModalWrapperStyles>
     );

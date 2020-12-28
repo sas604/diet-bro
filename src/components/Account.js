@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import CardStyles, { ButtonStyle } from "../styles/CardStyles";
+import { ButtonStyle } from "../styles/CardStyles";
 import base from "./firebase";
 import { StateContext } from "./StateProvider";
 import ControledInput from "./ControledInput";
@@ -7,6 +7,7 @@ import styled from "styled-components";
 import PopUp from "./PopUp";
 
 const AccountStyle = styled.div`
+  position: relative;
   form {
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--gray);

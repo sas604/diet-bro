@@ -41,6 +41,9 @@ const ToastStyle = styled(CardStyles)`
     animation: 250ms ease-out 200ms dash forwards;
   }
   @keyframes dash {
+    from {
+      stroke-dashoffset: 660;
+    }
     to {
       stroke-dashoffset: 440;
     }

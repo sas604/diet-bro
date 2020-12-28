@@ -52,7 +52,6 @@ export default function FoodSearch({ handleClick }) {
   const [pendingFetch, searchData] = useFetch(url);
   const [openSearch, setOpenSearch] = useState(false);
   const [search, setSearch] = useState("");
-  console.log(searchData);
   useEffect(() => {
     if (!query) {
       setUrl(null);
