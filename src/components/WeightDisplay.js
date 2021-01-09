@@ -78,7 +78,6 @@ export default function WeightDisplay() {
     );
   };
 
-  ///console.log(state.data.targetWeight > state.weight[latestWeightDate]);
   return (
     <WeightDisplayStyles className="display">
       <h3>Current Weight</h3>

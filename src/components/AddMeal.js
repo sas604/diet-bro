@@ -25,7 +25,6 @@ const AddFoodStyles = styled(CardStyles)`
 
 export default function AddMeal() {
   const [foodItemId, setFoodItemId] = useState(null);
-  const [openAddFood, setOpenAddFood] = useState(false);
   const [select, setSelect] = useState(true);
   const { dispatch } = useContext(StateContext);
   const history = useHistory();
@@ -85,10 +84,7 @@ export default function AddMeal() {
         {select ? (
           <FoodSearch handleClick={getFoodItem} />
         ) : (
-          <ManualFoodEntry
-            handleSubmit={addManualFoodEntry}
-            handleClick={() => setOpenAddFood(false)}
-          />
+          <ManualFoodEntry handleSubmit={addManualFoodEntry} />
         )}
       </AddFoodStyles>
     </>

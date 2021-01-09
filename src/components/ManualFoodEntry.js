@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ButtonStyle } from "../styles/CardStyles";
 import ControledInput from "./ControledInput";
 
-export default function ManualFoodEntry({ handleSubmit, handleClick }) {
+export default function ManualFoodEntry({ handleSubmit }) {
   const [food, setFood] = useState({});
   return (
     <form
