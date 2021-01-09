@@ -22,7 +22,6 @@ const reducer = (state, action) => {
       return { ...state, date: action.date };
 
     case "updateState":
-      console.log(action.payload.data);
       return {
         ...state,
         loading: false,
@@ -34,7 +33,6 @@ const reducer = (state, action) => {
       };
 
     case "setInitialData":
-      console.log("initial");
       return {
         ...initialState,
         loading: false,
@@ -83,7 +81,6 @@ const reducer = (state, action) => {
         data: { ...state.data, [action.field]: action.value },
       };
     case "testUser":
-      console.log(action.payload);
       return {
         ...state,
         loading: false,
@@ -100,7 +97,29 @@ export const StateContext = createContext();
 export const StateProvider = ({ children }) => {
   const testUserData = useTestData();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, updateName } = useContext(AuthContext);
+  //get random name for test user
+
+  const getTestUserName = async () => {
+    const result = await fetch("https://randomuser.me/api/?nat=us");
+    if (!result.ok) {
+      const message = `An error has occured: ${result.status}`;
+      throw new Error(message);
+    }
+    const person = await result.json();
+    return person;
+  };
+
+  useEffect(() => {
+    if (currentUser.uid === "ByJmvpz9vOfdXvtl3Ma3lwDW3jo2") {
+      getTestUserName().then((person) =>
+        updateName(
+          `${person.results[0].name.first} ${person.results[0].name.last} `
+        )
+      );
+    }
+  }, [currentUser, updateName]);
+
   // load data from the firebase
   useEffect(() => {
     const firebase = base.database().ref(`users/${currentUser.uid}`);
@@ -108,7 +127,6 @@ export const StateProvider = ({ children }) => {
       // check if there user is logged in
       if (!snapshot.val()) {
         // get user info
-        console.log("initial");
         firebase.set({
           data: {
             ...state.data,
@@ -119,7 +137,10 @@ export const StateProvider = ({ children }) => {
         dispatch({
           type: "setInitialData",
         });
-      } else if (currentUser.uid === "ByJmvpz9vOfdXvtl3Ma3lwDW3jo2") {
+      } else if (
+        currentUser.uid === "ByJmvpz9vOfdXvtl3Ma3lwDW3jo2" &&
+        !snapshot.val().mealHistory[state.date]
+      ) {
         dispatch({ type: "testUser", payload: testUserData });
       } else {
         const data = snapshot.val();
@@ -133,10 +154,8 @@ export const StateProvider = ({ children }) => {
   //  firebase  data updater
   useEffect(() => {
     if (state.loading) return;
-
     const firebase = base.database().ref(`users/${currentUser.uid}`);
     const updates = {};
-    console.log("updating", state.data);
     updates[`/data`] = state.data;
     if (state.weight[state.date]) {
       updates[`/weight/${state.date}`] = state.weight[state.date];
