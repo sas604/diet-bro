@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { StateContext } from "./StateProvider";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { DisplayStyles } from "../styles/CardStyles";
-import { FaPlus } from "react-icons/fa";
+import React, { useContext } from 'react';
+import { StateContext } from './StateProvider';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { DisplayStyles } from '../styles/CardStyles';
+import { FaPlus } from 'react-icons/fa';
 const StyledPath = styled.svg`
   fill: none;
   padding-top: 2em;
@@ -38,13 +38,14 @@ const StyledPath = styled.svg`
 
 export default function CaloriesDisplay() {
   const { state } = useContext(StateContext);
-
-  /// can I do it better ?????
+  // can I do it better ?????
+  // loop trough Meal history object and reduce it to single value
   const calloriesForThetDay = state.mealHistory[state.date]
     ? Object.keys(state.mealHistory[state.date])
         .map((entry) => state.mealHistory[state.date][entry])
         .reduce((acc, entry) => acc + entry.energy, 0)
     : 0;
+  // round
   const progress = Math.round(
     (calloriesForThetDay / state.data.targetEnergy) * 100
   );
@@ -69,9 +70,8 @@ export default function CaloriesDisplay() {
       </StyledPath>
 
       <span className="progress">
-        {" "}
         <span>You've logged </span>
-        <span className="number">{progress}%</span>{" "}
+        <span className="number">{progress}%</span>
         <span>of your daily goal</span>
       </span>
       <span>
@@ -83,14 +83,12 @@ export default function CaloriesDisplay() {
       <span>
         <p>Your goal is</p>
         <p>
-          {" "}
           <span className="number-small">{state.data.targetEnergy}</span> Cal
         </p>
       </span>
       <Link to={`dashboard/addmeal`}>
-        {" "}
         <FaPlus className="icon" />
-        Add meal{" "}
+        Add meal
       </Link>
     </DisplayStyles>
   );

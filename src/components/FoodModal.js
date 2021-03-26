@@ -1,13 +1,13 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import Loader from "react-loader-spinner";
-import { useFetch } from "./hooks";
-import FocusTrap from "focus-trap-react";
-import { TiTimes } from "react-icons/ti";
-import styled from "styled-components";
-import CardStyles, { ButtonStyle, TabsStyle } from "../styles/CardStyles";
-import ControledInput from "./ControledInput";
+import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import Loader from 'react-loader-spinner';
+import { useFetch } from './hooks';
+import FocusTrap from 'focus-trap-react';
+import { TiTimes } from 'react-icons/ti';
+import styled from 'styled-components';
+import CardStyles, { ButtonStyle, TabsStyle } from '../styles/CardStyles';
+import ControledInput from './ControledInput';
 
 const ModalWrapperStyles = styled.div`
   top: 0;
@@ -53,19 +53,23 @@ const ModalStyles = styled(CardStyles)`
 `;
 
 export default function FoodModal({ handleClick, foodId, returnData }) {
+  // path to the fda api
   const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208`;
+  // fetch data
   const [, data] = useFetch(url);
   const [foodNutrients, setFoodNutrients] = useState(null);
   const [select, setSelect] = useState(true);
 
   useEffect(() => {
+    // check if something in response
     if (data) {
+      // filter empty portions
       const portions = data.foodPortions.filter(
-        (el) => el.portionDescription !== "Quantity not specified"
+        (el) => el.portionDescription !== 'Quantity not specified'
       );
+      // format response
       setFoodNutrients({
         kcal: data.foodNutrients[0].amount,
-
         portions: portions,
         name: data.description,
         portion: portions[0].gramWeight,
@@ -99,7 +103,6 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
               handleClick();
             }}
           >
-            {" "}
             <TiTimes />
           </button>
           <h3 className="modal-heading">{foodNutrients.name}</h3>
@@ -148,9 +151,9 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             </>
           ) : (
             <ControledInput
-              label={"weight in OZ"}
-              type={"number"}
-              suffix={"OZ"}
+              label={'weight in OZ'}
+              type={'number'}
+              suffix={'OZ'}
               handeler={(e) =>
                 setFoodNutrients({
                   ...foodNutrients,
@@ -169,7 +172,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             }}
           >
             <span className="modal-calories-dislpay">
-              Add{" "}
+              Add{' '}
               {Math.round(foodNutrients.kcal * (foodNutrients.portion / 100))}
               Kcal
             </span>

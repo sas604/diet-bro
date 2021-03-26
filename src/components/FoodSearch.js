@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useFetch } from "./hooks";
-import Loader from "react-loader-spinner";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import SearchResult from "./SearchResult";
-import { TiTimes } from "react-icons/ti";
-import styled from "styled-components";
-import ControledInput from "./ControledInput";
+import React, { useState, useEffect } from 'react';
+import { useFetch } from './hooks';
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import SearchResult from './SearchResult';
+import { TiTimes } from 'react-icons/ti';
+import styled from 'styled-components';
+import ControledInput from './ControledInput';
 
 const SearchStyles = styled.div`
   position: relative;
@@ -46,12 +46,15 @@ const SearchStyles = styled.div`
   }
 `;
 
+// live food search component
 export default function FoodSearch({ handleClick }) {
   const [query, setQuery] = useState(null);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState('');
   const [pendingFetch, searchData] = useFetch(url);
   const [openSearch, setOpenSearch] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
+
+  // if there a query value send request to api
   useEffect(() => {
     if (!query) {
       setUrl(null);
@@ -61,12 +64,15 @@ export default function FoodSearch({ handleClick }) {
       `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.REACT_APP_API_KEY}&query="+${query}"&dataType=Survey%20(FNDDS)`
     );
   }, [query]);
+  // handle typing
   const handleSearch = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
     const query = e.target.value.trim();
-    setQuery(query.split(" ").join("%20+"));
+    setQuery(query.split(' ').join('%20+'));
   };
+
+  //render search componet with reset btn when there a query
   useEffect(() => {
     if (query) {
       setOpenSearch(true);
@@ -75,14 +81,14 @@ export default function FoodSearch({ handleClick }) {
     }
   }, [query]);
   return (
-    <SearchStyles className={`search ${openSearch && "open-search"}`}>
+    <SearchStyles className={`search ${openSearch && 'open-search'}`}>
       <form onSubmit={(e) => e.preventDefault()}>
         <ControledInput
           value={search}
           handeler={handleSearch}
           label="Food name"
           type="text"
-          inputStyle={{ padding: " 0.5em 0" }}
+          inputStyle={{ padding: ' 0.5em 0' }}
         />
         {openSearch && (
           <button
@@ -90,7 +96,7 @@ export default function FoodSearch({ handleClick }) {
             type="button"
             title="clear search"
             onClick={() => {
-              setSearch("");
+              setSearch('');
               setOpenSearch(false);
               setQuery(null);
             }}
@@ -101,11 +107,11 @@ export default function FoodSearch({ handleClick }) {
       </form>
       <ul className="search-list">
         {pendingFetch ? (
-          <li style={{ justifyContent: "center" }}>
+          <li style={{ justifyContent: 'center' }}>
             <Loader
               className="loader"
               type="Puff"
-              color={"#9163f2"}
+              color={'#9163f2'}
               height={100}
               width={100}
               timeout={3000} //3 secs

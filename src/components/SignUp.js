@@ -6,7 +6,7 @@ import { SIGN_IN } from "../constants/routes";
 import { useForm } from "./hooks";
 import ControledInput from "./ControledInput";
 import { ButtonStyle } from "../styles/CardStyles";
-import { LandingStyles, SignIn } from "../styles/SignInStyles";
+import  { LandingStyles, SignIn } from "../styles/SignInStyles";
 import styled from "styled-components";
 
 const SignUpStyles = styled(SignIn)`

@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import CardStyles from "../styles/CardStyles";
-import { StateContext } from "./StateProvider";
-import Weight from "./Weight";
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import CardStyles from '../styles/CardStyles';
+import { StateContext } from './StateProvider';
+import Weight from './Weight';
 
 const WeightDisplayStyles = styled(CardStyles)`
   display: flex;
@@ -58,7 +58,7 @@ export default function WeightDisplay() {
   const latestWeightDate =
     Object.keys(weight).length &&
     Object.keys(weight).reduce((a, b) =>
-      +a.replace("-", "") > +b.replace("-", "") ? a : b
+      +a.replace('-', '') > +b.replace('-', '') ? a : b
     );
 
   const weightResult = () => {
@@ -67,12 +67,10 @@ export default function WeightDisplay() {
 
     return (
       <p>
-        To meet your goal you need to{" "}
+        To meet your goal you need to
         {state.data.targetWeight > state.weight[latestWeightDate]
           ? `gain ${state.data.targetWeight - state.weight[latestWeightDate]}`
-          : `loose${
-              state.weight[latestWeightDate] - state.data.targetWeight
-            }`}{" "}
+          : `loose${state.weight[latestWeightDate] - state.data.targetWeight}`}
         Lbs.
       </p>
     );
@@ -87,17 +85,17 @@ export default function WeightDisplay() {
             Your last recorded weight is
             <span className="number">
               {state.weight[latestWeightDate]} lbs
-            </span>{" "}
+            </span>{' '}
             on <span className="number-small">{latestWeightDate}</span>
           </p>
           {state.data.targetWeight ? (
             <>
-              <p>Your target weight is {state.data.targetWeight}</p>{" "}
+              <p>Your target weight is {state.data.targetWeight}</p>{' '}
               {weightResult()}
             </>
           ) : (
             <span className="warning">
-              *You didn't set your target weigh go to the{" "}
+              *You didn't set your target weigh go to the{' '}
               <Link to="/dashboard/account">
                 settings page to set yout target
               </Link>

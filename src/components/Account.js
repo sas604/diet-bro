@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import { ButtonStyle } from "../styles/CardStyles";
-import base from "./firebase";
-import { StateContext } from "./StateProvider";
-import ControledInput from "./ControledInput";
-import styled from "styled-components";
-import PopUp from "./PopUp";
+import React, { useContext, useEffect, useState } from 'react';
+import { ButtonStyle } from '../styles/CardStyles';
+import base from './firebase';
+import { StateContext } from './StateProvider';
+import ControledInput from './ControledInput';
+import styled from 'styled-components';
+import PopUp from './PopUp';
 
 const AccountStyle = styled.div`
   position: relative;
@@ -24,13 +24,16 @@ const AccountStyle = styled.div`
 `;
 
 export default function Account({ name, updateName }) {
+  // get state from the store
   const { state, dispatch } = useContext(StateContext);
   const [energy, setEnergy] = useState(state.data.targetEnergy);
   const [weight, setWeight] = useState(state.data.targetWeight);
+  // pop up
   const [popUp, setPopUp] = useState(false);
   const [displayedName, setDisplayedName] = useState(name);
+  // update value using quiring to call this function with different args
   const handeler = (seter) => (e) => seter(e.target.value);
-
+  // toast notification
   useEffect(() => {
     const openToast = setTimeout(() => setPopUp(false), 600);
 
@@ -61,8 +64,8 @@ export default function Account({ name, updateName }) {
             e.preventDefault();
             setPopUp(true);
             dispatch({
-              type: "updateSettings",
-              field: "targetWeight",
+              type: 'updateSettings',
+              field: 'targetWeight',
               value: +e.target.weight.value,
             });
           }}
@@ -84,8 +87,8 @@ export default function Account({ name, updateName }) {
             e.preventDefault();
             setPopUp(true);
             dispatch({
-              type: "updateSettings",
-              field: "targetEnergy",
+              type: 'updateSettings',
+              field: 'targetEnergy',
               value: +e.target.energy.value,
             });
           }}

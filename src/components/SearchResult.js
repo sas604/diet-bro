@@ -1,8 +1,7 @@
-import React from "react";
-import { FaPlus } from "react-icons/fa";
-import styled from "styled-components";
-
-import { ButtonStyle } from "../styles/CardStyles";
+import React from 'react';
+import { FaPlus } from 'react-icons/fa';
+import styled from 'styled-components';
+import { ButtonStyle } from '../styles/CardStyles';
 
 const AddButtonStyle = styled(ButtonStyle)`
   width: 2rem;

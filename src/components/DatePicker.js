@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { parseISO, compareAsc, subDays, format, addDays } from "date-fns";
-import { StateContext } from "./StateProvider";
-import CardStyles from "../styles/CardStyles";
-import styled from "styled-components";
+import React, { useContext } from 'react';
+import { parseISO, compareAsc, subDays, format, addDays } from 'date-fns';
+import { StateContext } from './StateProvider';
+import CardStyles from '../styles/CardStyles';
+import styled from 'styled-components';
 
 const PickerStyle = styled(CardStyles)`
   padding: 0;
@@ -32,7 +32,9 @@ const PickerStyle = styled(CardStyles)`
     font-weight: var(--bold);
   }
 `;
+
 export default function DatePicker() {
+  // use reducer to control current date
   const { state, dispatch } = useContext(StateContext);
 
   return (
@@ -41,8 +43,8 @@ export default function DatePicker() {
         className="date-picker-btn"
         onClick={() => {
           dispatch({
-            type: "setDate",
-            date: format(subDays(parseISO(state.date), 1), "yyyy-MM-dd"),
+            type: 'setDate',
+            date: format(subDays(parseISO(state.date), 1), 'yyyy-MM-dd'),
           });
         }}
       >
@@ -52,8 +54,8 @@ export default function DatePicker() {
       <input
         type="date"
         value={state.date}
-        onChange={(e) => dispatch({ type: "setDate", date: e.target.value })}
-        max={new Date().toISOString().split("T")[0]}
+        onChange={(e) => dispatch({ type: 'setDate', date: e.target.value })}
+        max={new Date().toISOString().split('T')[0]}
       />
 
       <button
@@ -61,8 +63,8 @@ export default function DatePicker() {
         onClick={() => {
           if (compareAsc(addDays(parseISO(state.date), 1), new Date()) < 0)
             dispatch({
-              type: "setDate",
-              date: format(addDays(parseISO(state.date), 1), "yyyy-MM-dd"),
+              type: 'setDate',
+              date: format(addDays(parseISO(state.date), 1), 'yyyy-MM-dd'),
             });
         }}
       >

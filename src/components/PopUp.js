@@ -1,17 +1,6 @@
-import styled from "styled-components";
-import CardStyles from "../styles/CardStyles";
+import styled from 'styled-components';
+import CardStyles from '../styles/CardStyles';
 
-const ToastWrapper = styled.div`
-  /* border-radius: 5px;
-  margin: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #00000080;
-  width: 100%;
-  height: 100%;
-  z-index: 99; */
-`;
 const ToastStyle = styled(CardStyles)`
   position: absolute;
   display: flex;
@@ -70,7 +59,7 @@ const ToastStyle = styled(CardStyles)`
 `;
 export default function PopUp() {
   return (
-    <ToastWrapper>
+    <>
       <ToastStyle>
         <div>
           <svg
@@ -87,6 +76,6 @@ export default function PopUp() {
         </div>
         <span>Success!</span>
       </ToastStyle>
-    </ToastWrapper>
+    </>
   );
 }

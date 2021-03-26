@@ -1,14 +1,12 @@
-import React, { useState, useContext } from "react";
-
-import FoodSearch from "./FoodSearch";
-import FoodModal from "./FoodModal";
-import ManualFoodEntry from "./ManualFoodEntry";
-import { useHistory } from "react-router-dom";
-
-import { StateContext } from "./StateProvider";
-import styled from "styled-components";
-import CardStyles from "../styles/CardStyles";
-import { TabsStyle } from "../styles/CardStyles";
+import React, { useState, useContext } from 'react';
+import FoodSearch from './FoodSearch';
+import FoodModal from './FoodModal';
+import ManualFoodEntry from './ManualFoodEntry';
+import { useHistory } from 'react-router-dom';
+import { StateContext } from './StateProvider';
+import styled from 'styled-components';
+import CardStyles from '../styles/CardStyles';
+import { TabsStyle } from '../styles/CardStyles';
 
 const AddFoodStyles = styled(CardStyles)`
   max-width: 600px;
@@ -37,15 +35,14 @@ export default function AddMeal() {
     const energy =
       Math.round(food.portion && (food.kcal / 100) * food.portion * 10) / 10;
     dispatch({
-      type: "addMeal",
+      type: 'addMeal',
       food: { name: food.name, energy: energy || food.kcal },
     });
 
-    history.push("/dashboard");
+    history.push('/dashboard');
   };
 
-  const addManualFoodEntry = (food) => addMeal(food);
-
+  // search from data
   const updateFoodState = (data) => {
     addMeal(data);
   };
@@ -84,7 +81,7 @@ export default function AddMeal() {
         {select ? (
           <FoodSearch handleClick={getFoodItem} />
         ) : (
-          <ManualFoodEntry handleSubmit={addManualFoodEntry} />
+          <ManualFoodEntry handleSubmit={updateFoodState} />
         )}
       </AddFoodStyles>
     </>

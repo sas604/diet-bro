@@ -1,19 +1,19 @@
-import React, { useContext } from "react";
-import { Link, Route, Switch } from "react-router-dom";
-import Account from "./Account";
-import DatePicker from "./DatePicker";
-import Navigation from "./Navigation";
-import Weight from "./Weight";
-import { StateProvider } from "./StateProvider";
-import Stats from "./Stats";
-import CaloriesDisplay from "./CaloriesDisplay";
-import { AuthContext } from "../Auth";
-import AddMeal from "./AddMeal";
-import styled from "styled-components";
-import MealHistory from "./MealHistory";
-import WeightDisplay from "./WeightDisplay";
-import WeightHistory from "./WeightHistory";
-import { TiArrowLeftThick } from "react-icons/ti";
+import React, { useContext } from 'react';
+import { Link, Route, Switch } from 'react-router-dom';
+import Account from './Account';
+import DatePicker from './DatePicker';
+import Navigation from './Navigation';
+import Weight from './Weight';
+import { StateProvider } from './StateProvider';
+import Stats from './Stats';
+import CaloriesDisplay from './CaloriesDisplay';
+import { AuthContext } from '../Auth';
+import AddMeal from './AddMeal';
+import styled from 'styled-components';
+import MealHistory from './MealHistory';
+import WeightDisplay from './WeightDisplay';
+import WeightHistory from './WeightHistory';
+import { TiArrowLeftThick } from 'react-icons/ti';
 
 const DashStyles = styled.div`
   min-height: 99.7vh;
@@ -29,11 +29,11 @@ const DashStyles = styled.div`
   grid-template-columns: 50px repeat(2, minmax(300px, 450px));
   grid-template-rows: 4rem 2.5rem minmax(50px, 250px) minmax(50px, 250px) auto;
   grid-template-areas:
-    "nav header header"
-    "nav  date  . "
-    "nav  display  history"
-    "nav   display history"
-    "nav . .";
+    'nav header header'
+    'nav  date  . '
+    'nav  display  history'
+    'nav   display history'
+    'nav . .';
 
   nav {
     grid-area: nav;
@@ -77,7 +77,8 @@ const DashStyles = styled.div`
 `;
 
 export default function Dashboard() {
-  const path = "/dashboard";
+  const path = '/dashboard';
+  // Get user info
   const { currentUser, updateName } = useContext(AuthContext);
 
   return (
@@ -91,7 +92,7 @@ export default function Dashboard() {
             <MealHistory />
           </Route>
           <Route path={`${path}/addmeal`}>
-            <Link className="head" to={"/"}>
+            <Link className="head" to={'/'}>
               <TiArrowLeftThick /> Back to home
             </Link>
             <AddMeal />

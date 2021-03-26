@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const FieldStyles = styled.div`
   position: relative;
@@ -45,11 +45,11 @@ const FieldStyles = styled.div`
     transform: scale(0.9);
   }
 `;
-
+// controled input component
 export default function ControledInput({
   handeler,
   value,
-  label = "label",
+  label = 'label',
   suffix = null,
   type,
   style = {},
@@ -71,7 +71,7 @@ export default function ControledInput({
         style={inputStyle}
       />
       <p className={`suffix`}>{suffix}</p>
-      <label className={value ? null : "empty"} htmlFor="weight">
+      <label className={value ? null : 'empty'} htmlFor="weight">
         {label}
       </label>
     </FieldStyles>

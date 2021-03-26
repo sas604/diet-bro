@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import CardStyles from "./CardStyles";
+import styled from 'styled-components';
+import CardStyles from './CardStyles';
 
 const HistoryListStyles = styled(CardStyles)`
   * {
