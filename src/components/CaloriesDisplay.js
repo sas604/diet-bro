@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { DisplayStyles } from '../styles/CardStyles';
 import { FaPlus } from 'react-icons/fa';
+import Counter from './Counter';
 const StyledPath = styled.svg`
   fill: none;
   padding-top: 2em;
@@ -71,13 +72,16 @@ export default function CaloriesDisplay() {
 
       <span className="progress">
         <span>You've logged </span>
-        <span className="number">{progress}%</span>
+        <span className="number">
+          <Counter className="number" from={0} to={progress} />%
+        </span>
         <span>of your daily goal</span>
       </span>
       <span>
         <p>You've logged </p>
         <p>
-          <span className="number-small">{calloriesForThetDay}</span> Cal
+          <Counter className="number-small" from={0} to={calloriesForThetDay} />
+          Cal
         </p>
       </span>
       <span>
