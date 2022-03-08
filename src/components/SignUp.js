@@ -1,13 +1,12 @@
-import React, { useCallback } from "react";
-import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
-import base from "./firebase";
-import { SIGN_IN } from "../constants/routes";
-import { useForm } from "./hooks";
-import ControledInput from "./ControledInput";
-import { ButtonStyle } from "../styles/CardStyles";
-import  { LandingStyles, SignIn } from "../styles/SignInStyles";
-import styled from "styled-components";
+import React, { useCallback } from 'react';
+//import { withRouter } from "react-router";
+import { Link } from 'react-router-dom';
+import { SIGN_IN } from '../constants/routes';
+import { useForm } from './hooks';
+import ControledInput from './ControledInput';
+import { ButtonStyle } from '../styles/CardStyles';
+import { LandingStyles, SignIn } from '../styles/SignInStyles';
+import styled from 'styled-components';
 
 const SignUpStyles = styled(SignIn)`
   label {
@@ -17,24 +16,24 @@ const SignUpStyles = styled(SignIn)`
 
 function SignUp({ history }) {
   const { values, updateValue } = useForm({
-    email: "",
-    password: "",
-    name: "",
+    email: '',
+    password: '',
+    name: '',
   });
   const handelSingUp = useCallback(
     async (event) => {
       event.preventDefault();
-      try {
-        await base
-          .auth()
-          .createUserWithEmailAndPassword(values.email, values.password);
-        await base
-          .auth()
-          .currentUser.updateProfile({ displayName: values.name });
-        history.push("/");
-      } catch (error) {
-        alert(error);
-      }
+      // try {
+      //   await base
+      //     .auth()
+      //     .createUserWithEmailAndPassword(values.email, values.password);
+      //   await base
+      //     .auth()
+      //     .currentUser.updateProfile({ displayName: values.name });
+      //   history.push('/');
+      // } catch (error) {
+      //   alert(error);
+      // } /// to do refactor for V9
     },
 
     [history, values]
@@ -74,4 +73,4 @@ function SignUp({ history }) {
     </LandingStyles>
   );
 }
-export default withRouter(SignUp);
+export default SignUp;

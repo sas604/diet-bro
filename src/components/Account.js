@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ButtonStyle } from '../styles/CardStyles';
-import base from './firebase';
 import { StateContext } from './StateProvider';
 import ControledInput from './ControledInput';
 import styled from 'styled-components';
@@ -105,10 +104,7 @@ export default function Account({ name, updateName }) {
           <ButtonStyle>Set Target Energy</ButtonStyle>
         </form>
 
-        <ButtonStyle
-          className=" btn bg-purple sign-out"
-          onClick={() => base.auth().signOut()}
-        >
+        <ButtonStyle className=" btn bg-purple sign-out" onClick={(f) => f}>
           Logout
         </ButtonStyle>
       </AccountStyle>

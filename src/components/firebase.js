@@ -1,15 +1,17 @@
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
+import { initializeApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
 
-const base = firebase.initializeApp({
+import { getAuth } from 'firebase/auth';
+
+const app = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: "https://diet-bro.firebaseio.com",
-  projectId: "diet-bro",
-  storageBucket: "diet-bro.appspot.com",
+  databaseURL: 'https://diet-bro.firebaseio.com',
+  projectId: 'diet-bro',
+  storageBucket: 'diet-bro.appspot.com',
   messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
   appId: process.env.REACT_APP_API_ID,
 });
-export const provider = new firebase.auth.GithubAuthProvider();
-export default base;
+
+export const db = getDatabase(app);
+export const authFireBase = getAuth();

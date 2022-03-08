@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import { Link, Redirect, withRouter } from "react-router-dom";
-import * as ROUTES from "../constants/routes";
-import { AuthContext } from "../Auth";
-import { ReactComponent as UserSvg } from "../img/user-regular.svg";
-import { useHandleLogInTestUser } from "./hooks";
-import styled from "styled-components";
-import { ButtonStyle } from "../styles/CardStyles";
-import { LandingStyles } from "../styles/SignInStyles";
+import React, { useContext } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import * as ROUTES from '../constants/routes';
+import { AuthContext } from '../Auth';
+import { ReactComponent as UserSvg } from '../img/user-regular.svg';
+import { useHandleLogInTestUser } from './hooks';
+import styled from 'styled-components';
+import { ButtonStyle } from '../styles/CardStyles';
+import { LandingStyles } from '../styles/SignInStyles';
 
 const SignIn = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ function Landing({ history }) {
   const { currentUser } = useContext(AuthContext);
   const logInWithTest = useHandleLogInTestUser(history);
   if (currentUser) {
-    return <Redirect to={"/dashboard"} />;
+    return <Navigate to={'/dashboard'} />;
   }
 
   return (
@@ -62,4 +62,4 @@ function Landing({ history }) {
     </LandingStyles>
   );
 }
-export default withRouter(Landing);
+export default Landing;

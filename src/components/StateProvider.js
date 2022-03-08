@@ -1,11 +1,12 @@
-import { format, getTime } from "date-fns";
-import React, { createContext, useContext, useEffect, useReducer } from "react";
-import { AuthContext } from "../Auth";
-import base from "./firebase";
-import { useTestData } from "./hooks";
+import { format, getTime } from 'date-fns';
+import { onValue, ref, update } from 'firebase/database';
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import { AuthContext } from '../Auth';
+import { db } from './firebase';
 
+import { useTestData } from './hooks';
 const initialState = {
-  date: format(new Date(), "yyyy-MM-dd"),
+  date: format(new Date(), 'yyyy-MM-dd'),
   loading: true,
   data: {
     targetEnergy: 2001,
@@ -18,10 +19,10 @@ const initialState = {
 const reducer = (state, action) => {
   const stamp = getTime(new Date());
   switch (action.type) {
-    case "setDate":
+    case 'setDate':
       return { ...state, date: action.date };
 
-    case "updateState":
+    case 'updateState':
       return {
         ...state,
         loading: false,
@@ -32,7 +33,7 @@ const reducer = (state, action) => {
         weight: { ...action.payload.weight } || {},
       };
 
-    case "setInitialData":
+    case 'setInitialData':
       return {
         ...initialState,
         loading: false,
@@ -41,7 +42,7 @@ const reducer = (state, action) => {
         }, // to prevent the load of empty state
       };
 
-    case "addMeal":
+    case 'addMeal':
       return {
         ...state,
         mealHistory: {
@@ -52,7 +53,7 @@ const reducer = (state, action) => {
           },
         },
       };
-    case "del":
+    case 'del':
       return {
         ...state,
         mealHistory: {
@@ -60,7 +61,7 @@ const reducer = (state, action) => {
           [state.date]: { ...action.state },
         },
       };
-    case "delWeight":
+    case 'delWeight':
       return {
         ...state,
         weight: {
@@ -68,19 +69,19 @@ const reducer = (state, action) => {
         },
       };
 
-    case "setWeight":
+    case 'setWeight':
       return {
         ...state,
         weight: {
           [state.date]: action.weight,
         },
       };
-    case "updateSettings":
+    case 'updateSettings':
       return {
         ...state,
         data: { ...state.data, [action.field]: action.value },
       };
-    case "testUser":
+    case 'testUser':
       return {
         ...state,
         loading: false,
@@ -101,7 +102,7 @@ export const StateProvider = ({ children }) => {
   //get random name for test user
 
   const getTestUserName = async () => {
-    const result = await fetch("https://randomuser.me/api/?nat=us");
+    const result = await fetch('https://randomuser.me/api/?nat=us');
     if (!result.ok) {
       const message = `An error has occured: ${result.status}`;
       throw new Error(message);
@@ -111,7 +112,7 @@ export const StateProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (currentUser.uid === "ByJmvpz9vOfdXvtl3Ma3lwDW3jo2") {
+    if (currentUser.uid === 'ByJmvpz9vOfdXvtl3Ma3lwDW3jo2') {
       getTestUserName().then((person) =>
         updateName(
           `${person.results[0].name.first} ${person.results[0].name.last} `
@@ -122,8 +123,8 @@ export const StateProvider = ({ children }) => {
 
   // load data from the firebase
   useEffect(() => {
-    const firebase = base.database().ref(`users/${currentUser.uid}`);
-    firebase.on("value", (snapshot) => {
+    const firebase = ref(db, `users/${currentUser.uid}`);
+    const off = onValue(firebase, (snapshot) => {
       // check if there user is logged in
       if (!snapshot.val()) {
         // get user info
@@ -135,26 +136,26 @@ export const StateProvider = ({ children }) => {
           },
         });
         dispatch({
-          type: "setInitialData",
+          type: 'setInitialData',
         });
       } else if (
-        currentUser.uid === "ByJmvpz9vOfdXvtl3Ma3lwDW3jo2" &&
+        currentUser.uid === 'ByJmvpz9vOfdXvtl3Ma3lwDW3jo2' &&
         !snapshot.val().mealHistory[state.date]
       ) {
-        dispatch({ type: "testUser", payload: testUserData });
+        dispatch({ type: 'testUser', payload: testUserData });
       } else {
         const data = snapshot.val();
-        dispatch({ type: "updateState", payload: { ...data } });
+        dispatch({ type: 'updateState', payload: { ...data } });
       }
     });
     // close conection to database on rerender
-    return () => firebase.off();
+    return () => off();
   }, [currentUser, state.date]);
 
   //  firebase  data updater
   useEffect(() => {
     if (state.loading) return;
-    const firebase = base.database().ref(`users/${currentUser.uid}`);
+    const firebase = ref(db, `users/${currentUser.uid}`);
     const updates = {};
     updates[`/data`] = state.data;
     if (state.weight[state.date]) {
@@ -163,7 +164,7 @@ export const StateProvider = ({ children }) => {
     if (state.mealHistory[state.date]) {
       updates[`/mealHistory/${state.date}`] = state.mealHistory[state.date];
     }
-    firebase.update(updates);
+    update(firebase, updates);
   }, [state, currentUser]);
 
   return (

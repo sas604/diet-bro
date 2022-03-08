@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
-import base from "./firebase";
-import { subDays, format } from "date-fns";
-import { days, restD } from "./testDataFile";
+import { useState, useEffect, useCallback } from 'react';
+import base from './firebase';
+import { subDays, format } from 'date-fns';
+import { days, restD } from './testDataFile';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 export function useForm(defaults) {
   const [values, setValues] = useState(defaults);
@@ -9,7 +10,7 @@ export function useForm(defaults) {
   function updateValue(e) {
     // check if its a number
     let { value } = e.target;
-    if (e.target.type === "number") {
+    if (e.target.type === 'number') {
       value = +value;
     }
     setValues({
@@ -62,10 +63,13 @@ export const useHandleLogInTestUser = (history) =>
       event.preventDefault();
 
       try {
-        await base
-          .auth()
-          .signInWithEmailAndPassword("test@tagunovdesign.com", "123456");
-        history.push("/");
+        const auth = getAuth();
+        await signInWithEmailAndPassword(
+          auth,
+          'test@tagunovdesign.com',
+          '123456'
+        );
+        history('/');
       } catch (error) {
         alert(error);
       }
@@ -79,7 +83,7 @@ export const useTestData = () => {
 
     const date = new Date();
     while (week.length < 7) {
-      week.push(format(subDays(date, week.length), "yyyy-MM-dd"));
+      week.push(format(subDays(date, week.length), 'yyyy-MM-dd'));
     }
     return week;
   };

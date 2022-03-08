@@ -1,14 +1,18 @@
-import React, { useCallback, useContext } from "react";
-import { Redirect, withRouter } from "react-router";
-import { Link } from "react-router-dom";
-import base, { provider } from "./firebase";
-import { AuthContext } from "../Auth";
-import * as ROUTES from "../constants/routes";
-import { useForm, useHandleLogInTestUser } from "./hooks";
-import { LandingStyles, SignIn } from "../styles/SignInStyles";
-import { ButtonStyle } from "../styles/CardStyles";
-import styled from "styled-components";
-import ControledInput from "./ControledInput";
+import React, { useCallback, useContext } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Auth';
+import * as ROUTES from '../constants/routes';
+import { useForm, useHandleLogInTestUser } from './hooks';
+import { LandingStyles, SignIn } from '../styles/SignInStyles';
+import { ButtonStyle } from '../styles/CardStyles';
+import styled from 'styled-components';
+import ControledInput from './ControledInput';
+import {
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  GithubAuthProvider,
+} from 'firebase/auth';
+import { authFireBase as auth } from './firebase';
 
 const SignInStyles = styled(SignIn)`
   label {
@@ -19,33 +23,35 @@ const SignInStyles = styled(SignIn)`
   }
 `;
 
-function SignUp({ history }) {
+function SignInPage() {
+  const history = useNavigate();
   const logWithTest = useHandleLogInTestUser(history);
+  const provider = new GithubAuthProvider();
+
   const { values, updateValue } = useForm({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const handleLogIn = useCallback(
     async (event) => {
       event.preventDefault();
+
       try {
-        await base
-          .auth()
-          .signInWithEmailAndPassword(values.email, values.password);
-        history.push("/");
+        await signInWithEmailAndPassword(auth, values.email, values.password);
+        history('/');
       } catch (error) {
         alert(error);
       }
     },
-    [history, values.email, values.password]
+    [history, values.email, values.password, auth]
   );
   // sign up with github, /// try to figure out why you need a use callback here
   const handleGitHubLogin = async (event) => {
     event.preventDefault();
 
     try {
-      await base.auth().signInWithPopup(provider);
-      history.push("/");
+      await signInWithPopup(auth, provider);
+      history('/');
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +59,7 @@ function SignUp({ history }) {
 
   const { currentUser } = useContext(AuthContext);
   if (currentUser) {
-    return <Redirect to={"/home"} />;
+    return <Navigate to={'/dashboard'} />;
   }
   return (
     <LandingStyles>
@@ -98,4 +104,4 @@ function SignUp({ history }) {
     </LandingStyles>
   );
 }
-export default withRouter(SignUp);
+export default SignInPage;

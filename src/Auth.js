@@ -1,15 +1,20 @@
-import React, { useState } from "react";
-import base from "./components/firebase";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
+import base from './components/firebase';
 
 export const AuthContext = React.createContext();
-
+const auth = getAuth();
 export const AuthProvider = ({ children }) => {
-  const updateName = (name) =>
-    base.auth().currentUser.updateProfile({ displayName: name });
+  const updateName = (name) => name;
+  //   auth().currentUser.updateProfile({ displayName: name });
   const [currentUser, setCurrentUser] = useState();
-  const unsubcribe = base.auth().onAuthStateChanged((user) => {
-    setCurrentUser(user);
-  });
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        setCurrentUser(user);
+      }),
+    []
+  );
 
   return (
     <AuthContext.Provider
@@ -17,7 +22,6 @@ export const AuthProvider = ({ children }) => {
         updateName,
         currentUser,
         setCurrentUser,
-        unsubcribe,
       }}
     >
       {children}

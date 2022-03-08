@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
-import { GoSignOut, GoGear, GoGraph, GoHome } from "react-icons/go";
-import { FaWeight } from "react-icons/fa";
-import styled from "styled-components";
-import base from "./firebase";
-import { AuthContext } from "../Auth";
+import React, { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import { GoSignOut, GoGear, GoGraph, GoHome } from 'react-icons/go';
+import { FaWeight } from 'react-icons/fa';
+import styled from 'styled-components';
+
+import { AuthContext } from '../Auth';
+import { authFireBase } from './firebase';
 
 const NavStyles = styled.nav`
   display: flex;
@@ -63,7 +64,7 @@ export default function Navigation({ path }) {
   return (
     <>
       <NavStyles className="global-nav">
-        <NavLink title="Home" exact to={path}>
+        <NavLink title="Home" to={path}>
           <GoHome />
         </NavLink>
 
@@ -81,10 +82,7 @@ export default function Navigation({ path }) {
         <button
           title="signout"
           type="button"
-          onClick={() => {
-            unsubcribe();
-            base.auth().signOut();
-          }}
+          onClick={(f) => authFireBase.signOut()}
         >
           <GoSignOut />
         </button>

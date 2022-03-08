@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import FoodSearch from './FoodSearch';
 import FoodModal from './FoodModal';
 import ManualFoodEntry from './ManualFoodEntry';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { StateContext } from './StateProvider';
 import styled from 'styled-components';
 import CardStyles from '../styles/CardStyles';
@@ -25,7 +25,7 @@ export default function AddMeal() {
   const [foodItemId, setFoodItemId] = useState(null);
   const [select, setSelect] = useState(true);
   const { dispatch } = useContext(StateContext);
-  const history = useHistory();
+  const history = useNavigate();
 
   const getFoodItem = (e) => {
     setFoodItemId(e.target.id);
@@ -39,7 +39,7 @@ export default function AddMeal() {
       food: { name: food.name, energy: energy || food.kcal },
     });
 
-    history.push('/dashboard');
+    history('/dashboard');
   };
 
   // search from data

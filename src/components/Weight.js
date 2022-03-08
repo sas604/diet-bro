@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
-import Loader from "react-loader-spinner";
-import styled from "styled-components";
-import ControledInput from "./ControledInput";
-import { StateContext } from "./StateProvider";
+import React, { useContext, useState } from 'react';
+import { Audio as Loader } from 'react-loader-spinner';
+import styled from 'styled-components';
+import ControledInput from './ControledInput';
+import { StateContext } from './StateProvider';
 
 const AddWeightStyle = styled.div`
   border-top: 3px solid var(--gray);
@@ -25,24 +25,24 @@ const AddWeightStyle = styled.div`
 
 export default function Weight() {
   const { state, dispatch } = useContext(StateContext);
-  const [weight, setWeight] = useState("");
+  const [weight, setWeight] = useState('');
   if (state.loaded)
     return (
       <Loader
         className="loader"
         type="Puff"
-        color={"#9163f2"}
+        color={'#9163f2'}
         height={100}
         width={100}
-        style={{ margin: "10rem auto", textAlign: "center" }}
+        style={{ margin: '10rem auto', textAlign: 'center' }}
         timeout={11000} //3 secs
       />
     );
 
   const addWeightEntry = (e) => {
     e.preventDefault();
-    dispatch({ type: "setWeight", weight: +weight });
-    setWeight("");
+    dispatch({ type: 'setWeight', weight: +weight });
+    setWeight('');
   };
 
   const handleInput = (e) => setWeight(e.target.value);
@@ -60,7 +60,7 @@ export default function Weight() {
         }
 
         <button type="submit" className="btn bg-green">
-          Add{" "}
+          Add{' '}
         </button>
       </form>
     </AddWeightStyle>

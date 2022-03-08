@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import Loader from 'react-loader-spinner';
+import { Audio as Loader } from 'react-loader-spinner';
 import { useFetch } from './hooks';
 import FocusTrap from 'focus-trap-react';
 import { TiTimes } from 'react-icons/ti';
