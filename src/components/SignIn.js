@@ -32,19 +32,16 @@ function SignInPage() {
     email: '',
     password: '',
   });
-  const handleLogIn = useCallback(
-    async (event) => {
-      event.preventDefault();
+  const handleLogIn = async (event) => {
+    event.preventDefault();
 
-      try {
-        await signInWithEmailAndPassword(auth, values.email, values.password);
-        history('/');
-      } catch (error) {
-        alert(error);
-      }
-    },
-    [history, values.email, values.password, auth]
-  );
+    try {
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+      history('/');
+    } catch (error) {
+      alert(error);
+    }
+  };
   // sign up with github, /// try to figure out why you need a use callback here
   const handleGitHubLogin = async (event) => {
     event.preventDefault();

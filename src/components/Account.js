@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import PopUp from './PopUp';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { authFireBase } from './firebase';
+import { AuthContext } from '../Auth';
 
 const AccountStyle = styled.div`
   position: relative;
@@ -25,7 +26,7 @@ const AccountStyle = styled.div`
 `;
 
 export default function Account() {
-  const { currentUser } = authFireBase;
+  const { currentUser, updateName } = useContext(AuthContext);
 
   // get state from the store
   const { state, dispatch } = useContext(StateContext);
@@ -42,15 +43,7 @@ export default function Account() {
 
     return () => clearTimeout(openToast);
   }, [popUp]);
-  async function updateName(name) {
-    try {
-      const res = updateProfile(currentUser, {
-        displayName: name,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
+
   return (
     <>
       <AccountStyle className="account">

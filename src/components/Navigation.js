@@ -68,9 +68,9 @@ export default function Navigation({ path = '/dashboard' }) {
           <FaWeight />
         </NavLink>
 
-        <NavLink title="statistics" to={`${path}/stats`}>
+        {/* <NavLink title="statistics" to={`${path}/stats`}>
           <GoGraph />
-        </NavLink>
+        </NavLink> */}
 
         <NavLink title="account settings" to={`${path}/account`}>
           <GoGear />
