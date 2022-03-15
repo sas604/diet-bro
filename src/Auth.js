@@ -1,12 +1,9 @@
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
-import base from './components/firebase';
-
+import { authFireBase } from './components/firebase';
 export const AuthContext = React.createContext();
-const auth = getAuth();
+const auth = authFireBase;
 export const AuthProvider = ({ children }) => {
-  const updateName = (name) => name;
-  //   auth().currentUser.updateProfile({ displayName: name });
   const [currentUser, setCurrentUser] = useState();
   useEffect(
     () =>
@@ -19,7 +16,6 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        updateName,
         currentUser,
         setCurrentUser,
       }}

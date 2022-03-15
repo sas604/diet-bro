@@ -1,10 +1,7 @@
-import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { GoSignOut, GoGear, GoGraph, GoHome } from 'react-icons/go';
 import { FaWeight } from 'react-icons/fa';
 import styled from 'styled-components';
-
-import { AuthContext } from '../Auth';
 import { authFireBase } from './firebase';
 
 const NavStyles = styled.nav`
@@ -59,8 +56,7 @@ const NavStyles = styled.nav`
   }
 `;
 
-export default function Navigation({ path }) {
-  const { unsubcribe } = useContext(AuthContext);
+export default function Navigation({ path = '/dashboard' }) {
   return (
     <>
       <NavStyles className="global-nav">

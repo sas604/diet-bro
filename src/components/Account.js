@@ -4,6 +4,8 @@ import { StateContext } from './StateProvider';
 import ControledInput from './ControledInput';
 import styled from 'styled-components';
 import PopUp from './PopUp';
+import { getAuth, updateProfile } from 'firebase/auth';
+import { authFireBase } from './firebase';
 
 const AccountStyle = styled.div`
   position: relative;
@@ -22,14 +24,16 @@ const AccountStyle = styled.div`
   }
 `;
 
-export default function Account({ name, updateName }) {
+export default function Account() {
+  const { currentUser } = authFireBase;
+
   // get state from the store
   const { state, dispatch } = useContext(StateContext);
   const [energy, setEnergy] = useState(state.data.targetEnergy);
   const [weight, setWeight] = useState(state.data.targetWeight);
   // pop up
   const [popUp, setPopUp] = useState(false);
-  const [displayedName, setDisplayedName] = useState(name);
+  const [displayedName, setDisplayedName] = useState(currentUser.displayName);
   // update value using quiring to call this function with different args
   const handeler = (seter) => (e) => seter(e.target.value);
   // toast notification
@@ -38,7 +42,15 @@ export default function Account({ name, updateName }) {
 
     return () => clearTimeout(openToast);
   }, [popUp]);
-
+  async function updateName(name) {
+    try {
+      const res = updateProfile(currentUser, {
+        displayName: name,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <AccountStyle className="account">

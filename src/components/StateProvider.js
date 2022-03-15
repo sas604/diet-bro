@@ -1,5 +1,5 @@
 import { format, getTime } from 'date-fns';
-import { onValue, ref, update } from 'firebase/database';
+import { onValue, ref, update, set } from 'firebase/database';
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { AuthContext } from '../Auth';
 import { db } from './firebase';
@@ -128,7 +128,7 @@ export const StateProvider = ({ children }) => {
       // check if there user is logged in
       if (!snapshot.val()) {
         // get user info
-        firebase.set({
+        set(firebase, {
           data: {
             ...state.data,
             name: currentUser.displayName,

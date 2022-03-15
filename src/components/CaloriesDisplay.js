@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { DisplayStyles } from '../styles/CardStyles';
 import { FaPlus } from 'react-icons/fa';
 import Counter from './Counter';
+import { ADD_MEAL, DASH } from '../constants/routes';
 const StyledPath = styled.svg`
   fill: none;
   padding-top: 2em;
@@ -90,7 +91,7 @@ export default function CaloriesDisplay() {
           <span className="number-small">{state.data.targetEnergy}</span> Cal
         </p>
       </span>
-      <Link to={`dashboard/addmeal`}>
+      <Link to={DASH + ADD_MEAL}>
         <FaPlus className="icon" />
         Add meal
       </Link>
