@@ -6,6 +6,7 @@ import { AuthContext } from '../Auth';
 
 export default function MealDash() {
   const { currentUser } = useContext(AuthContext);
+
   return (
     <>
       <h2 className="head">Welcome, {currentUser.displayName}</h2>

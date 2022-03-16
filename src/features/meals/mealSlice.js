@@ -2,15 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const fetchMealData = createAsyncThunk('mealHistory/getDataStatus');
 
-const initialState = {
-  mealHistory: {},
-};
+const initialState = {};
 
 export const mealSlice = createSlice({
   name: 'mealHistory',
   initialState: {},
   reducers: {
-    fetchItemsFulfiled: (state, action) => ({ mealHistory: action.payload }),
+    fetchItemsFulfiled: (state, action) => action.payload,
   },
   //   extraReducers: (buider) => {
   //     buider.addCase();

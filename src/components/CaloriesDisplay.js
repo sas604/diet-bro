@@ -6,6 +6,7 @@ import { DisplayStyles } from '../styles/CardStyles';
 import { FaPlus } from 'react-icons/fa';
 import Counter from './Counter';
 import { ADD_MEAL, DASH } from '../constants/routes';
+import { useSelector } from 'react-redux';
 const StyledPath = styled.svg`
   fill: none;
   padding-top: 2em;
@@ -39,19 +40,22 @@ const StyledPath = styled.svg`
 `;
 
 export default function CaloriesDisplay() {
-  const { state } = useContext(StateContext);
+  const { loading, mealHistory, date, userData } = useSelector(
+    (state) => state
+  );
+  if (loading) return <h1>Loading...</h1>;
   // can I do it better ?????
   // loop trough Meal history object and reduce it to single value
-  const calloriesForThetDay = state.mealHistory[state.date]
-    ? Object.keys(state.mealHistory[state.date])
-        .map((entry) => state.mealHistory[state.date][entry])
+  const calloriesForThetDay = mealHistory
+    ? Object.keys(mealHistory)
+        .map((entry) => mealHistory[entry])
         .reduce((acc, entry) => acc + entry.energy, 0)
     : 0;
   // round
   const progress = Math.round(
-    (calloriesForThetDay / state.data.targetEnergy) * 100
+    (calloriesForThetDay / userData.targetEnergy) * 100
   );
-  if (state.loading) return <h1>Loading...</h1>;
+
   return (
     <DisplayStyles className="display">
       <StyledPath
@@ -88,7 +92,7 @@ export default function CaloriesDisplay() {
       <span>
         <p>Your goal is</p>
         <p>
-          <span className="number-small">{state.data.targetEnergy}</span> Cal
+          <span className="number-small">{userData.targetEnergy}</span> Cal
         </p>
       </span>
       <Link to={DASH + ADD_MEAL}>

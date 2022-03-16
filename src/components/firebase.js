@@ -4,6 +4,7 @@ import { getDatabase } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchItemsFulfiled } from '../features/meals/mealSlice';
+import { setLoading } from '../features/loading/loadingSlice';
 
 const app = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -17,12 +18,14 @@ const app = initializeApp({
 
 export const db = getDatabase(app);
 export const authFireBase = getAuth();
-export function MealHistoryListner(uid, firebase, onValue) {
+export function firebasePathListner(uid, firebase, onValue, action) {
   return (dispatch) => {
+    dispatch(setLoading(true));
     return onValue(firebase, (snapshot) => {
       console.log('data is changing ');
       if (snapshot.val()) {
-        dispatch(fetchItemsFulfiled(snapshot.val()));
+        dispatch(action(snapshot.val()));
+        dispatch(setLoading(false));
       }
     });
   };
