@@ -5,9 +5,9 @@ export const dateSlice = createSlice({
   name: 'date',
   initialState: format(new Date(), 'yyyy-MM-dd'),
   reducers: {
-    setDate: (state, action) => action.payload,
+    setDateAction: (state, action) => action.payload,
   },
 });
 
-export const { setDate } = dateSlice.actions;
+export const { setDateAction } = dateSlice.actions;
 export default dateSlice.reducer;

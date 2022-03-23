@@ -1,13 +1,8 @@
 import { onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { off, onValue, ref } from 'firebase/database';
+import { onValue, ref } from 'firebase/database';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  authFireBase,
-  db,
-  firebasePathListner,
-  MealHistoryListner,
-} from './components/firebase';
+import { authFireBase, db, firebasePathListner } from './components/firebase';
 import { fetchItemsFulfiled } from './features/meals/mealSlice';
 import { fetchUserDataFulfiled } from './features/userData/userDataSlice';
 export const AuthContext = React.createContext();

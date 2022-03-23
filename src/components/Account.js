@@ -4,8 +4,6 @@ import { StateContext } from './StateProvider';
 import ControledInput from './ControledInput';
 import styled from 'styled-components';
 import PopUp from './PopUp';
-import { getAuth, updateProfile } from 'firebase/auth';
-import { authFireBase } from './firebase';
 import { AuthContext } from '../Auth';
 
 const AccountStyle = styled.div`

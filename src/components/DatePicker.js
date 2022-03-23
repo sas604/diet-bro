@@ -3,6 +3,8 @@ import { parseISO, compareAsc, subDays, format, addDays } from 'date-fns';
 import { StateContext } from './StateProvider';
 import CardStyles from '../styles/CardStyles';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDateAction } from '../features/date/dateSlice';
 
 const PickerStyle = styled(CardStyles)`
   padding: 0;
@@ -35,37 +37,44 @@ const PickerStyle = styled(CardStyles)`
 
 export default function DatePicker() {
   // use reducer to control current date
-  const { state, dispatch } = useContext(StateContext);
+  //const { state, dispatch } = useContext(StateContext);
+  const { date } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  console.log(date);
 
   return (
     <PickerStyle>
       <button
         className="date-picker-btn"
-        onClick={() => {
-          dispatch({
-            type: 'setDate',
-            date: format(subDays(parseISO(state.date), 1), 'yyyy-MM-dd'),
-          });
-        }}
+        onClick={() =>
+          dispatch(
+            setDateAction(format(subDays(parseISO(date), 1), 'yyyy-MM-dd'))
+          )
+        }
       >
         <strong> &lt;</strong>
       </button>
 
       <input
         type="date"
-        value={state.date}
-        onChange={(e) => dispatch({ type: 'setDate', date: e.target.value })}
+        value={date}
+        onChange={() =>
+          dispatch(
+            setDateAction(format(subDays(parseISO(date), 1), 'yyyy-MM-dd'))
+          )
+        }
         max={new Date().toISOString().split('T')[0]}
       />
 
       <button
         className="date-picker-btn"
         onClick={() => {
-          if (compareAsc(addDays(parseISO(state.date), 1), new Date()) < 0)
-            dispatch({
-              type: 'setDate',
-              date: format(addDays(parseISO(state.date), 1), 'yyyy-MM-dd'),
-            });
+          if (compareAsc(addDays(parseISO(date), 1), new Date()) < 0) {
+            dispatch(
+              setDateAction(format(addDays(parseISO(date), 1), 'yyyy-MM-dd'))
+            );
+          }
         }}
       >
         <strong>&gt;</strong>

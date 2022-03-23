@@ -1,5 +1,3 @@
-import React, { useContext } from 'react';
-import { StateContext } from './StateProvider';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { DisplayStyles } from '../styles/CardStyles';
@@ -40,17 +38,17 @@ const StyledPath = styled.svg`
 `;
 
 export default function CaloriesDisplay() {
-  const { loading, mealHistory, date, userData } = useSelector(
-    (state) => state
-  );
+  const {
+    mealHistory: { loading, entries },
+    userData,
+  } = useSelector((state) => state);
+
   if (loading) return <h1>Loading...</h1>;
-  // can I do it better ?????
-  // loop trough Meal history object and reduce it to single value
-  const calloriesForThetDay = mealHistory
-    ? Object.keys(mealHistory)
-        .map((entry) => mealHistory[entry])
-        .reduce((acc, entry) => acc + entry.energy, 0)
-    : 0;
+
+  const calloriesForThetDay = Object.keys(entries).reduce(
+    (acc, entry) => acc + entries[entry].energy,
+    0
+  );
   // round
   const progress = Math.round(
     (calloriesForThetDay / userData.targetEnergy) * 100
