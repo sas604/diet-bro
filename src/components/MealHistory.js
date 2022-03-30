@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import HistoryListStyles from '../styles/HistoryList';
 import { useSelector } from 'react-redux';
+import { deleteMealFromFirebase } from './firebase';
 
 const emoji = [
   '🍔',
@@ -39,7 +39,11 @@ export default function MealHistory() {
         <span>
           <p>{entries[element].name}</p> <p>{entries[element].energy} Cal</p>
         </span>
-        <button title="Delete Entry" type="button" onClick={(f) => f}>
+        <button
+          title="Delete Entry"
+          type="button"
+          onClick={(f) => deleteMealFromFirebase(element)}
+        >
           <FaRegTrashAlt />
         </button>
       </li>

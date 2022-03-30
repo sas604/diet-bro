@@ -3,6 +3,7 @@ import { getDatabase, ref, update } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import { setLoading } from '../features/meals/mealSlice';
 import { getTime } from 'date-fns';
+import { store } from '../store/store';
 
 const app = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -25,11 +26,26 @@ export function firebasePathListner(uid, firebase, onValue, action) {
     });
   };
 }
-export function postMealToFirebase(data, date) {
+export async function postMealToFirebase(data) {
+  const { date } = store.getState();
   const stamp = getTime(new Date());
   const firebase = ref(
     db,
     `users/${authFireBase.currentUser.uid}/mealHistory/${date}/${stamp}`
   );
-  update(firebase, data);
+  const error = await update(firebase, data);
+  if (error) {
+    console.log(error);
+  }
+}
+export async function deleteMealFromFirebase(stamp) {
+  const { date } = store.getState();
+  const firebase = ref(
+    db,
+    `users/${authFireBase.currentUser.uid}/mealHistory/${date}`
+  );
+  const error = await update(firebase, { [stamp]: null });
+  if (error) {
+    console.log(error);
+  }
 }
