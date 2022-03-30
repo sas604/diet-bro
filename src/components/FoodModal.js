@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Audio as Loader } from 'react-loader-spinner';
+import { Bars as Loader } from 'react-loader-spinner';
 import { useFetch } from './hooks';
 import FocusTrap from 'focus-trap-react';
 import { TiTimes } from 'react-icons/ti';
@@ -56,10 +56,9 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
   // path to the fda api
   const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208`;
   // fetch data
-  const [, data] = useFetch(url);
+  const [loading, data, error] = useFetch(url);
   const [foodNutrients, setFoodNutrients] = useState(null);
   const [select, setSelect] = useState(true);
-
   useEffect(() => {
     // check if something in response
     if (data) {
@@ -76,22 +75,32 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
       });
     }
   }, [data]);
-
-  if (!foodNutrients)
+  if (error)
     return (
       <ModalWrapperStyles className="modal-wrapper">
         <ModalStyles className="modal">
-          <Loader
-            type="Puff"
-            color="#00BFFF"
-            height={100}
-            width={100}
-            timeout={5000}
-          />
-          <p>Sometimes this API is very slow, wait for it to respond.</p>
+          <button
+            className="close-btn"
+            onClick={() => {
+              setFoodNutrients(null);
+              handleClick();
+            }}
+          >
+            <TiTimes />
+          </button>
+          <p>There was an error connecting to FDA API please try again</p>
         </ModalStyles>
       </ModalWrapperStyles>
     );
+  if (loading || !data)
+    return (
+      <ModalWrapperStyles className="modal-wrapper">
+        <ModalStyles className="modal">
+          <Loader color="#00BFFF" height={100} width={100} timeout={5000} />
+        </ModalStyles>
+      </ModalWrapperStyles>
+    );
+
   return (
     <ModalWrapperStyles className="modal-wrapper">
       <FocusTrap>

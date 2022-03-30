@@ -23,38 +23,53 @@ export function useForm(defaults) {
 export const useFetch = (url) => {
   const [pendingFetch, setPending] = useState(false);
   const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    let cancel = false;
-
     if (!url) {
       setData(null);
       return;
     }
+    const controller = new AbortController();
+    let timeoutId;
 
     const fetchData = async () => {
       setPending(true);
-      const response = await fetch(url);
-      if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
-      }
-      const data = await response.json();
-      if (!cancel) {
+      try {
+        timeoutId = setTimeout(() => {
+          controller.abort();
+          setError('Connection timeout');
+          setPending(false);
+          setData(null);
+        }, 6000);
+        const response = await fetch(url, { signal: controller.signal });
+        clearInterval(timeoutId);
+        if (!response.ok) {
+          const message = `An error has occured: ${response.status}`;
+          throw new Error(message);
+        }
+        const data = await response.json();
         setData(data);
         setPending(false);
-      } else {
-        setPending(false);
-        setData(null);
+        setError(false);
+      } catch (e) {
+        if (e.name !== 'AbortError') {
+          setError(e.message);
+          setData(null);
+          setPending(false);
+        }
       }
     };
 
     fetchData();
-
-    return () => (cancel = true);
+    return () => {
+      controller.abort();
+      setPending(false);
+      setData(null);
+    };
   }, [url]);
 
-  return [pendingFetch, data];
+  return [pendingFetch, data, error];
 };
 
 export const useHandleLogInTestUser = (history) =>

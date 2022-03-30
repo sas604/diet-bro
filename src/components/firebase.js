@@ -1,9 +1,8 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase } from 'firebase/database';
-
+import { getDatabase, ref, update } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
-
 import { setLoading } from '../features/meals/mealSlice';
+import { getTime } from 'date-fns';
 
 const app = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -25,4 +24,12 @@ export function firebasePathListner(uid, firebase, onValue, action) {
       dispatch(setLoading(false));
     });
   };
+}
+export function postMealToFirebase(data, date) {
+  const stamp = getTime(new Date());
+  const firebase = ref(
+    db,
+    `users/${authFireBase.currentUser.uid}/mealHistory/${date}/${stamp}`
+  );
+  update(firebase, data);
 }

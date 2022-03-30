@@ -1,12 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import FoodSearch from './FoodSearch';
 import FoodModal from './FoodModal';
 import ManualFoodEntry from './ManualFoodEntry';
 import { useNavigate } from 'react-router-dom';
-import { StateContext } from './StateProvider';
 import styled from 'styled-components';
 import CardStyles from '../styles/CardStyles';
 import { TabsStyle } from '../styles/CardStyles';
+import { postMealToFirebase } from './firebase';
+import { useSelector } from 'react-redux';
 
 const AddFoodStyles = styled(CardStyles)`
   max-width: 600px;
@@ -24,28 +25,21 @@ const AddFoodStyles = styled(CardStyles)`
 export default function AddMeal() {
   const [foodItemId, setFoodItemId] = useState(null);
   const [select, setSelect] = useState(true);
-  const { dispatch } = useContext(StateContext);
+  const { date } = useSelector((state) => state);
   const history = useNavigate();
 
   const getFoodItem = (e) => {
     setFoodItemId(e.target.id);
   };
 
-  const addMeal = (food) => {
+  const updateFoodState = (food) => {
     const energy =
       Math.round(food.portion && (food.kcal / 100) * food.portion * 10) / 10;
-    dispatch({
-      type: 'addMeal',
-      food: { name: food.name, energy: energy || food.kcal },
-    });
-
+    postMealToFirebase({ name: food.name, energy: energy || food.kcal }, date);
     history('/dashboard');
   };
 
   // search from data
-  const updateFoodState = (data) => {
-    addMeal(data);
-  };
 
   return (
     <>

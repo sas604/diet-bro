@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
 import { parseISO, compareAsc, subDays, format, addDays } from 'date-fns';
-import { StateContext } from './StateProvider';
 import CardStyles from '../styles/CardStyles';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,12 +34,8 @@ const PickerStyle = styled(CardStyles)`
 `;
 
 export default function DatePicker() {
-  // use reducer to control current date
-  //const { state, dispatch } = useContext(StateContext);
   const { date } = useSelector((state) => state);
   const dispatch = useDispatch();
-
-  console.log(date);
 
   return (
     <PickerStyle>
