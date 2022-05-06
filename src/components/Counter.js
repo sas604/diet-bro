@@ -2,13 +2,14 @@ import { animate } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 
 export default function Counter({ from, to, className }) {
-  const ref = useRef();
+  const ref = useRef(null);
 
   useEffect(() => {
+    const node = ref.current;
     const controls = animate(from, to, {
       duration: 0.5,
       onUpdate(value) {
-        ref.current.textContent = value.toFixed();
+        node.textContent = value.toFixed();
       },
     });
     return () => controls.stop();

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ButtonStyle } from '../styles/CardStyles';
-import base from './firebase';
-import { StateContext } from './StateProvider';
 import ControledInput from './ControledInput';
 import styled from 'styled-components';
 import PopUp from './PopUp';
+import { AuthContext } from '../Auth';
+import { useSelector } from 'react-redux';
+import { updateUserDataFirebase } from './firebase';
 
 const AccountStyle = styled.div`
   position: relative;
@@ -23,23 +24,29 @@ const AccountStyle = styled.div`
   }
 `;
 
-export default function Account({ name, updateName }) {
+export default function Account() {
+  const { currentUser, updateName } = useContext(AuthContext);
+
   // get state from the store
-  const { state, dispatch } = useContext(StateContext);
-  const [energy, setEnergy] = useState(state.data.targetEnergy);
-  const [weight, setWeight] = useState(state.data.targetWeight);
+  const { userData } = useSelector((s) => s);
+  const [energy, setEnergy] = useState(userData.targetEnergy);
+  const [weight, setWeight] = useState(userData.targetWeight);
   // pop up
   const [popUp, setPopUp] = useState(false);
-  const [displayedName, setDisplayedName] = useState(name);
+  const [displayedName, setDisplayedName] = useState(currentUser.displayName);
   // update value using quiring to call this function with different args
   const handeler = (seter) => (e) => seter(e.target.value);
   // toast notification
+
   useEffect(() => {
     const openToast = setTimeout(() => setPopUp(false), 600);
-
     return () => clearTimeout(openToast);
   }, [popUp]);
-
+  const submitHandler = (e, prop, data) => {
+    e.preventDefault();
+    setPopUp(true);
+    updateUserDataFirebase(prop, data);
+  };
   return (
     <>
       <AccountStyle className="account">
@@ -59,17 +66,7 @@ export default function Account({ name, updateName }) {
           />
           <ButtonStyle>Save</ButtonStyle>
         </form>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setPopUp(true);
-            dispatch({
-              type: 'updateSettings',
-              field: 'targetWeight',
-              value: +e.target.weight.value,
-            });
-          }}
-        >
+        <form onSubmit={(e) => submitHandler(e, 'targetWeight', weight)}>
           <ControledInput
             label="Weight"
             suffix="lbs"
@@ -82,17 +79,7 @@ export default function Account({ name, updateName }) {
           <ButtonStyle>Set Target Weight</ButtonStyle>
         </form>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setPopUp(true);
-            dispatch({
-              type: 'updateSettings',
-              field: 'targetEnergy',
-              value: +e.target.energy.value,
-            });
-          }}
-        >
+        <form onSubmit={(e) => submitHandler(e, 'targetEnergy', energy)}>
           <ControledInput
             label="Energy"
             suffix="Cal"
@@ -105,10 +92,7 @@ export default function Account({ name, updateName }) {
           <ButtonStyle>Set Target Energy</ButtonStyle>
         </form>
 
-        <ButtonStyle
-          className=" btn bg-purple sign-out"
-          onClick={() => base.auth().signOut()}
-        >
+        <ButtonStyle className=" btn bg-purple sign-out" onClick={(f) => f}>
           Logout
         </ButtonStyle>
       </AccountStyle>

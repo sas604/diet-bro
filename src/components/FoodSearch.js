@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFetch } from './hooks';
-import Loader from 'react-loader-spinner';
+import { Audio as Loader } from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import SearchResult from './SearchResult';
 import { TiTimes } from 'react-icons/ti';

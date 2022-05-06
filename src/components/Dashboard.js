@@ -1,19 +1,8 @@
 import React, { useContext } from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
-import Account from './Account';
-import DatePicker from './DatePicker';
+import { Navigate, Outlet } from 'react-router-dom';
 import Navigation from './Navigation';
-import Weight from './Weight';
-import { StateProvider } from './StateProvider';
-import Stats from './Stats';
-import CaloriesDisplay from './CaloriesDisplay';
 import { AuthContext } from '../Auth';
-import AddMeal from './AddMeal';
 import styled from 'styled-components';
-import MealHistory from './MealHistory';
-import WeightDisplay from './WeightDisplay';
-import WeightHistory from './WeightHistory';
-import { TiArrowLeftThick } from 'react-icons/ti';
 
 const DashStyles = styled.div`
   min-height: 99.7vh;
@@ -77,45 +66,13 @@ const DashStyles = styled.div`
 `;
 
 export default function Dashboard() {
-  const path = '/dashboard';
   // Get user info
-  const { currentUser, updateName } = useContext(AuthContext);
-
+  const { currentUser } = useContext(AuthContext);
+  if (!currentUser) return <Navigate to={'/'} />;
   return (
     <DashStyles className="dashboard">
-      <StateProvider>
-        <Switch>
-          <Route exact path={path}>
-            <h2 className="head">Welcome, {currentUser.displayName}</h2>
-            <DatePicker />
-            <CaloriesDisplay />
-            <MealHistory />
-          </Route>
-          <Route path={`${path}/addmeal`}>
-            <Link className="head" to={'/'}>
-              <TiArrowLeftThick /> Back to home
-            </Link>
-            <AddMeal />
-          </Route>
-          <Route path={`${path}/weight`}>
-            <h2 className="head">Weight Tracking</h2>
-            <DatePicker />
-            <WeightDisplay />
-            <WeightHistory />
-          </Route>
-          <Route path={`${path}/stats`}>
-            <Stats />
-          </Route>
-          <Route path={`${path}/stats`}>
-            <Weight />
-          </Route>
-          <Route path={`${path}/account`}>
-            <h2 className="head">Account Settings </h2>
-            <Account name={currentUser.displayName} updateName={updateName} />
-          </Route>
-        </Switch>
-        <Navigation path={path} />
-      </StateProvider>
+      <Outlet />
+      <Navigation />
     </DashStyles>
   );
 }

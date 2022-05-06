@@ -1,13 +1,14 @@
-import React, { useCallback } from "react";
-import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
-import base from "./firebase";
-import { SIGN_IN } from "../constants/routes";
-import { useForm } from "./hooks";
-import ControledInput from "./ControledInput";
-import { ButtonStyle } from "../styles/CardStyles";
-import  { LandingStyles, SignIn } from "../styles/SignInStyles";
-import styled from "styled-components";
+import React, { useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { SIGN_IN } from '../constants/routes';
+import { DASH } from '../constants/routes';
+import { useForm } from './hooks';
+import ControledInput from './ControledInput';
+import { ButtonStyle } from '../styles/CardStyles';
+import { LandingStyles, SignIn } from '../styles/SignInStyles';
+import styled from 'styled-components';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { authFireBase } from './firebase';
 
 const SignUpStyles = styled(SignIn)`
   label {
@@ -15,30 +16,30 @@ const SignUpStyles = styled(SignIn)`
   }
 `;
 
-function SignUp({ history }) {
+function SignUp() {
+  const history = useNavigate();
   const { values, updateValue } = useForm({
-    email: "",
-    password: "",
-    name: "",
+    email: '',
+    password: '',
+    name: '',
   });
-  const handelSingUp = useCallback(
-    async (event) => {
-      event.preventDefault();
-      try {
-        await base
-          .auth()
-          .createUserWithEmailAndPassword(values.email, values.password);
-        await base
-          .auth()
-          .currentUser.updateProfile({ displayName: values.name });
-        history.push("/");
-      } catch (error) {
-        alert(error);
-      }
-    },
 
-    [history, values]
-  );
+  const handelSingUp = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        authFireBase,
+        values.email,
+        values.password
+      );
+      await updateProfile(user, { displayName: values.name });
+      history(DASH);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <LandingStyles>
       <h1>Sign Up</h1>
@@ -74,4 +75,4 @@ function SignUp({ history }) {
     </LandingStyles>
   );
 }
-export default withRouter(SignUp);
+export default SignUp;
