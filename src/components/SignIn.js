@@ -25,6 +25,7 @@ const SignInStyles = styled(SignIn)`
 
 function SignInPage() {
   const history = useNavigate();
+  console.log(history);
   const logWithTest = useHandleLogInTestUser(history);
   const provider = new GithubAuthProvider();
 

@@ -50,7 +50,6 @@ export default function CaloriesDisplay() {
     0
   );
   // round
-  console.log({ calloriesForThetDay, data: userData.targetEnergy });
   const progress = Math.round(
     (calloriesForThetDay / userData.targetEnergy) * 100
   );

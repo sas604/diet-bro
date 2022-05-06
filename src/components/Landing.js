@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
 import { AuthContext } from '../Auth';
 import { ReactComponent as UserSvg } from '../img/user-regular.svg';
@@ -34,7 +34,8 @@ const SignIn = styled.div`
     display: block;
   }
 `;
-function Landing({ history }) {
+function Landing() {
+  const history = useNavigate();
   const { currentUser } = useContext(AuthContext);
   const logInWithTest = useHandleLogInTestUser(history);
   if (currentUser) {
