@@ -17,7 +17,7 @@ const app = initializeApp({
 
 export const db = getDatabase(app);
 export const authFireBase = getAuth();
-export function firebasePathListner(uid, firebase, onValue, action) {
+export function firebasePathListner(firebase, onValue, action) {
   return (dispatch) => {
     dispatch(setLoading(true));
     return onValue(firebase, (snapshot) => {
@@ -45,6 +45,21 @@ export async function deleteMealFromFirebase(stamp) {
     `users/${authFireBase.currentUser.uid}/mealHistory/${date}`
   );
   const error = await update(firebase, { [stamp]: null });
+  if (error) {
+    console.log(error);
+  }
+}
+export async function weightEntryFirebase(stamp, data = null) {
+  const firebase = ref(db, `users/${authFireBase.currentUser.uid}/weight`);
+  const error = await update(firebase, { [stamp]: data });
+  if (error) {
+    console.log(error);
+  }
+}
+
+export async function updateUserDataFirebase(prop, data) {
+  const firebase = ref(db, `users/${authFireBase.currentUser.uid}/data`);
+  const error = await update(firebase, { [prop]: data });
   if (error) {
     console.log(error);
   }

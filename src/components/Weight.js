@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Audio as Loader } from 'react-loader-spinner';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import ControledInput from './ControledInput';
-import { StateContext } from './StateProvider';
+import { weightEntryFirebase } from './firebase';
 
 const AddWeightStyle = styled.div`
   border-top: 3px solid var(--gray);
@@ -24,7 +25,7 @@ const AddWeightStyle = styled.div`
 `;
 
 export default function Weight() {
-  const { state, dispatch } = useContext(StateContext);
+  const state = useSelector((state) => state);
   const [weight, setWeight] = useState('');
   if (state.loaded)
     return (
@@ -41,8 +42,7 @@ export default function Weight() {
 
   const addWeightEntry = (e) => {
     e.preventDefault();
-    dispatch({ type: 'setWeight', weight: +weight });
-    setWeight('');
+    weightEntryFirebase(state.date, +weight);
   };
 
   const handleInput = (e) => setWeight(e.target.value);
@@ -60,7 +60,7 @@ export default function Weight() {
         }
 
         <button type="submit" className="btn bg-green">
-          Add{' '}
+          Add
         </button>
       </form>
     </AddWeightStyle>

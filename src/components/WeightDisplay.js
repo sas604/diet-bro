@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import CardStyles from '../styles/CardStyles';
-import { StateContext } from './StateProvider';
 import Weight from './Weight';
 
 const WeightDisplayStyles = styled(CardStyles)`
@@ -50,27 +49,25 @@ const WeightDisplayStyles = styled(CardStyles)`
 `;
 
 export default function WeightDisplay() {
-  const { state } = useContext(StateContext);
-  if (state.loading) return <h1>Loading...</h1>;
+  const { weight, userData, mealHistory } = useSelector((state) => state);
+  if (mealHistory.loading) return <h1>Loading...</h1>;
 
-  const weight = state.weight;
   // loop trough object and find a lates weight
   const latestWeightDate =
     Object.keys(weight).length &&
     Object.keys(weight).reduce((a, b) =>
       +a.replace('-', '') > +b.replace('-', '') ? a : b
     );
-
   const weightResult = () => {
-    if (state.data.targetWeight - state.weight[latestWeightDate] === 0)
+    if (userData.targetWeight - weight[latestWeightDate] === 0)
       return <p>Congratulation you've meet your target weight.</p>;
 
     return (
       <p>
         To meet your goal you need to
-        {state.data.targetWeight > state.weight[latestWeightDate]
-          ? `gain ${state.data.targetWeight - state.weight[latestWeightDate]}`
-          : `loose${state.weight[latestWeightDate] - state.data.targetWeight}`}
+        {userData.targetWeight > weight[latestWeightDate]
+          ? ` gain ${userData.targetWeight - weight[latestWeightDate]}`
+          : ` loose ${weight[latestWeightDate] - userData.targetWeight} `}
         Lbs.
       </p>
     );
@@ -84,13 +81,12 @@ export default function WeightDisplay() {
           <p>
             Your last recorded weight is
             <span className="number">
-              {state.weight[latestWeightDate]} lbs
-            </span>{' '}
-            on <span className="number-small">{latestWeightDate}</span>
+              {weight[latestWeightDate]} lbs
+            </span> on <span className="number-small">{latestWeightDate}</span>
           </p>
-          {state.data.targetWeight ? (
+          {userData.targetWeight ? (
             <>
-              <p>Your target weight is {state.data.targetWeight}</p>{' '}
+              <p>Your target weight is {userData.targetWeight} lbs</p>{' '}
               {weightResult()}
             </>
           ) : (

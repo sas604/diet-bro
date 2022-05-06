@@ -1,11 +1,11 @@
-import { format } from "date-fns";
-import { parseISO } from "date-fns/esm";
-import React, { useContext } from "react";
-import { FaRegTrashAlt, FaSortUp, FaSortDown } from "react-icons/fa";
-import styled from "styled-components";
+import { format } from 'date-fns';
+import { parseISO } from 'date-fns/esm';
+import { FaRegTrashAlt, FaSortUp, FaSortDown } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import HistoryListStyles from "../styles/HistoryList";
-import { StateContext } from "./StateProvider";
+import HistoryListStyles from '../styles/HistoryList';
+import { weightEntryFirebase } from './firebase';
 
 const WeightHistoryStyles = styled(HistoryListStyles)`
   span {
@@ -16,20 +16,10 @@ const WeightHistoryStyles = styled(HistoryListStyles)`
   }
 `;
 export default function WeightHistory() {
-  const { state, dispatch } = useContext(StateContext);
-
+  //const { state, dispatch } = useContext(StateContext);
+  const state = useSelector((state) => state);
   const deleteEntry = (entry) => {
-    const updatedState = Object.keys(state.weight).reduce((acc, value) => {
-      if (value !== entry) {
-        return {
-          ...acc,
-          [value]: state.weight[value],
-        };
-      }
-      return { ...acc };
-    }, {});
-
-    dispatch({ type: "delWeight", weight: updatedState });
+    weightEntryFirebase(entry);
   };
 
   const weightHistoryList = Object.keys(state.weight).length ? (
@@ -44,23 +34,23 @@ export default function WeightHistory() {
             if (state.weight[entry] - state.weight[reverseArray[i + 1]] > 0) {
               return (
                 <span>
-                  <FaSortUp style={{ color: "var(--green)" }} />
+                  <FaSortUp style={{ color: 'var(--green)' }} />
                   <span>
-                    {state.weight[entry] - state.weight[reverseArray[i + 1]]}{" "}
-                    Lbs{" "}
-                  </span>{" "}
+                    {state.weight[entry] - state.weight[reverseArray[i + 1]]}
+                    Lbs
+                  </span>
                 </span>
               );
             } else
               return (
                 <span>
-                  <FaSortDown style={{ color: "var(--red)" }} />
+                  <FaSortDown style={{ color: 'var(--red)' }} />
                   <span>
                     {Math.abs(
                       state.weight[entry] - state.weight[reverseArray[i + 1]]
-                    )}{" "}
-                    Lbs{" "}
-                  </span>{" "}
+                    )}
+                    Lbs
+                  </span>
                 </span>
               );
           }
@@ -68,9 +58,9 @@ export default function WeightHistory() {
 
         return (
           <li key={entry}>
-            <span className="icon">📅</span>{" "}
+            <span className="icon">📅</span>
             <span>
-              <p>{format(parseISO(entry), " MMM d  yyyy")}</p>
+              <p>{format(parseISO(entry), ' MMM d  yyyy')}</p>
               <p className="number">{state.weight[entry]}Lbs</p>
             </span>
             <span>{trend(entry)}</span>

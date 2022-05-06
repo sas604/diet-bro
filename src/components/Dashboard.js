@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import Navigation from './Navigation';
-import { StateProvider } from './StateProvider';
 import { AuthContext } from '../Auth';
 import styled from 'styled-components';
 
@@ -72,10 +71,8 @@ export default function Dashboard() {
   if (!currentUser) return <Navigate to={'/'} />;
   return (
     <DashStyles className="dashboard">
-      <StateProvider>
-        <Outlet />
-        <Navigation />
-      </StateProvider>
+      <Outlet />
+      <Navigation />
     </DashStyles>
   );
 }

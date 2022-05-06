@@ -12,6 +12,14 @@ export const userDataSlice = createSlice({
     fetchUserDataFulfiled: (state, action) => action.payload,
   },
 });
-
+export const weightSlice = createSlice({
+  name: 'weight',
+  initialState: {},
+  reducers: {
+    fetchWeightFulfiled: (state, action) => action.payload,
+  },
+});
 export const { fetchUserDataFulfiled } = userDataSlice.actions;
-export default userDataSlice.reducer;
+export const { fetchWeightFulfiled } = weightSlice.actions;
+export const userReducer = userDataSlice.reducer;
+export const weighReducer = weightSlice.reducer;
