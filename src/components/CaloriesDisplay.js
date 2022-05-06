@@ -43,13 +43,14 @@ export default function CaloriesDisplay() {
     userData,
   } = useSelector((state) => state);
 
-  if (loading) return <h1>Loading...</h1>;
+  if (loading || !userData) return <h1>Loading...</h1>;
 
   const calloriesForThetDay = Object.keys(entries).reduce(
     (acc, entry) => acc + entries[entry].energy,
     0
   );
   // round
+  console.log({ calloriesForThetDay, data: userData.targetEnergy });
   const progress = Math.round(
     (calloriesForThetDay / userData.targetEnergy) * 100
   );

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  targetEnergy: 0,
+  targetEnergy: 1900,
   targetWeight: 0,
 };
 
@@ -9,14 +9,14 @@ export const userDataSlice = createSlice({
   name: 'mealHistory',
   initialState,
   reducers: {
-    fetchUserDataFulfiled: (state, action) => action.payload,
+    fetchUserDataFulfiled: (state, action) => ({ ...state, ...action.payload }),
   },
 });
 export const weightSlice = createSlice({
   name: 'weight',
   initialState: {},
   reducers: {
-    fetchWeightFulfiled: (state, action) => action.payload,
+    fetchWeightFulfiled: (state, action) => ({ ...state, ...action.payload }),
   },
 });
 export const { fetchUserDataFulfiled } = userDataSlice.actions;
