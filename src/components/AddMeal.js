@@ -8,6 +8,8 @@ import CardStyles from '../styles/CardStyles';
 import { TabsStyle } from '../styles/CardStyles';
 import { postMealToFirebase } from './firebase';
 import { useSelector } from 'react-redux';
+import { Modal } from './Modal';
+import { Scanner } from './Scaner';
 
 const AddFoodStyles = styled(CardStyles)`
   max-width: 600px;
@@ -25,6 +27,7 @@ const AddFoodStyles = styled(CardStyles)`
 export default function AddMeal() {
   const [foodItemId, setFoodItemId] = useState(null);
   const [select, setSelect] = useState(true);
+  const [qrModal, setQrModal] = useState(false);
   const { date } = useSelector((state) => state);
   const history = useNavigate();
 
@@ -76,6 +79,14 @@ export default function AddMeal() {
           <FoodSearch handleClick={getFoodItem} />
         ) : (
           <ManualFoodEntry handleSubmit={updateFoodState} />
+        )}
+        <button onClick={() => setQrModal(true)}>Scan Barcode</button>
+        {qrModal && (
+          <Modal>
+            <h1>Portal</h1>
+            <button onClick={() => setQrModal(false)}>Close</button>
+            <Scanner />
+          </Modal>
         )}
       </AddFoodStyles>
     </>
