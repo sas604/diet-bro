@@ -27,6 +27,7 @@ export function Scanner() {
   return (
     <div>
       <div>{JSON.stringify(camera)}</div>
+      <div>{scannTest.detected} </div>
       <div
         ref={scannerRef}
         style={{ position: 'relative', border: '3px solid red' }}
