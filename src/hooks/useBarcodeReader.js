@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Quagga from '@ericblade/quagga2';
 const defaultLocatorSettings = {
   patchSize: 'medium',
@@ -25,7 +25,6 @@ function getMedianOfCodeErrors(decodedCodes) {
 }
 const defaultDecoders = ['ean_reader'];
 export function useBarcodeReader(
-  onDetected = (res) => console.log(res),
   scannerRef,
   scanning,
   locator = defaultLocatorSettings,
@@ -37,25 +36,22 @@ export function useBarcodeReader(
   locate = true,
   onScannerReady
 ) {
+  const [detected, setDetected] = useState('');
   const errorCheck = useCallback(
     (result) => {
-      if (!onDetected) {
-        return;
-      }
       const err = getMedianOfCodeErrors(result.codeResult.decodedCodes);
       // if Quagga is at least 75% certain that it read correctly, then accept the code.
       if (err < 0.25) {
-        onDetected(result.codeResult.code);
+        setDetected(result.codeResult.code);
       }
     },
-    [onDetected]
+    [setDetected]
   );
   const handleProcessed = (result) => {
     const drawingCtx = Quagga.canvas.ctx.overlay;
     const drawingCanvas = Quagga.canvas.dom.overlay;
     drawingCtx.font = '24px Arial';
     drawingCtx.fillStyle = 'green';
-
     if (result) {
       // console.warn('* quagga onProcessed', result);
       if (result.boxes) {
@@ -80,22 +76,12 @@ export function useBarcodeReader(
           lineWidth: 2,
         });
       }
-      if (result.codeResult && result.codeResult.code) {
-        // const validated = barcodeValidator(result.codeResult.code);
-        // const validated = validateBarcode(result.codeResult.code);
-        // Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: validated ? 'green' : 'red', lineWidth: 3 });
-        drawingCtx.font = '24px Arial';
-        // drawingCtx.fillStyle = validated ? 'green' : 'red';
-        // drawingCtx.fillText(`${result.codeResult.code} valid: ${validated}`, 10, 50);
-        drawingCtx.fillText(result.codeResult.code, 10, 20);
-        // if (validated) {
-        //     onDetected(result);
-        // }
-      }
     }
   };
   useEffect(() => {
-    if (!scanning) return;
+    console.log(scannerRef);
+    if (!scanning || !scannerRef?.current) return;
+    console.log('pass return');
     Quagga.init(
       {
         inputStream: {
@@ -121,6 +107,7 @@ export function useBarcodeReader(
         if (scannerRef && scannerRef.current) {
           Quagga.start();
           if (onScannerReady) {
+            console.log('scanner is ready');
             onScannerReady();
           }
         }
@@ -132,7 +119,19 @@ export function useBarcodeReader(
       Quagga.offProcessed(handleProcessed);
       Quagga.stop();
     };
-  }, [scanning]);
+  }, [
+    scanning,
+    scannerRef,
+    errorCheck,
+    locate,
+    cameraId,
+    constraints,
+    decoders,
+    facingMode,
+    locator,
+    numOfWorkers,
+    onScannerReady,
+  ]);
 
-  return true;
+  return { detected };
 }
