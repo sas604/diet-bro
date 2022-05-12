@@ -37,6 +37,7 @@ export function useBarcodeReader(
   onScannerReady
 ) {
   const [detected, setDetected] = useState('');
+  const [error, setError] = useState(false);
   const errorCheck = useCallback(
     (result) => {
       const err = getMedianOfCodeErrors(result.codeResult.decodedCodes);
@@ -79,9 +80,15 @@ export function useBarcodeReader(
     }
   };
   useEffect(() => {
-    console.log(scannerRef);
     if (!scanning || !scannerRef?.current) return;
-    console.log('pass return');
+    if (
+      !navigator.mediaDevices ||
+      typeof navigator.mediaDevices.getUserMedia !== 'function' ||
+      !navigator.mediaDevices.enumerateDevices
+    ) {
+      setError('Camera is unavalible');
+      return;
+    }
     Quagga.init(
       {
         inputStream: {
@@ -133,5 +140,5 @@ export function useBarcodeReader(
     onScannerReady,
   ]);
 
-  return { detected };
+  return { detected, error };
 }

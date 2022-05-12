@@ -1,6 +1,8 @@
 import FocusTrap from 'focus-trap-react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
+import { CloseModalBtn } from '../styles/CloseModalBtn';
+import { TiTimes } from 'react-icons/ti';
 
 const ModalVeilStyles = styled.div`
   position: absolute;
@@ -11,7 +13,7 @@ const ModalVeilStyles = styled.div`
   width: 100%;
   height: 100%;
   background-color: var(--veil-bg);
-  padding: 2rem;
+  padding: var(--space-lg);
 `;
 const ModalBodyStyles = styled.div`
   max-width: 60rem;
@@ -21,18 +23,24 @@ const ModalBodyStyles = styled.div`
   width: 100%;
   padding: var(--space-md);
 `;
-function ModalBody({ children }) {
+
+function ModalBody({ children, closeModal }) {
   return (
     <ModalVeilStyles>
       <FocusTrap>
-        <ModalBodyStyles>{children}</ModalBodyStyles>
+        <ModalBodyStyles>
+          <CloseModalBtn className="modal-btn-close" onClick={closeModal}>
+            <TiTimes />
+          </CloseModalBtn>
+          {children}
+        </ModalBodyStyles>
       </FocusTrap>
     </ModalVeilStyles>
   );
 }
 
-export const Modal = ({ children }) =>
+export const Modal = ({ children, closeModal }) =>
   createPortal(
-    <ModalBody children={children} />,
+    <ModalBody children={children} closeModal={closeModal} />,
     document.getElementById('modal-parent')
   );

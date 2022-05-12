@@ -8,8 +8,21 @@ import CardStyles from '../styles/CardStyles';
 import { TabsStyle } from '../styles/CardStyles';
 import { postMealToFirebase } from './firebase';
 import { useSelector } from 'react-redux';
-import { Modal } from './Modal';
 import { Scanner } from './Scaner';
+import { ButtonStyle } from '../styles/CardStyles';
+import { AiOutlineScan } from 'react-icons/ai';
+
+const ScannerButton = styled(ButtonStyle)`
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  text-align: left;
+  margin-left: var(--space-sm);
+  margin-right: var(--space-sm);
+  max-width: unset;
+  width: calc(100% - (var(--space-sm) * 2));
+`;
 
 const AddFoodStyles = styled(CardStyles)`
   max-width: 600px;
@@ -27,7 +40,7 @@ const AddFoodStyles = styled(CardStyles)`
 export default function AddMeal() {
   const [foodItemId, setFoodItemId] = useState(null);
   const [select, setSelect] = useState(true);
-  const [qrModal, setQrModal] = useState(false);
+  const [scanning, setScanning] = useState(false);
   const { date } = useSelector((state) => state);
   const history = useNavigate();
 
@@ -80,14 +93,11 @@ export default function AddMeal() {
         ) : (
           <ManualFoodEntry handleSubmit={updateFoodState} />
         )}
-        <button onClick={() => setQrModal(true)}>Scan Barcode</button>
-        {qrModal && (
-          <Modal>
-            <h1>Portal</h1>
-            <button onClick={() => setQrModal(false)}>Close</button>
-            <Scanner />
-          </Modal>
-        )}
+        <Scanner scanning={scanning} />
+        <ScannerButton onClick={() => setScanning(!scanning)}>
+          <AiOutlineScan />
+          Scan Barcode
+        </ScannerButton>
       </AddFoodStyles>
     </>
   );

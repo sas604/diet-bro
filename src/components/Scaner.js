@@ -1,49 +1,29 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
+import styled from 'styled-components';
 import { useBarcodeReader } from '../hooks/useBarcodeReader';
 
-export function Scanner() {
+const ScannerStyles = styled.div`
+  min-height: 320px;
+  canvas {
+    position: absolute;
+  }
+  video {
+    display: ${({ scanning }) => (scanning ? 'block' : 'none')};
+  }
+  .canvas-wrapper {
+    position: relative;
+  }
+`;
+export function Scanner({ scanning }) {
   const scannerRef = useRef(null);
-  // useEffect(() => {
-  //   navigator.mediaDevices
-  //     .enumerateDevices()
-  //     .then(function (devices) {
-  //       devices.forEach(function (device) {
-  //         setCamera(device);
-  //         console.log(device);
-  //         console.log(
-  //           device.kind + ': ' + device.label + ' id = ' + device.deviceId
-  //         );
-  //       });
-  //     })
-  //     .catch(function (err) {
-  //       setCamera(err);
-  //       console.log(err.name + ': ' + err.message);
-  //     });
-  // }, []);
-  const [camera, setCamera] = useState({});
-  const [scanning, setScanning] = useState(false);
-  const scannTest = useBarcodeReader(scannerRef, scanning);
-
+  const { detected, error } = useBarcodeReader(scannerRef, scanning);
+  if (error) return <h1>Camera is not avalible=</h1>;
   return (
-    <div>
-      <div>{JSON.stringify(camera)}</div>
-      <div>{scannTest.detected} </div>
-      <div
-        ref={scannerRef}
-        style={{ position: 'relative', border: '3px solid red' }}
-      >
-        <button onClick={() => setScanning(!scanning)}>Scan</button>
-        <canvas
-          className="drawingBuffer"
-          width={320}
-          height={320}
-          style={{
-            border: '1px solid red',
-            marginTop: '20px',
-            position: 'absolute',
-          }}
-        ></canvas>
+    <ScannerStyles scanning={scanning}>
+      <div>{detected}</div>
+      <div className="canvas-wrapper" ref={scannerRef}>
+        <canvas className="drawingBuffer" width={320} height={320}></canvas>
       </div>
-    </div>
+    </ScannerStyles>
   );
 }

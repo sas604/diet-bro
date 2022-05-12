@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ButtonStyle = styled.button`
   border-radius: 3px;
@@ -9,6 +9,7 @@ export const ButtonStyle = styled.button`
   color: var(--white);
   padding: 0.8em;
   cursor: pointer;
+  appearance: none;
   &:hover,
   &:focus {
     transform: scale(1.05);
@@ -95,7 +96,7 @@ export const TabsStyle = styled.div`
 
   border-radius: 3px;
   margin-bottom: 1rem;
-  [type="radio"] {
+  [type='radio'] {
     display: none;
   }
 
@@ -107,7 +108,7 @@ export const TabsStyle = styled.div`
     border-radius: 3px;
     font-weight: 600;
   }
-  [type="radio"]:checked + label {
+  [type='radio']:checked + label {
     background: var(--purple);
     border-bottom: 1px solid white;
     color: var(--white);
