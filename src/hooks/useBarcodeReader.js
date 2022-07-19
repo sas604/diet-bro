@@ -35,7 +35,7 @@ export function useBarcodeReader(
   facingMode,
   numOfWorkers = navigator.hardwareConcurrency || 0,
   decoders = defaultDecoders,
-  locate = true,
+  locate = false,
   onScannerReady
 ) {
   const [detected, setDetected] = useState('');
