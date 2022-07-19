@@ -5,8 +5,8 @@ const defaultLocatorSettings = {
   halfSample: true,
 };
 const defaultConstraints = {
-  width: 320,
-  height: 320,
+  width: 640,
+  height: 640,
   focusMode: 'auto',
   resizeMode: 'crop-and-scale',
 };

@@ -8,6 +8,8 @@ const ScannerStyles = styled.div`
   }
   video {
     display: ${({ scanning }) => (scanning ? 'block' : 'none')};
+    width: 320px;
+    height: 320px;
   }
   .canvas-wrapper {
     position: relative;
