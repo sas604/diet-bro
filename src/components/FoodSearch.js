@@ -61,7 +61,7 @@ export default function FoodSearch({ handleClick }) {
       return;
     }
     setUrl(
-      `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.REACT_APP_API_KEY}&query="+${query}"&dataType=Survey%20(FNDDS)`
+      `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.REACT_APP_API_KEY}&query="${query}"`
     );
   }, [query]);
   // handle typing

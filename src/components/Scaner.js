@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useBarcodeReader } from '../hooks/useBarcodeReader';
 
 const ScannerStyles = styled.div`
-  min-height: 320px;
   canvas {
     position: absolute;
   }

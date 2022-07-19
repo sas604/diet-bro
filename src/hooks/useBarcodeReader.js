@@ -7,6 +7,7 @@ const defaultLocatorSettings = {
 const defaultConstraints = {
   width: 320,
   height: 320,
+  focusMode: 'auto',
 };
 function getMedian(arr) {
   arr.sort((a, b) => a - b);
@@ -23,7 +24,7 @@ function getMedianOfCodeErrors(decodedCodes) {
   const medianOfErrors = getMedian(errors);
   return medianOfErrors;
 }
-const defaultDecoders = ['ean_reader'];
+const defaultDecoders = ['upc_reader'];
 export function useBarcodeReader(
   scannerRef,
   scanning,
@@ -43,6 +44,7 @@ export function useBarcodeReader(
       const err = getMedianOfCodeErrors(result.codeResult.decodedCodes);
       // if Quagga is at least 75% certain that it read correctly, then accept the code.
       if (err < 0.25) {
+        console.log(result.codeResult.code);
         setDetected(result.codeResult.code);
       }
     },
@@ -54,7 +56,6 @@ export function useBarcodeReader(
     drawingCtx.font = '24px Arial';
     drawingCtx.fillStyle = 'green';
     if (result) {
-      // console.warn('* quagga onProcessed', result);
       if (result.boxes) {
         drawingCtx.clearRect(
           0,
@@ -80,7 +81,11 @@ export function useBarcodeReader(
     }
   };
   useEffect(() => {
-    if (!scanning || !scannerRef?.current) return;
+    if (!scanning || !scannerRef?.current) {
+      return;
+    }
+
+    console.log(scanning);
     if (
       !navigator.mediaDevices ||
       typeof navigator.mediaDevices.getUserMedia !== 'function' ||

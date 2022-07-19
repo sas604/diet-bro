@@ -14,14 +14,13 @@ import { AiOutlineScan } from 'react-icons/ai';
 
 const ScannerButton = styled(ButtonStyle)`
   display: flex;
+  position: relative;
+  z-index: 1000;
   align-items: center;
   gap: var(--space-sm);
   margin-top: var(--space-md);
   text-align: left;
-  margin-left: var(--space-sm);
-  margin-right: var(--space-sm);
   max-width: unset;
-  width: calc(100% - (var(--space-sm) * 2));
 `;
 
 const AddFoodStyles = styled(CardStyles)`
@@ -74,7 +73,10 @@ export default function AddMeal() {
             value="Search"
             name="input option"
             checked={select}
-            onChange={() => setSelect(true)}
+            onChange={() => {
+              setSelect(true);
+              setScanning(false);
+            }}
           />
           <label htmlFor="search">Search database</label>
 
@@ -84,7 +86,10 @@ export default function AddMeal() {
             value="manual"
             name="input option"
             checked={!select}
-            onChange={() => setSelect(false)}
+            onChange={() => {
+              setSelect(false);
+              setScanning(false);
+            }}
           />
           <label htmlFor="manual">Type manualy</label>
         </TabsStyle>
@@ -93,11 +98,13 @@ export default function AddMeal() {
         ) : (
           <ManualFoodEntry handleSubmit={updateFoodState} />
         )}
-        <Scanner scanning={scanning} />
-        <ScannerButton onClick={() => setScanning(!scanning)}>
-          <AiOutlineScan />
-          Scan Barcode
-        </ScannerButton>
+        <div>
+          <Scanner scanning={scanning} />
+          <ScannerButton onClick={() => setScanning(!scanning)}>
+            <AiOutlineScan />
+            {!scanning ? 'Scan Barcode' : 'Stop Scanning'}
+          </ScannerButton>
+        </div>
       </AddFoodStyles>
     </>
   );
