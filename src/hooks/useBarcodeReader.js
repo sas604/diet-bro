@@ -121,7 +121,7 @@ export function useBarcodeReader(
         if (scannerRef && scannerRef.current) {
           Quagga.start();
           setDebugg(Quagga.CameraAccess.getActiveTrack().getCapabilities());
-          console.log(Quagga.CameraAccess.getActiveTrack().getCapabilities());
+          console.log(Quagga.CameraAccess.getActiveTrack().getSettings());
           if (onScannerReady) {
             console.log('scanner is ready');
             onScannerReady();
