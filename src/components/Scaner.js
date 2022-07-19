@@ -15,7 +15,7 @@ const ScannerStyles = styled.div`
 `;
 export function Scanner({ scanning }) {
   const scannerRef = useRef(null);
-  const { detected, error } = useBarcodeReader(scannerRef, scanning);
+  const { detected, error, debugg } = useBarcodeReader(scannerRef, scanning);
   if (error) return <h1>Camera is not avalible=</h1>;
   return (
     <ScannerStyles scanning={scanning}>
@@ -23,6 +23,7 @@ export function Scanner({ scanning }) {
       <div className="canvas-wrapper" ref={scannerRef}>
         <canvas className="drawingBuffer" width={320} height={320}></canvas>
       </div>
+      <pre>{JSON.stringify(debugg, undefined, 2)}</pre>
     </ScannerStyles>
   );
 }

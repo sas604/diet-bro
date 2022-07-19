@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import Quagga from '@ericblade/quagga2';
 const defaultLocatorSettings = {
-  patchSize: 'medium',
+  patchSize: 'large',
   halfSample: true,
 };
 const defaultConstraints = {
   width: 320,
   height: 320,
   focusMode: 'auto',
+  resizeMode: 'crop-and-scale',
 };
 function getMedian(arr) {
   arr.sort((a, b) => a - b);
@@ -39,6 +40,7 @@ export function useBarcodeReader(
 ) {
   const [detected, setDetected] = useState('');
   const [error, setError] = useState(false);
+  const [debugg, setDebugg] = useState(false);
   const errorCheck = useCallback(
     (result) => {
       const err = getMedianOfCodeErrors(result.codeResult.decodedCodes);
@@ -118,6 +120,8 @@ export function useBarcodeReader(
         }
         if (scannerRef && scannerRef.current) {
           Quagga.start();
+          setDebugg(Quagga.CameraAccess.getActiveTrack().getCapabilities());
+          console.log(Quagga.CameraAccess.getActiveTrack().getCapabilities());
           if (onScannerReady) {
             console.log('scanner is ready');
             onScannerReady();
@@ -145,5 +149,5 @@ export function useBarcodeReader(
     onScannerReady,
   ]);
 
-  return { detected, error };
+  return { detected, error, debugg };
 }
