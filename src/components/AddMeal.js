@@ -8,9 +8,10 @@ import CardStyles from '../styles/CardStyles';
 import { TabsStyle } from '../styles/CardStyles';
 import { postMealToFirebase } from './firebase';
 import { useSelector } from 'react-redux';
-import { Scanner } from './Scaner';
+
 import { ButtonStyle } from '../styles/CardStyles';
 import { AiOutlineScan } from 'react-icons/ai';
+import { BarcodeReader } from './BarcodeReader';
 
 const ScannerButton = styled(ButtonStyle)`
   display: flex;
@@ -99,7 +100,7 @@ export default function AddMeal() {
           <ManualFoodEntry handleSubmit={updateFoodState} />
         )}
         <div>
-          <Scanner scanning={scanning} />
+          <BarcodeReader scanning={scanning} />
           <ScannerButton onClick={() => setScanning(!scanning)}>
             <AiOutlineScan />
             {!scanning ? 'Scan Barcode' : 'Stop Scanning'}

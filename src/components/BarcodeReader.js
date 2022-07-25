@@ -1,33 +1,33 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import Quagga from '@ericblade/quagga2';
-const defaultLocatorSettings = {
-  patchSize: 'large',
-  halfSample: true,
-};
-const defaultConstraints = {
-  width: 640,
-  height: 640,
-  focusMode: 'auto',
-  resizeMode: 'crop-and-scale',
-};
-function getMedian(arr) {
-  arr.sort((a, b) => a - b);
-  const half = Math.floor(arr.length / 2);
-  if (arr.length % 2 === 1) {
-    return arr[half];
+import styled from 'styled-components';
+import { setBarcodeData } from '../features/userData/userDataSlice';
+import {
+  getMedianOfCodeErrors,
+  defaultLocatorSettings,
+  defaultConstraints,
+  defaultDecoders,
+} from '../utils/quagga';
+import { useDispatch } from 'react-redux';
+const ScannerStyles = styled.div`
+  .drawingBuffer {
+    width: 320px;
+    height: 320px;
   }
-  return (arr[half - 1] + arr[half]) / 2;
-}
-function getMedianOfCodeErrors(decodedCodes) {
-  const errors = decodedCodes
-    .filter((x) => x.error !== undefined)
-    .map((x) => x.error);
-  const medianOfErrors = getMedian(errors);
-  return medianOfErrors;
-}
-const defaultDecoders = ['upc_reader'];
-export function useBarcodeReader(
-  scannerRef,
+  canvas {
+    position: absolute;
+  }
+  video {
+    display: ${({ scanning }) => (scanning ? 'block' : 'none')};
+    width: 320px;
+    height: 320px;
+  }
+  .canvas-wrapper {
+    position: relative;
+  }
+`;
+
+export function BarcodeReader({
   scanning,
   locator = defaultLocatorSettings,
   constraints = defaultConstraints,
@@ -36,21 +36,22 @@ export function useBarcodeReader(
   numOfWorkers = navigator.hardwareConcurrency || 0,
   decoders = defaultDecoders,
   locate = false,
-  onScannerReady
-) {
-  const [detected, setDetected] = useState('');
+  onScannerReady,
+}) {
+  const dispatch = useDispatch();
   const [error, setError] = useState(false);
   const [debugg, setDebugg] = useState(false);
+  const scannerRef = useRef(null);
   const errorCheck = useCallback(
     (result) => {
       const err = getMedianOfCodeErrors(result.codeResult.decodedCodes);
       // if Quagga is at least 75% certain that it read correctly, then accept the code.
       if (err < 0.25) {
         console.log(result.codeResult.code);
-        setDetected(result.codeResult.code);
+        dispatch(setBarcodeData(result.codeResult.code));
       }
     },
-    [setDetected]
+    [dispatch]
   );
   const handleProcessed = (result) => {
     const drawingCtx = Quagga.canvas.ctx.overlay;
@@ -118,6 +119,7 @@ export function useBarcodeReader(
         if (err) {
           return console.log('Error starting Quagga:', err);
         }
+        console.log(Quagga.canvas.ctx.overlay);
         if (scannerRef && scannerRef.current) {
           Quagga.start();
           setDebugg(Quagga.CameraAccess.getActiveTrack().getSettings());
@@ -149,5 +151,12 @@ export function useBarcodeReader(
     onScannerReady,
   ]);
 
-  return { detected, error, debugg };
+  return (
+    <ScannerStyles scanning={scanning}>
+      <div className="canvas-wrapper" ref={scannerRef}>
+        <canvas className="drawingBuffer" width={320} height={320}></canvas>
+      </div>
+      <pre>{JSON.stringify(debugg, undefined, 2)}</pre>
+    </ScannerStyles>
+  );
 }
