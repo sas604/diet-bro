@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import dateSlice from '../features/date/dateSlice';
 import loadingSlice from '../features/loading/loadingSlice';
 import mealSlice from '../features/meals/mealSlice';
+import searchSlice from '../features/search/searchSlice';
 import {
   barcodeReducer,
   userReducer,
@@ -16,5 +17,6 @@ export const store = configureStore({
     userData: userReducer,
     weight: weighReducer,
     barcode: barcodeReducer,
+    search: searchSlice,
   },
 });

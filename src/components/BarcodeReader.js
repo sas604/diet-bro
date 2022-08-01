@@ -37,6 +37,7 @@ export function BarcodeReader({
   decoders = defaultDecoders,
   locate = false,
   onScannerReady,
+  setSearchTearm,
 }) {
   const dispatch = useDispatch();
   const [error, setError] = useState(false);
@@ -48,7 +49,7 @@ export function BarcodeReader({
       // if Quagga is at least 75% certain that it read correctly, then accept the code.
       if (err < 0.25) {
         console.log(result.codeResult.code);
-        dispatch(setBarcodeData(result.codeResult.code));
+        setSearchTearm(result.codeResult.code);
       }
     },
     [dispatch]
@@ -87,8 +88,6 @@ export function BarcodeReader({
     if (!scanning || !scannerRef?.current) {
       return;
     }
-
-    console.log(scanning);
     if (
       !navigator.mediaDevices ||
       typeof navigator.mediaDevices.getUserMedia !== 'function' ||
@@ -119,7 +118,6 @@ export function BarcodeReader({
         if (err) {
           return console.log('Error starting Quagga:', err);
         }
-        console.log(Quagga.canvas.ctx.overlay);
         if (scannerRef && scannerRef.current) {
           Quagga.start();
           setDebugg(Quagga.CameraAccess.getActiveTrack().getSettings());
@@ -156,7 +154,6 @@ export function BarcodeReader({
       <div className="canvas-wrapper" ref={scannerRef}>
         <canvas className="drawingBuffer" width={320} height={320}></canvas>
       </div>
-      <pre>{JSON.stringify(debugg, undefined, 2)}</pre>
     </ScannerStyles>
   );
 }

@@ -8,7 +8,6 @@ import CardStyles from '../styles/CardStyles';
 import { TabsStyle } from '../styles/CardStyles';
 import { postMealToFirebase } from './firebase';
 import { useSelector } from 'react-redux';
-
 import { ButtonStyle } from '../styles/CardStyles';
 import { AiOutlineScan } from 'react-icons/ai';
 import { BarcodeReader } from './BarcodeReader';
@@ -43,6 +42,7 @@ export default function AddMeal() {
   const [scanning, setScanning] = useState(false);
   const { date } = useSelector((state) => state);
   const history = useNavigate();
+  const [searchTerm, setSearchTearm] = useState('');
 
   const getFoodItem = (e) => {
     setFoodItemId(e.target.id);
@@ -95,12 +95,16 @@ export default function AddMeal() {
           <label htmlFor="manual">Type manualy</label>
         </TabsStyle>
         {select ? (
-          <FoodSearch handleClick={getFoodItem} />
+          <FoodSearch
+            handleClick={getFoodItem}
+            searchTerm={searchTerm}
+            setSearchTearm={setSearchTearm}
+          />
         ) : (
           <ManualFoodEntry handleSubmit={updateFoodState} />
         )}
         <div>
-          <BarcodeReader scanning={scanning} />
+          <BarcodeReader scanning={scanning} setSearchTearm={setSearchTearm} />
           <ScannerButton onClick={() => setScanning(!scanning)}>
             <AiOutlineScan />
             {!scanning ? 'Scan Barcode' : 'Stop Scanning'}

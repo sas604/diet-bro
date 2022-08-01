@@ -54,9 +54,9 @@ const ModalStyles = styled(CardStyles)`
 
 export default function FoodModal({ handleClick, foodId, returnData }) {
   // path to the fda api
-  const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208`;
+  const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}`;
   // fetch data
-  const [loading, data, error] = useFetch(url);
+  const { loading, data, error } = useFetch(url);
   const [foodNutrients, setFoodNutrients] = useState(null);
   const [select, setSelect] = useState(true);
   useEffect(() => {
@@ -67,11 +67,12 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
         (el) => el.portionDescription !== 'Quantity not specified'
       );
       // format response
+      console.log(data);
       setFoodNutrients({
         kcal: data.foodNutrients[0].amount,
         portions: portions,
         name: data.description,
-        portion: portions[0].gramWeight,
+        portion: portions[0]?.gramWeight,
       });
     }
   }, [data]);
@@ -151,11 +152,11 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
                 }
                 defaultValue={foodNutrients.portion}
               >
-                {foodNutrients.portions.map((el, i) => (
+                {/* {foodNutrients.portions.map((el, i) => (
                   <option key={el.id} value={el.gramWeight}>
                     {el.portionDescription}
                   </option>
-                ))}
+                ))} */}
               </select>
             </>
           ) : (

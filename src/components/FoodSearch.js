@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useFetch } from './hooks';
+import React, { useEffect, useState } from 'react';
 import { Audio as Loader } from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import SearchResult from './SearchResult';
 import { TiTimes } from 'react-icons/ti';
 import styled from 'styled-components';
 import ControledInput from './ControledInput';
+import { fdaUrl } from '../constants/api';
+import { useFetch } from './hooks';
 
 const SearchStyles = styled.div`
   position: relative;
@@ -18,6 +19,7 @@ const SearchStyles = styled.div`
     appearance: none;
     border: none;
     background: transparent;
+    cursor: pointer;
   }
   ul {
     max-height: 280px;
@@ -47,58 +49,35 @@ const SearchStyles = styled.div`
 `;
 
 // live food search component
-export default function FoodSearch({ handleClick }) {
-  const [query, setQuery] = useState(null);
-  const [url, setUrl] = useState('');
-  const [pendingFetch, searchData] = useFetch(url);
-  const [openSearch, setOpenSearch] = useState(false);
-  const [search, setSearch] = useState('');
-
+export default function FoodSearch({
+  handleClick,
+  searchTerm,
+  setSearchTearm,
+}) {
+  const { data, loading, error } = useFetch(fdaUrl(searchTerm));
   // if there a query value send request to api
-  useEffect(() => {
-    if (!query) {
-      setUrl(null);
-      return;
-    }
-    setUrl(
-      `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.REACT_APP_API_KEY}&query="${query}"`
-    );
-  }, [query]);
-  // handle typing
   const handleSearch = (e) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-    const query = e.target.value.trim();
-    setQuery(query.split(' ').join('%20+'));
+    setSearchTearm(e.target.value);
   };
 
-  //render search componet with reset btn when there a query
-  useEffect(() => {
-    if (query) {
-      setOpenSearch(true);
-    } else {
-      setOpenSearch(false);
-    }
-  }, [query]);
   return (
-    <SearchStyles className={`search ${openSearch && 'open-search'}`}>
+    <SearchStyles className="search">
       <form onSubmit={(e) => e.preventDefault()}>
         <ControledInput
-          value={search}
+          value={searchTerm}
           handeler={handleSearch}
           label="Food name"
           type="text"
           inputStyle={{ padding: ' 0.5em 0' }}
         />
-        {openSearch && (
+
+        {searchTerm && (
           <button
             className="search-button"
             type="button"
             title="clear search"
             onClick={() => {
-              setSearch('');
-              setOpenSearch(false);
-              setQuery(null);
+              setSearchTearm('');
             }}
           >
             <TiTimes />
@@ -106,7 +85,7 @@ export default function FoodSearch({ handleClick }) {
         )}
       </form>
       <ul className="search-list">
-        {pendingFetch ? (
+        {loading ? (
           <li style={{ justifyContent: 'center' }}>
             <Loader
               className="loader"
@@ -118,10 +97,10 @@ export default function FoodSearch({ handleClick }) {
             />
           </li>
         ) : (
-          searchData &&
-          searchData.foods.map((el) => (
+          data?.foods &&
+          data.foods.map((el) => (
             <SearchResult
-              calories={el.foodNutrients[3].value}
+              calories={el?.foodNutrients[3]?.value}
               key={el.fdcId}
               id={el.fdcId}
               handleClick={handleClick}
@@ -129,6 +108,7 @@ export default function FoodSearch({ handleClick }) {
             />
           ))
         )}
+        {error && <li>{error.message}</li>}
       </ul>
     </SearchStyles>
   );

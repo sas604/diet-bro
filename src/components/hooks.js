@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import base from './firebase';
 import { subDays, format } from 'date-fns';
 import { days, restD } from './testDataFile';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
@@ -21,7 +20,8 @@ export function useForm(defaults) {
   return { values, updateValue };
 }
 export const useFetch = (url) => {
-  const [pendingFetch, setPending] = useState(false);
+  console.log(url);
+  const [loading, setPending] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -30,20 +30,12 @@ export const useFetch = (url) => {
       setData(null);
       return;
     }
-    const controller = new AbortController();
-    let timeoutId;
 
     const fetchData = async () => {
       setPending(true);
       try {
-        timeoutId = setTimeout(() => {
-          controller.abort();
-          setError('Connection timeout');
-          setPending(false);
-          setData(null);
-        }, 6000);
-        const response = await fetch(url, { signal: controller.signal });
-        clearInterval(timeoutId);
+        console.log('clear');
+        const response = await fetch(url);
         if (!response.ok) {
           const message = `An error has occured: ${response.status}`;
           throw new Error(message);
@@ -63,13 +55,13 @@ export const useFetch = (url) => {
 
     fetchData();
     return () => {
-      controller.abort();
       setPending(false);
       setData(null);
+      setError(null);
     };
   }, [url]);
 
-  return [pendingFetch, data, error];
+  return { loading, data, error };
 };
 
 export const useHandleLogInTestUser = (history) =>
