@@ -30,20 +30,12 @@ export const useFetch = (url) => {
       setData(null);
       return;
     }
-    const controller = new AbortController();
-    let timeoutId;
 
     const fetchData = async () => {
       setPending(true);
       try {
-        timeoutId = setTimeout(() => {
-          controller.abort();
-          setError('Connection timeout');
-          setPending(false);
-          setData(null);
-        }, 6000);
-        const response = await fetch(url, { signal: controller.signal });
-        clearInterval(timeoutId);
+        const response = await fetch(url);
+
         if (!response.ok) {
           const message = `An error has occured: ${response.status}`;
           throw new Error(message);
@@ -63,7 +55,6 @@ export const useFetch = (url) => {
 
     fetchData();
     return () => {
-      controller.abort();
       setPending(false);
       setData(null);
     };
