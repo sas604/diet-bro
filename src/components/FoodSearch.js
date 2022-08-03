@@ -5,11 +5,30 @@ import SearchResult from './SearchResult';
 import { TiTimes } from 'react-icons/ti';
 import styled from 'styled-components';
 import ControledInput from './ControledInput';
-import { fdaUrl } from '../constants/api';
+import { fdaUrl } from '../utils/api';
 import { useFetch } from './hooks';
+import { AiOutlineScan } from 'react-icons/ai';
+import { ButtonStyle } from '../styles/CardStyles';
 
+const ScannerButton = styled(ButtonStyle)`
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: left;
+  max-width: unset;
+`;
 const SearchStyles = styled.div`
   position: relative;
+  .input-group {
+    display: flex;
+    gap: var(--space-sm);
+    > div {
+      flex: 1;
+    }
+    input {
+      margin: 0;
+    }
+  }
   .search-button {
     position: absolute;
     top: 6px;
@@ -53,9 +72,11 @@ export default function FoodSearch({
   handleClick,
   searchTerm,
   setSearchTearm,
+  scanning,
+  setScanning,
 }) {
   const { data, loading, error } = useFetch(fdaUrl(searchTerm));
-  // if there a query value send request to api
+  // if there is a query value send request to api
   const handleSearch = (e) => {
     setSearchTearm(e.target.value);
   };
@@ -63,14 +84,19 @@ export default function FoodSearch({
   return (
     <SearchStyles className="search">
       <form onSubmit={(e) => e.preventDefault()}>
-        <ControledInput
-          value={searchTerm}
-          handeler={handleSearch}
-          label="Food name"
-          type="text"
-          inputStyle={{ padding: ' 0.5em 0' }}
-        />
-
+        <div className="input-group">
+          <ScannerButton type="button" onClick={() => setScanning(!scanning)}>
+            <AiOutlineScan />
+            {!scanning ? 'Scan Barcode' : 'Stop Scanning'}
+          </ScannerButton>
+          <ControledInput
+            value={searchTerm}
+            handeler={handleSearch}
+            label="Food name"
+            type="text"
+            inputStyle={{ padding: ' 0.5em 0' }}
+          />
+        </div>
         {searchTerm && (
           <button
             className="search-button"

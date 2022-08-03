@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
 import Quagga from '@ericblade/quagga2';
 import styled from 'styled-components';
-import { setBarcodeData } from '../features/userData/userDataSlice';
 import {
   getMedianOfCodeErrors,
   defaultLocatorSettings,
   defaultConstraints,
   defaultDecoders,
 } from '../utils/quagga';
-import { useDispatch } from 'react-redux';
+
 const ScannerStyles = styled.div`
   .drawingBuffer {
     width: 320px;
@@ -33,15 +32,13 @@ export function BarcodeReader({
   constraints = defaultConstraints,
   cameraId,
   facingMode,
-  numOfWorkers = navigator.hardwareConcurrency || 0,
+  numOfWorkers = 0,
   decoders = defaultDecoders,
-  locate = false,
+  locate = true,
   onScannerReady,
   setSearchTearm,
 }) {
-  const dispatch = useDispatch();
   const [error, setError] = useState(false);
-  const [debugg, setDebugg] = useState(false);
   const scannerRef = useRef(null);
   const errorCheck = useCallback(
     (result) => {
@@ -49,41 +46,13 @@ export function BarcodeReader({
       // if Quagga is at least 75% certain that it read correctly, then accept the code.
       if (err < 0.25) {
         console.log(result.codeResult.code);
+
         setSearchTearm(result.codeResult.code);
       }
     },
-    [dispatch]
+    [setSearchTearm]
   );
-  const handleProcessed = (result) => {
-    const drawingCtx = Quagga.canvas.ctx.overlay;
-    const drawingCanvas = Quagga.canvas.dom.overlay;
-    drawingCtx.font = '24px Arial';
-    drawingCtx.fillStyle = 'green';
-    if (result) {
-      if (result.boxes) {
-        drawingCtx.clearRect(
-          0,
-          0,
-          parseInt(drawingCanvas.getAttribute('width')),
-          parseInt(drawingCanvas.getAttribute('height'))
-        );
-        result.boxes
-          .filter((box) => box !== result.box)
-          .forEach((box) => {
-            Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
-              color: 'purple',
-              lineWidth: 2,
-            });
-          });
-      }
-      if (result.box) {
-        Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
-          color: 'blue',
-          lineWidth: 2,
-        });
-      }
-    }
-  };
+
   useEffect(() => {
     if (!scanning || !scannerRef?.current) {
       return;
@@ -113,15 +82,11 @@ export function BarcodeReader({
         locate,
       },
       (err) => {
-        Quagga.onProcessed(handleProcessed);
-
         if (err) {
           return console.log('Error starting Quagga:', err);
         }
         if (scannerRef && scannerRef.current) {
           Quagga.start();
-          setDebugg(Quagga.CameraAccess.getActiveTrack().getSettings());
-          console.log(Quagga.CameraAccess.getActiveTrack().getSettings());
           if (onScannerReady) {
             console.log('scanner is ready');
             onScannerReady();
@@ -132,7 +97,6 @@ export function BarcodeReader({
     Quagga.onDetected(errorCheck);
     return () => {
       Quagga.offDetected(errorCheck);
-      Quagga.offProcessed(handleProcessed);
       Quagga.stop();
     };
   }, [

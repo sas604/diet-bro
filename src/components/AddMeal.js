@@ -8,20 +8,7 @@ import CardStyles from '../styles/CardStyles';
 import { TabsStyle } from '../styles/CardStyles';
 import { postMealToFirebase } from './firebase';
 import { useSelector } from 'react-redux';
-import { ButtonStyle } from '../styles/CardStyles';
-import { AiOutlineScan } from 'react-icons/ai';
 import { BarcodeReader } from './BarcodeReader';
-
-const ScannerButton = styled(ButtonStyle)`
-  display: flex;
-  position: relative;
-  z-index: 1000;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-top: var(--space-md);
-  text-align: left;
-  max-width: unset;
-`;
 
 const AddFoodStyles = styled(CardStyles)`
   max-width: 600px;
@@ -99,16 +86,14 @@ export default function AddMeal() {
             handleClick={getFoodItem}
             searchTerm={searchTerm}
             setSearchTearm={setSearchTearm}
+            scanning={scanning}
+            setScanning={setScanning}
           />
         ) : (
           <ManualFoodEntry handleSubmit={updateFoodState} />
         )}
         <div>
           <BarcodeReader scanning={scanning} setSearchTearm={setSearchTearm} />
-          <ScannerButton onClick={() => setScanning(!scanning)}>
-            <AiOutlineScan />
-            {!scanning ? 'Scan Barcode' : 'Stop Scanning'}
-          </ScannerButton>
         </div>
       </AddFoodStyles>
     </>
