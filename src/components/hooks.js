@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import base from './firebase';
 import { subDays, format } from 'date-fns';
 import { days, restD } from './testDataFile';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
@@ -21,7 +20,7 @@ export function useForm(defaults) {
   return { values, updateValue };
 }
 export const useFetch = (url) => {
-  const [pendingFetch, setPending] = useState(false);
+  const [loading, setPending] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -35,7 +34,6 @@ export const useFetch = (url) => {
       setPending(true);
       try {
         const response = await fetch(url);
-
         if (!response.ok) {
           const message = `An error has occured: ${response.status}`;
           throw new Error(message);
@@ -57,10 +55,11 @@ export const useFetch = (url) => {
     return () => {
       setPending(false);
       setData(null);
+      setError(null);
     };
   }, [url]);
 
-  return [pendingFetch, data, error];
+  return { loading, data, error };
 };
 
 export const useHandleLogInTestUser = (history) =>

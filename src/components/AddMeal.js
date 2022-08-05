@@ -8,6 +8,7 @@ import CardStyles from '../styles/CardStyles';
 import { TabsStyle } from '../styles/CardStyles';
 import { postMealToFirebase } from './firebase';
 import { useSelector } from 'react-redux';
+import { BarcodeReader } from './BarcodeReader';
 
 const AddFoodStyles = styled(CardStyles)`
   max-width: 600px;
@@ -25,8 +26,10 @@ const AddFoodStyles = styled(CardStyles)`
 export default function AddMeal() {
   const [foodItemId, setFoodItemId] = useState(null);
   const [select, setSelect] = useState(true);
+  const [scanning, setScanning] = useState(false);
   const { date } = useSelector((state) => state);
   const history = useNavigate();
+  const [searchTerm, setSearchTearm] = useState('');
 
   const getFoodItem = (e) => {
     setFoodItemId(e.target.id);
@@ -58,7 +61,10 @@ export default function AddMeal() {
             value="Search"
             name="input option"
             checked={select}
-            onChange={() => setSelect(true)}
+            onChange={() => {
+              setSelect(true);
+              setScanning(false);
+            }}
           />
           <label htmlFor="search">Search database</label>
 
@@ -68,15 +74,33 @@ export default function AddMeal() {
             value="manual"
             name="input option"
             checked={!select}
-            onChange={() => setSelect(false)}
+            onChange={() => {
+              setSelect(false);
+              setScanning(false);
+            }}
           />
           <label htmlFor="manual">Type manualy</label>
         </TabsStyle>
         {select ? (
-          <FoodSearch handleClick={getFoodItem} />
+          <FoodSearch
+            handleClick={getFoodItem}
+            searchTerm={searchTerm}
+            setSearchTearm={setSearchTearm}
+            scanning={scanning}
+            setScanning={setScanning}
+          />
         ) : (
           <ManualFoodEntry handleSubmit={updateFoodState} />
         )}
+        <div>
+          {scanning && (
+            <BarcodeReader
+              scanning={scanning}
+              setScanning={setScanning}
+              setSearchTearm={setSearchTearm}
+            />
+          )}
+        </div>
       </AddFoodStyles>
     </>
   );

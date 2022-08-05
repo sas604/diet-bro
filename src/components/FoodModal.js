@@ -56,22 +56,32 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
   // path to the fda api
   const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208`;
   // fetch data
-  const [loading, data, error] = useFetch(url);
+  const { loading, data, error } = useFetch(url);
   const [foodNutrients, setFoodNutrients] = useState(null);
   const [select, setSelect] = useState(true);
   useEffect(() => {
     // check if something in response
     if (data) {
       // filter empty portions
-      const portions = data.foodPortions.filter(
-        (el) => el.portionDescription !== 'Quantity not specified'
-      );
+
+      const portions = data.foodPortions.length
+        ? data.foodPortions.filter(
+            (el) => el.portionDescription !== 'Quantity not specified'
+          )
+        : [
+            {
+              portionDescription: '1 Serving',
+              gramWeight: data.servingSize,
+              id: 12435,
+            },
+          ];
+
       // format response
       setFoodNutrients({
         kcal: data.foodNutrients[0].amount,
         portions: portions,
         name: data.description,
-        portion: portions[0].gramWeight,
+        portion: portions[0]?.gramWeight,
       });
     }
   }, [data]);
