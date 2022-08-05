@@ -140,6 +140,7 @@ export default function FoodSearch({
             />
           ))
         )}
+        {data && !data.foods.length && <li>No Results</li>}
         {error && <li>{error.message}</li>}
       </ul>
     </SearchStyles>

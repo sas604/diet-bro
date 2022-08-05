@@ -63,11 +63,20 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
     // check if something in response
     if (data) {
       // filter empty portions
-      const portions = data.foodPortions.filter(
-        (el) => el.portionDescription !== 'Quantity not specified'
-      );
+
+      const portions = data.foodPortions.length
+        ? data.foodPortions.filter(
+            (el) => el.portionDescription !== 'Quantity not specified'
+          )
+        : [
+            {
+              portionDescription: '1 Serving',
+              gramWeight: data.servingSize,
+              id: 12435,
+            },
+          ];
+
       // format response
-      console.log(data);
       setFoodNutrients({
         kcal: data.foodNutrients[0].amount,
         portions: portions,
