@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+  useLayoutEffect,
+} from 'react';
 import Quagga from '@ericblade/quagga2';
 import styled from 'styled-components';
 import {
@@ -10,16 +16,20 @@ import {
 
 const ScannerStyles = styled.div`
   .drawingBuffer {
-    width: 320px;
-    height: 320px;
+    width: 100%;
+    max-height: 100%;
   }
   canvas {
     position: absolute;
+    transition: 0, 5s;
   }
+  .overlay {
+    background-color: #3fbbaf70;
+  }
+
   video {
-    display: ${({ scanning }) => (scanning ? 'block' : 'none')};
-    width: 320px;
-    height: 320px;
+    width: 100%;
+    max-height: 100%;
   }
   .canvas-wrapper {
     position: relative;
@@ -37,23 +47,26 @@ export function BarcodeReader({
   locate = true,
   onScannerReady,
   setSearchTearm,
+  setScanning,
 }) {
   const [error, setError] = useState(false);
+  const [detected, setDetected] = useState(false);
   const scannerRef = useRef(null);
   const errorCheck = useCallback(
     (result) => {
       const err = getMedianOfCodeErrors(result.codeResult.decodedCodes);
       // if Quagga is at least 75% certain that it read correctly, then accept the code.
       if (err < 0.25) {
-        console.log(result.codeResult.code);
-
-        setSearchTearm(result.codeResult.code);
+        setDetected(true);
+        setTimeout(() => {
+          setSearchTearm(result.codeResult.code);
+          setScanning(false);
+        }, 500);
       }
     },
-    [setSearchTearm]
+    [setSearchTearm, setScanning]
   );
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!scanning || !scannerRef?.current) {
       return;
     }
@@ -112,11 +125,14 @@ export function BarcodeReader({
     numOfWorkers,
     onScannerReady,
   ]);
-
   return (
     <ScannerStyles scanning={scanning}>
       <div className="canvas-wrapper" ref={scannerRef}>
-        <canvas className="drawingBuffer" width={320} height={320}></canvas>
+        <canvas
+          className={`drawingBuffer ${detected ? 'overlay' : ' '}`}
+          width={320}
+          height={320}
+        ></canvas>
       </div>
     </ScannerStyles>
   );

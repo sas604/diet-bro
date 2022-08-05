@@ -85,7 +85,13 @@ export default function FoodSearch({
     <SearchStyles className="search">
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="input-group">
-          <ScannerButton type="button" onClick={() => setScanning(!scanning)}>
+          <ScannerButton
+            type="button"
+            onClick={() => {
+              setScanning(!scanning);
+              setSearchTearm('');
+            }}
+          >
             <AiOutlineScan />
             {!scanning ? 'Scan Barcode' : 'Stop Scanning'}
           </ScannerButton>

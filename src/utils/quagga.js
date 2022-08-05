@@ -4,7 +4,7 @@ export const defaultLocatorSettings = {
 };
 export const defaultConstraints = {
   width: 640,
-  height: 640,
+  height: 320,
   focusMode: 'auto',
   resizeMode: 'crop-and-scale',
 };

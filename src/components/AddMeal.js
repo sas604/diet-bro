@@ -93,7 +93,13 @@ export default function AddMeal() {
           <ManualFoodEntry handleSubmit={updateFoodState} />
         )}
         <div>
-          <BarcodeReader scanning={scanning} setSearchTearm={setSearchTearm} />
+          {scanning && (
+            <BarcodeReader
+              scanning={scanning}
+              setScanning={setScanning}
+              setSearchTearm={setSearchTearm}
+            />
+          )}
         </div>
       </AddFoodStyles>
     </>

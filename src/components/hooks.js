@@ -20,7 +20,6 @@ export function useForm(defaults) {
   return { values, updateValue };
 }
 export const useFetch = (url) => {
-  console.log(url);
   const [loading, setPending] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -34,7 +33,6 @@ export const useFetch = (url) => {
     const fetchData = async () => {
       setPending(true);
       try {
-        console.log('clear');
         const response = await fetch(url);
         if (!response.ok) {
           const message = `An error has occured: ${response.status}`;
