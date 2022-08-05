@@ -17,7 +17,7 @@ import {
 const ScannerStyles = styled.div`
   .drawingBuffer {
     width: 100%;
-    max-height: 100%;
+    max-height: 320px;
   }
   canvas {
     position: absolute;
@@ -29,7 +29,7 @@ const ScannerStyles = styled.div`
 
   video {
     width: 100%;
-    max-height: 100%;
+    max-height: 320px;
   }
   .canvas-wrapper {
     position: relative;
