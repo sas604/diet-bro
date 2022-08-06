@@ -9,6 +9,7 @@ import { fdaUrl } from '../utils/api';
 import { useFetch } from './hooks';
 import { AiOutlineScan } from 'react-icons/ai';
 import { ButtonStyle } from '../styles/CardStyles';
+import Pagination from './Pagination';
 
 const ScannerButton = styled(ButtonStyle)`
   display: flex;
@@ -19,6 +20,8 @@ const ScannerButton = styled(ButtonStyle)`
 `;
 const SearchStyles = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
   .input-group {
     display: flex;
     gap: var(--space-sm);
@@ -40,30 +43,31 @@ const SearchStyles = styled.div`
     background: transparent;
     cursor: pointer;
   }
-  ul {
-    max-height: 280px;
+  .search-list {
+    flex: 1;
     overflow-y: scroll;
     padding: 0;
     @media (max-width: 700px) {
       max-height: 50vh;
     }
-  }
-  li {
-    padding: 0.5em 1em 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  li + li {
-    margin-top: 0.5em;
-    border-top: 3px solid var(--gray);
-  }
-  p {
-    margin: 0;
-  }
-  p:last-of-type {
-    margin-left: auto;
-    margin-right: 0.5em;
+
+    li {
+      padding: 0.5em 1em 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li + li {
+      margin-top: 0.5em;
+      border-top: 3px solid var(--gray);
+    }
+    p {
+      margin: 0;
+    }
+    p:last-of-type {
+      margin-left: auto;
+      margin-right: 0.5em;
+    }
   }
 `;
 
@@ -75,74 +79,86 @@ export default function FoodSearch({
   scanning,
   setScanning,
 }) {
-  const { data, loading, error } = useFetch(fdaUrl(searchTerm));
+  const [page, setPage] = useState(1);
+  const { data, loading, error } = useFetch(fdaUrl(searchTerm, page));
+
   // if there is a query value send request to api
   const handleSearch = (e) => {
+    setScanning(false);
     setSearchTearm(e.target.value);
   };
 
   return (
-    <SearchStyles className="search">
-      <form onSubmit={(e) => e.preventDefault()}>
-        <div className="input-group">
-          <ScannerButton
-            type="button"
-            onClick={() => {
-              setScanning(!scanning);
-              setSearchTearm('');
-            }}
-          >
-            <AiOutlineScan />
-            {!scanning ? 'Scan Barcode' : 'Stop Scanning'}
-          </ScannerButton>
-          <ControledInput
-            value={searchTerm}
-            handeler={handleSearch}
-            label="Food name"
-            type="text"
-            inputStyle={{ padding: ' 0.5em 0' }}
-          />
-        </div>
-        {searchTerm && (
-          <button
-            className="search-button"
-            type="button"
-            title="clear search"
-            onClick={() => {
-              setSearchTearm('');
-            }}
-          >
-            <TiTimes />
-          </button>
-        )}
-      </form>
-      <ul className="search-list">
-        {loading ? (
-          <li style={{ justifyContent: 'center' }}>
-            <Loader
-              className="loader"
-              type="Puff"
-              color={'#9163f2'}
-              height={100}
-              width={100}
-              timeout={3000} //3 secs
+    <>
+      <SearchStyles className="search">
+        <form onSubmit={(e) => e.preventDefault()}>
+          <div className="input-group">
+            <ScannerButton
+              type="button"
+              onClick={() => {
+                setScanning(!scanning);
+                setSearchTearm('');
+              }}
+            >
+              <AiOutlineScan />
+              {!scanning ? 'Scan Barcode' : 'Stop Scanning'}
+            </ScannerButton>
+            <ControledInput
+              value={searchTerm}
+              handeler={handleSearch}
+              label="Food name"
+              type="text"
+              inputStyle={{ padding: ' 0.5em 0' }}
             />
-          </li>
-        ) : (
-          data?.foods &&
-          data.foods.map((el) => (
-            <SearchResult
-              calories={el?.foodNutrients[3]?.value}
-              key={el.fdcId}
-              id={el.fdcId}
-              handleClick={handleClick}
-              name={el.description}
-            />
-          ))
+          </div>
+          {searchTerm && (
+            <button
+              className="search-button"
+              type="button"
+              title="clear search"
+              onClick={() => {
+                setSearchTearm('');
+              }}
+            >
+              <TiTimes />
+            </button>
+          )}
+        </form>
+        <ul className="search-list">
+          {loading ? (
+            <li style={{ justifyContent: 'center' }}>
+              <Loader
+                className="loader"
+                type="Puff"
+                color={'#9163f2'}
+                height={100}
+                width={100}
+                timeout={3000} //3 secs
+              />
+            </li>
+          ) : (
+            data?.foods &&
+            data.foods.map((el) => (
+              <SearchResult
+                calories={el?.foodNutrients[3]?.value}
+                key={el.fdcId}
+                id={el.fdcId}
+                handleClick={handleClick}
+                name={el.description}
+              />
+            ))
+          )}
+          {data && !data.foods.length && <li>No Results</li>}
+          {error && <li>{error.message}</li>}
+        </ul>
+        {data && (
+          <Pagination
+            pages={data.pageList}
+            currentPage={page}
+            setPage={setPage}
+          ></Pagination>
         )}
-        {data && !data.foods.length && <li>No Results</li>}
-        {error && <li>{error.message}</li>}
-      </ul>
-    </SearchStyles>
+      </SearchStyles>
+    </>
   );
 }
