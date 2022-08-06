@@ -12,6 +12,13 @@ const NavStyles = styled.nav`
   flex-direction: column;
   background-color: var(--gray);
 
+  @media (max-width: 700px) {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+  }
+
   a {
     font-size: 30px;
     color: #737179;

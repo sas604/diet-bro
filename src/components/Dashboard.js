@@ -56,12 +56,6 @@ const DashStyles = styled.div`
     }
     display: block;
     padding: 2rem 1rem;
-    nav {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      left: 0;
-    }
   }
 `;
 
