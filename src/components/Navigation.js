@@ -17,13 +17,14 @@ const NavStyles = styled.nav`
     bottom: 0;
     width: 100%;
     left: 0;
+    z-index: 3;
   }
 
   a {
     font-size: 30px;
     color: #737179;
     display: block;
-    margin-top: 1rem;
+    margin-top: var(--space-md);
     &:hover {
       transform: scale(1.1);
       color: var(--purple);
@@ -34,7 +35,7 @@ const NavStyles = styled.nav`
     color: var(--dark-purple);
   }
   a:first-of-type {
-    margin-top: 2rem;
+    margin-top: var(--space-md);
   }
   svg {
     width: 30px;

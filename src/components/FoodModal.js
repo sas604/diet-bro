@@ -23,6 +23,7 @@ const ModalWrapperStyles = styled.div`
 `;
 const ModalStyles = styled(CardStyles)`
   position: relative;
+  max-width: 600px;
   label {
     display: block;
   }

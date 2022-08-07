@@ -9,15 +9,16 @@ import { TabsStyle } from '../styles/CardStyles';
 import { postMealToFirebase } from './firebase';
 import { useSelector } from 'react-redux';
 import { BarcodeReader } from './BarcodeReader';
+import { LayoutStyles } from '../styles/LayoutStyles';
 
 const AddFoodStyles = styled(CardStyles)`
-  max-width: 600px;
+  max-width: 800px;
+  min-height: 550px;
   margin: 0;
   input {
     margin-bottom: 1rem;
   }
   @media (max-width: 700px) {
-    margin-top: 1rem;
     min-height: 70vh;
     align-items: flex-start;
   }
@@ -45,7 +46,7 @@ export default function AddMeal() {
   // search from data
 
   return (
-    <>
+    <LayoutStyles>
       {foodItemId && (
         <FoodModal
           returnData={updateFoodState}
@@ -102,6 +103,6 @@ export default function AddMeal() {
           )}
         </div>
       </AddFoodStyles>
-    </>
+    </LayoutStyles>
   );
 }

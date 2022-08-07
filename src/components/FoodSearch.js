@@ -80,7 +80,7 @@ export default function FoodSearch({
   setScanning,
 }) {
   const [page, setPage] = useState(1);
-  const { data, loading, error } = useFetch(fdaUrl(searchTerm, page));
+  const { data, loading, error } = useFetch(fdaUrl(searchTerm, page, 10));
 
   // if there is a query value send request to api
   const handleSearch = (e) => {

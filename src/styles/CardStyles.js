@@ -22,8 +22,6 @@ const CardStyles = styled.div`
   background: var(--white);
   padding: 2rem 1.5rem;
   border-radius: 5px;
-  max-width: 500px;
-  margin: 0 auto;
   width: 100%;
   box-shadow: var(--light-shadow);
   @media (max-width: 700px) {

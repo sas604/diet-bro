@@ -1,14 +1,18 @@
 import WeightDisplay from './WeightDisplay';
 import DatePicker from './DatePicker';
 import Weighthistory from './WeightHistory';
+import { Title } from './Title';
+import { LayoutStyles } from '../styles/LayoutStyles';
 
 export default function WeightDashboard() {
   return (
     <>
-      <h2 className="head">Weight Tracking</h2>
+      <Title title="Weight Tracking" />
       <DatePicker />
-      <WeightDisplay />
-      <Weighthistory />
+      <LayoutStyles>
+        <WeightDisplay />
+        <Weighthistory />
+      </LayoutStyles>
     </>
   );
 }
