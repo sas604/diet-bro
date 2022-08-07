@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import Landing from './components/Landing';
 import PasswordRestore from './components/PasswordRestore';
@@ -13,9 +13,11 @@ import AddMeal from './components/AddMeal';
 import { GlobalStyles } from './styles/GlobalStyles';
 import Typography from './styles/Typography';
 import WeightDashboard from './components/WeightDashboard';
-import { TiArrowLeftThick } from 'react-icons/ti';
+
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import BackButton from './components/BackButton';
+
 function App() {
   return (
     <Provider store={store}>
@@ -35,23 +37,17 @@ function App() {
                   path={ROUTES.DASH + ROUTES.ADD_MEAL}
                   element={
                     <>
-                      <Link className="head" to={ROUTES.DASH}>
-                        <TiArrowLeftThick /> Back to home
-                      </Link>
+                      <BackButton
+                        route={ROUTES.DASH}
+                        text="Back to Dashboard"
+                      />
                       <AddMeal />
                     </>
                   }
                 />
                 <Route
                   path={ROUTES.DASH + ROUTES.ACCOUNT}
-                  element={
-                    <>
-                      <>
-                        <h2 className="head">Account Settings </h2>
-                        <Account />
-                      </>
-                    </>
-                  }
+                  element={<Account />}
                 />
               </Route>
               <Route
