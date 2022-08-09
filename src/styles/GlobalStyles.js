@@ -1,9 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
 import patern from '../img/pattern';
-export const GlobalStyles = createGlobalStyle`
+import { getUserColorSchema } from '../utils/getUserColorSchema';
 
-:root {
-  --dark-purple: #9163f2;
+const theme = getUserColorSchema();
+
+export const GlobalStyles = createGlobalStyle`
+html {
+  ${(props) => console.log(props)}
+  --dark-purple: #9163f2 ;
+  --bg-primary: ${theme === 'light' ? '#9163f2' : '#202124'};
+  --bg-secondary: ${theme === 'light' ? 'var(--white)' : '#292a2d'};
   --purple: #8480f2;
   --blue: #30a8f2;
   --blue-green: #32bad9;
@@ -27,12 +33,14 @@ export const GlobalStyles = createGlobalStyle`
   --space-xs: 0.5rem;
   --space-xl: 2.5rem;
   --pattern: ${patern};
+  --text-primary: ${theme === 'light' ? 'black' : 'var(--white)'}
 
 }
 
 html{
   font-size:16px;
-  background-color: var(--white);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 html {
   box-sizing: border-box;
@@ -44,6 +52,7 @@ html {
  /* Scrollbar Styles */
  body::-webkit-scrollbar , ul::-webkit-scrollbar {
     width: 12px;
+    
 
   }
   html, ul {
@@ -51,12 +60,12 @@ html {
     scrollbar-color: var(--purple) ;
   }
   body::-webkit-scrollbar-track, ul::-webkit-scrollbar-track {
-    background: var(--white);
+    background: var(--bg-primary);
   }
   body::-webkit-scrollbar-thumb, ul::-webkit-scrollbar-thumb {
     background-color: var(--purple) ;
     border-radius: 6px;
-    border: 3px solid var(--white);
+    border: 3px solid var(--bg-primary);
   }
  :any-link{
    text-decoration:none;

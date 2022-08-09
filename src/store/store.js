@@ -5,6 +5,7 @@ import mealSlice from '../features/meals/mealSlice';
 import searchSlice from '../features/search/searchSlice';
 import {
   barcodeReducer,
+  userColorScemaReducer,
   userReducer,
   weighReducer,
 } from '../features/userData/userDataSlice';
@@ -18,5 +19,6 @@ export const store = configureStore({
     weight: weighReducer,
     barcode: barcodeReducer,
     search: searchSlice,
+    theme: userColorScemaReducer,
   },
 });

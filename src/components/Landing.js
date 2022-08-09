@@ -22,7 +22,7 @@ const SignIn = styled.div`
   border: 5px solid var(--purple);
   border-radius: 3px;
   padding: 2rem 3rem;
-  background-color: var(--white);
+  background-color: var(--bg-primary);
   position: relative;
   z-index: 1;
   max-width: 400px;
