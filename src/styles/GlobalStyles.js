@@ -1,22 +1,25 @@
+import { useSelector } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 import patern from '../img/pattern';
-import { getUserColorSchema } from '../utils/getUserColorSchema';
 
-const theme = getUserColorSchema();
-
+export function GlobalStylesHOC() {
+  const { theme } = useSelector((state) => state);
+  return <GlobalStyles theme={theme} />;
+}
 export const GlobalStyles = createGlobalStyle`
 html {
-  ${(props) => console.log(props)}
   --dark-purple: #9163f2 ;
-  --bg-primary: ${theme === 'light' ? '#9163f2' : '#202124'};
-  --bg-secondary: ${theme === 'light' ? 'var(--white)' : '#292a2d'};
+  --bg-primary: ${({ theme }) =>
+    theme === 'light' ? 'var(--white)' : '#202124'};
+  --bg-secondary: ${({ theme }) =>
+    theme === 'light' ? 'var(--white)' : '#292a2d'};
   --purple: #8480f2;
   --blue: #30a8f2;
-  --blue-green: #32bad9;
-  --green: #48d9ca;
+  --blue-green:${({ theme }) => (theme === 'light' ? '#32bad9 ' : '#21778a')};  
+  --green:${({ theme }) => (theme === 'light' ? '#48d9ca ' : '#2a8a80')}; 
   --dark-green: #3fbbaf;
   --white: #fcfcfc;
-  --gray: #e8e8e8;
+  --gray:${({ theme }) => (theme === 'light' ? '#e8e8e8 ' : '#3a3a3a')};  ;
   --red: #e61616;
   --font: "Quicksand", "Segoe UI", "Helvetica Neue", sans-serif;
   --bold: 700;
@@ -33,8 +36,11 @@ html {
   --space-xs: 0.5rem;
   --space-xl: 2.5rem;
   --pattern: ${patern};
-  --text-primary: ${theme === 'light' ? 'black' : 'var(--white)'}
-
+  --pater-color: ${({ theme }) =>
+    theme === 'light' ? 'var(--white)' : '#202124'};
+  --text-primary: ${({ theme }) =>
+    theme === 'light' ? 'black' : 'var(--white)'};
+    transition: all 0.3s;
 }
 
 html{

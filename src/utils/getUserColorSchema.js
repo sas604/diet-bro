@@ -1,3 +1,5 @@
+import { THEME, THEME_KEY } from '../constants/theme';
+
 export const setToLS = (key, value) => {
   window.localStorage.setItem(key, JSON.stringify(value));
 };
@@ -12,7 +14,7 @@ export const getFromLS = (key) => {
 };
 
 export const getUserColorSchema = () => {
-  let theme = getFromLS('userTheme');
+  let theme = getFromLS(THEME_KEY);
   if (theme) {
     return theme;
   }
@@ -20,7 +22,7 @@ export const getUserColorSchema = () => {
     window.matchMedia &&
     window.matchMedia('(prefers-color-scheme: dark)').matches
   ) {
-    return 'dark';
+    return THEME.DARK;
   }
-  return 'light';
+  return THEME.LIGHT;
 };

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import Landing from './components/Landing';
@@ -10,20 +9,18 @@ import MealDash from './components/MealDash';
 import Dashboard from './components/Dashboard';
 import Account from './components/Account';
 import AddMeal from './components/AddMeal';
-import { GlobalStyles } from './styles/GlobalStyles';
+import { GlobalStylesHOC } from './styles/GlobalStyles';
 import Typography from './styles/Typography';
 import WeightDashboard from './components/WeightDashboard';
-
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import { store } from './store/store';
 import BackButton from './components/BackButton';
 
 function App() {
-  const { theme } = store.getState((state) => state);
   return (
     <Provider store={store}>
       <AuthProvider>
-        <GlobalStyles theme={theme} />
+        <GlobalStylesHOC />
         <Typography />
         <Router>
           <Routes>
