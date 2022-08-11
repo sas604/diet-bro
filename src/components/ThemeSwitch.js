@@ -18,50 +18,72 @@ const SwitchStyles = styled.div`
   height: 30px;
   font-size: 30px;
   position: relative;
-  color: #000;
   .switch-icon {
     position: absolute;
+    :first-of-type {
+      z-index: 2;
+    }
   }
   svg {
     width: 30px;
   }
 `;
+const variants = {
+  moon: {
+    [THEME.DARK]: {
+      rotate: 90,
+      transition: { duration: 0.5 },
+      y: -8.9,
+      x: -1.8,
+      scale: 0.54,
+      color: 'var(--white)',
+    },
+    [THEME.LIGHT]: {
+      rotate: 0,
+      y: 0,
+      x: 0,
+      scale: 1,
+      color: 'var(--dark-purple)',
+      transition: {
+        duration: 0.5,
+        rotate: { delay: 0.2, duration: 0.3 },
+      },
+    },
+  },
+  bulb: {
+    [THEME.DARK]: {
+      opacity: 1,
+      color: 'var(--dark-purple)',
+      transition: { duration: 0.5 },
+    },
+    [THEME.LIGHT]: { opacity: 0, transition: { duration: 0.2 } },
+  },
+};
 export default function ThemeSwitch() {
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state);
   return (
     <div>
       <SwitchStyles onClick={() => dispatch(handleThemeChange(theme))}>
-        <AnimatePresence>
-          {theme === THEME.LIGHT ? (
-            <motion.div
-              key="burrito"
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{
-                rotate: 90,
-                scale: 0.6,
-                y: -8,
-                x: -2,
-                color: ['#000', '#000', '#000', '#fff'],
-              }}
-              transition={{ duration: 0.5 }}
-              className="switch-icon"
-            >
-              <MdNightlight />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="taco"
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              className="switch-icon"
-            >
-              <MdLightbulb />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <motion.div
+          key="burrito"
+          initial={false}
+          variants={variants.moon}
+          animate={theme === THEME.LIGHT ? THEME.LIGHT : THEME.DARK}
+          className="switch-icon"
+        >
+          <MdNightlight />
+        </motion.div>
+        <motion.div
+          key="taco"
+          initial={false}
+          variants={variants.bulb}
+          style={{ color: 'var(--white)' }}
+          animate={theme === THEME.LIGHT ? THEME.LIGHT : THEME.DARK}
+          className="switch-icon"
+        >
+          <MdLightbulb />
+        </motion.div>
       </SwitchStyles>
     </div>
   );
