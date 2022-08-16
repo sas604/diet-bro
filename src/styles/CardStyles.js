@@ -108,7 +108,6 @@ export const TabsStyle = styled.div`
   }
   [type='radio']:checked + label {
     background: var(--purple);
-    border-bottom: 1px solid white;
     color: var(--white);
     z-index: 2;
   }

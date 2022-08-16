@@ -16,6 +16,7 @@ const FieldStyles = styled.div`
     border-radius: 3px;
     border: 1px solid var(--dark-purple);
     background-color: var(--bg-primary);
+    color: var(--text-primary);
   }
   .suffix {
     position: absolute;

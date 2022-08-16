@@ -21,6 +21,9 @@ const SignInStyles = styled(SignIn)`
   button + button {
     background-color: var(--green);
   }
+  a {
+    color: var(--dark-green);
+  }
 `;
 
 function SignInPage() {

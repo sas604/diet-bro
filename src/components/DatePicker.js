@@ -8,19 +8,20 @@ const PickerStyle = styled(CardStyles)`
   padding: 0;
   display: flex;
   justify-content: center;
-  :hover {
-    color: var(--purple);
-  }
+
   .date-picker-btn {
     touch-action: manipulation;
     margin: 0;
     border: 0;
     background: transparent;
-
-    font-size: clamp(1rem 5vw 2rem);
+    color: var(--text-color);
+    font-size: clamp(1rem, 5vw, 2rem);
     line-height: 2rem;
     cursor: pointer;
-    &:hover {
+    &:disabled {
+      color: var(--gray);
+    }
+    &:hover:not(:disabled) {
       color: var(--purple);
     }
   }
@@ -63,6 +64,7 @@ export default function DatePicker() {
 
       <button
         className="date-picker-btn"
+        disabled={compareAsc(addDays(parseISO(date), 1), new Date()) >= 0}
         onClick={() => {
           if (compareAsc(addDays(parseISO(date), 1), new Date()) < 0) {
             dispatch(

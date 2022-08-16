@@ -65,15 +65,17 @@ html {
     scrollbar-width: thin;
     scrollbar-color: var(--purple) ;
   }
-  body::-webkit-scrollbar-track, ul::-webkit-scrollbar-track {
-    background: var(--bg-primary);
+  input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px var(--bg-primary) inset; /* Change the color to your own background color */
+    box-shadow:0 0 0 50px var(--bg-primary) inset; 
+    -webkit-text-fill-color: var(--text-primary);
   }
-  body::-webkit-scrollbar-thumb, ul::-webkit-scrollbar-thumb {
-    background-color: var(--purple) ;
-    border-radius: 6px;
-    border: 3px solid var(--bg-primary);
+  input {
+    color: var(--text-primary);
+    color-scheme: ${({ theme }) => theme} ;
   }
  :any-link{
    text-decoration:none;
+
  }
 `;

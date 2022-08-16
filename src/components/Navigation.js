@@ -21,9 +21,9 @@ const NavStyles = styled.nav`
     z-index: 3;
   }
 
-  a {
+  > * {
     font-size: 30px;
-    color: #737179;
+    color: var(--dark-purple);
     display: block;
     margin-top: var(--space-md);
     &:hover {
@@ -33,7 +33,7 @@ const NavStyles = styled.nav`
   }
 
   a.active {
-    color: var(--dark-purple);
+    color: var(--purple);
   }
   > :first-child {
     display: flex;
@@ -70,7 +70,6 @@ const NavStyles = styled.nav`
 export default function Navigation({ path = '/dashboard' }) {
   return (
     <NavStyles className="global-nav">
-      <ThameSwitch />
       <NavLink title="Home" to={path}>
         <GoHome />
       </NavLink>
@@ -82,10 +81,11 @@ export default function Navigation({ path = '/dashboard' }) {
       {/* <NavLink title="statistics" to={`${path}/stats`}>
           <GoGraph />
         </NavLink> */}
-
+      <ThameSwitch />
       <NavLink title="account settings" to={`${path}/account`}>
         <GoGear />
       </NavLink>
+
       <button
         title="signout"
         type="button"
