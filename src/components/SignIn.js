@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import { useContext } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Auth';
 import * as ROUTES from '../constants/routes';
@@ -21,11 +21,13 @@ const SignInStyles = styled(SignIn)`
   button + button {
     background-color: var(--green);
   }
+  a {
+    color: var(--dark-green);
+  }
 `;
 
 function SignInPage() {
   const history = useNavigate();
-  console.log(history);
   const logWithTest = useHandleLogInTestUser(history);
   const provider = new GithubAuthProvider();
 

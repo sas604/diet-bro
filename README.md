@@ -5,6 +5,7 @@ Diet bro is a single page calorie counter web app built with React, React router
 ## Features
 
 - Search for food in the FDA database
+- Barcode Scaner
 - Adding a specific portion to user daily meal history
 - Manual meal entry
 - All entries stored in the database, users can go back in time to add or remove entries

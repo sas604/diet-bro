@@ -19,7 +19,7 @@ export const ButtonStyle = styled.button`
 
 const CardStyles = styled.div`
   position: relative;
-  background: var(--white);
+  background: var(--bg-secondary);
   padding: 2rem 1.5rem;
   border-radius: 5px;
   width: 100%;
@@ -108,7 +108,6 @@ export const TabsStyle = styled.div`
   }
   [type='radio']:checked + label {
     background: var(--purple);
-    border-bottom: 1px solid white;
     color: var(--white);
     z-index: 2;
   }

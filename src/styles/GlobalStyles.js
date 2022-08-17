@@ -1,16 +1,25 @@
+import { useSelector } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 import patern from '../img/pattern';
-export const GlobalStyles = createGlobalStyle`
 
-:root {
-  --dark-purple: #9163f2;
+export function GlobalStylesHOC() {
+  const { theme } = useSelector((state) => state);
+  return <GlobalStyles theme={theme} />;
+}
+export const GlobalStyles = createGlobalStyle`
+html {
+  --dark-purple: #9163f2 ;
+  --bg-primary: ${({ theme }) =>
+    theme === 'light' ? 'var(--white)' : '#202124'};
+  --bg-secondary: ${({ theme }) =>
+    theme === 'light' ? 'var(--white)' : '#292a2d'};
   --purple: #8480f2;
   --blue: #30a8f2;
-  --blue-green: #32bad9;
-  --green: #48d9ca;
+  --blue-green:${({ theme }) => (theme === 'light' ? '#32bad9 ' : '#21778a')};  
+  --green:${({ theme }) => (theme === 'light' ? '#48d9ca ' : '#2a8a80')}; 
   --dark-green: #3fbbaf;
   --white: #fcfcfc;
-  --gray: #e8e8e8;
+  --gray:${({ theme }) => (theme === 'light' ? '#e8e8e8 ' : '#3a3a3a')};  ;
   --red: #e61616;
   --font: "Quicksand", "Segoe UI", "Helvetica Neue", sans-serif;
   --bold: 700;
@@ -27,12 +36,17 @@ export const GlobalStyles = createGlobalStyle`
   --space-xs: 0.5rem;
   --space-xl: 2.5rem;
   --pattern: ${patern};
-
+  --pater-color: ${({ theme }) =>
+    theme === 'light' ? 'var(--white)' : '#202124'};
+  --text-primary: ${({ theme }) =>
+    theme === 'light' ? 'black' : 'var(--white)'};
+    transition: all 0.3s;
 }
 
 html{
   font-size:16px;
-  background-color: var(--white);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 html {
   box-sizing: border-box;
@@ -44,21 +58,24 @@ html {
  /* Scrollbar Styles */
  body::-webkit-scrollbar , ul::-webkit-scrollbar {
     width: 12px;
+    
 
   }
   html, ul {
     scrollbar-width: thin;
     scrollbar-color: var(--purple) ;
   }
-  body::-webkit-scrollbar-track, ul::-webkit-scrollbar-track {
-    background: var(--white);
+  input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px var(--bg-primary) inset; /* Change the color to your own background color */
+    box-shadow:0 0 0 50px var(--bg-primary) inset; 
+    -webkit-text-fill-color: var(--text-primary);
   }
-  body::-webkit-scrollbar-thumb, ul::-webkit-scrollbar-thumb {
-    background-color: var(--purple) ;
-    border-radius: 6px;
-    border: 3px solid var(--white);
+  input {
+    color: var(--text-primary);
+    color-scheme: ${({ theme }) => theme} ;
   }
  :any-link{
    text-decoration:none;
+
  }
 `;

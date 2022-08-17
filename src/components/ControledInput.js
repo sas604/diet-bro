@@ -15,7 +15,8 @@ const FieldStyles = styled.div`
     min-width: 0;
     border-radius: 3px;
     border: 1px solid var(--dark-purple);
-    background-color: var(--white);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
   }
   .suffix {
     position: absolute;
@@ -31,7 +32,7 @@ const FieldStyles = styled.div`
     top: -0.8em;
     transition: 0.1s ease-in;
     /* background-color: white; */
-    background-color: var(--white);
+    background-color: var(--bg-primary);
     pointer-events: none;
   }
 

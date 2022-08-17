@@ -16,7 +16,6 @@ const WeightHistoryStyles = styled(HistoryListStyles)`
   }
 `;
 export default function WeightHistory() {
-  //const { state, dispatch } = useContext(StateContext);
   const state = useSelector((state) => state);
   const deleteEntry = (entry) => {
     weightEntryFirebase(entry);

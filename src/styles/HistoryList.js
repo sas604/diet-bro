@@ -44,6 +44,7 @@ const HistoryListStyles = styled(CardStyles)`
     border: none;
     font-size: 1.3rem;
     font-weight: 600;
+    color: var(--text-color);
     &:hover,
     &:focus {
       color: var(--red);

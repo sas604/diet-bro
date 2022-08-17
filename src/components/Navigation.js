@@ -3,6 +3,7 @@ import { GoSignOut, GoGear, GoGraph, GoHome } from 'react-icons/go';
 import { FaWeight } from 'react-icons/fa';
 import styled from 'styled-components';
 import { authFireBase } from './firebase';
+import ThameSwitch from './ThemeSwitch';
 
 const NavStyles = styled.nav`
   display: flex;
@@ -20,9 +21,9 @@ const NavStyles = styled.nav`
     z-index: 3;
   }
 
-  a {
+  > * {
     font-size: 30px;
-    color: #737179;
+    color: var(--dark-purple);
     display: block;
     margin-top: var(--space-md);
     &:hover {
@@ -32,9 +33,11 @@ const NavStyles = styled.nav`
   }
 
   a.active {
-    color: var(--dark-purple);
+    color: var(--purple);
   }
-  a:first-of-type {
+  > :first-child {
+    display: flex;
+    justify-content: center;
     margin-top: var(--space-md);
   }
   svg {
@@ -66,31 +69,30 @@ const NavStyles = styled.nav`
 
 export default function Navigation({ path = '/dashboard' }) {
   return (
-    <>
-      <NavStyles className="global-nav">
-        <NavLink title="Home" to={path}>
-          <GoHome />
-        </NavLink>
+    <NavStyles className="global-nav">
+      <NavLink title="Home" to={path}>
+        <GoHome />
+      </NavLink>
 
-        <NavLink title="weight tracker" to={`${path}/weight`}>
-          <FaWeight />
-        </NavLink>
+      <NavLink title="weight tracker" to={`${path}/weight`}>
+        <FaWeight />
+      </NavLink>
 
-        {/* <NavLink title="statistics" to={`${path}/stats`}>
+      {/* <NavLink title="statistics" to={`${path}/stats`}>
           <GoGraph />
         </NavLink> */}
+      <ThameSwitch />
+      <NavLink title="account settings" to={`${path}/account`}>
+        <GoGear />
+      </NavLink>
 
-        <NavLink title="account settings" to={`${path}/account`}>
-          <GoGear />
-        </NavLink>
-        <button
-          title="signout"
-          type="button"
-          onClick={(f) => authFireBase.signOut()}
-        >
-          <GoSignOut />
-        </button>
-      </NavStyles>
-    </>
+      <button
+        title="signout"
+        type="button"
+        onClick={(f) => authFireBase.signOut()}
+      >
+        <GoSignOut />
+      </button>
+    </NavStyles>
   );
 }

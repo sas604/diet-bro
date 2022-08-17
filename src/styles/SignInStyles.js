@@ -1,13 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const LandingStyles = styled.div`
-  background-color: var(--white);
+  background-color: var(--bg-primary);
   background-image: var(--pattern);
   overflow: hidden;
   height: 100vh;
   position: relative;
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     height: 60vh;
     width: 100%;
@@ -35,7 +35,7 @@ export const SignIn = styled.div`
   border: 5px solid var(--purple);
   border-radius: 3px;
   padding: 2rem 3rem;
-  background-color: var(--white);
+  background-color: var(--bg-secondary);
   position: relative;
   z-index: 1;
   max-width: 400px;
