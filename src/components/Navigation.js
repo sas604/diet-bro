@@ -58,7 +58,8 @@ const NavStyles = styled.nav`
     align-items: center;
     a,
     a:first-of-type,
-    button {
+    button,
+    > * {
       flex: 1;
       margin: 0;
       padding: 0;

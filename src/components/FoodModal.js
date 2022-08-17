@@ -60,11 +60,12 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
   const { loading, data, error } = useFetch(url);
   const [foodNutrients, setFoodNutrients] = useState(null);
   const [select, setSelect] = useState(true);
+
   useEffect(() => {
     // check if something in response
+    console.log('useEffect');
     if (data) {
       // filter empty portions
-
       const portions = data.foodPortions.length
         ? data.foodPortions.filter(
             (el) => el.portionDescription !== 'Quantity not specified'
@@ -103,7 +104,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
         </ModalStyles>
       </ModalWrapperStyles>
     );
-  if (loading || !data)
+  if (loading || !foodNutrients)
     return (
       <ModalWrapperStyles className="modal-wrapper">
         <ModalStyles className="modal">
@@ -125,7 +126,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
           >
             <TiTimes />
           </button>
-          <h3 className="modal-heading">{foodNutrients.name}</h3>
+          {/* <h3 className="modal-heading">{foodNutrients.name}</h3> */}
           <TabsStyle>
             <input
               id="portion"
