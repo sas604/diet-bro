@@ -60,33 +60,33 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
   const { loading, data, error } = useFetch(url);
   const [foodNutrients, setFoodNutrients] = useState(null);
   const [select, setSelect] = useState(true);
+  const [prevData, setPrevData] = useState(data);
 
-  useEffect(() => {
-    // check if something in response
-    console.log('useEffect');
-    if (data) {
-      // filter empty portions
-      const portions = data.foodPortions.length
-        ? data.foodPortions.filter(
-            (el) => el.portionDescription !== 'Quantity not specified'
-          )
-        : [
-            {
-              portionDescription: '1 Serving',
-              gramWeight: data.servingSize,
-              id: 12435,
-            },
-          ];
+  // revrite it to calculate on render
+  if (data !== prevData) {
+    // filter empty portions
+    const portions = data.foodPortions.length
+      ? data.foodPortions.filter(
+          (el) => el.portionDescription !== 'Quantity not specified'
+        )
+      : [
+          {
+            portionDescription: '1 Serving',
+            gramWeight: data.servingSize,
+            id: 12435,
+          },
+        ];
 
-      // format response
-      setFoodNutrients({
-        kcal: data.foodNutrients[0].amount,
-        portions: portions,
-        name: data.description,
-        portion: portions[0]?.gramWeight,
-      });
-    }
-  }, [data]);
+    // format response
+    setFoodNutrients({
+      kcal: data.foodNutrients[0].amount,
+      portions: portions,
+      name: data.description,
+      portion: portions[0]?.gramWeight,
+    });
+    setPrevData(data);
+  }
+
   if (error)
     return (
       <ModalWrapperStyles className="modal-wrapper">

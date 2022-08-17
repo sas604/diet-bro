@@ -21,6 +21,7 @@ const SwitchStyles = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   .switch-icon {
     position: absolute;
     :first-of-type {
