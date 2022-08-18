@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { Bars as Loader } from 'react-loader-spinner';
 import { useFetch } from './hooks';
@@ -52,7 +51,17 @@ const ModalStyles = styled(CardStyles)`
     margin: 0 1rem;
   }
 `;
-
+const InputGroupStyles = styled.div`
+  display: flex;
+  gap: var(--space-md);
+  select,
+  input {
+    width: 100%;
+  }
+  label {
+    flex: 1;
+  }
+`;
 export default function FoodModal({ handleClick, foodId, returnData }) {
   // path to the fda api
   const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208`;
@@ -60,10 +69,11 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
   const { loading, data, error } = useFetch(url);
   const [foodNutrients, setFoodNutrients] = useState(null);
   const [select, setSelect] = useState(true);
+  const [quantity, setQuantity] = useState(1);
   const [prevData, setPrevData] = useState(data);
 
   // revrite it to calculate on render
-  if (data !== prevData) {
+  if (data && data !== prevData) {
     // filter empty portions
     const portions = data.foodPortions.length
       ? data.foodPortions.filter(
@@ -126,7 +136,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
           >
             <TiTimes />
           </button>
-          {/* <h3 className="modal-heading">{foodNutrients.name}</h3> */}
+          <h3 className="modal-heading">{foodNutrients.name}</h3>
           <TabsStyle>
             <input
               id="portion"
@@ -148,28 +158,40 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             <label htmlFor="weight">Enter exact weight</label>
           </TabsStyle>
           {select ? (
-            <>
+            <InputGroupStyles>
               <label htmlFor="portion-select" className="modal-select">
-                Portion
+                <p>Portion</p>
+                <select
+                  name="portion-select"
+                  id="portion-select"
+                  onChange={(e) =>
+                    setFoodNutrients({
+                      ...foodNutrients,
+                      portion: +e.target.value,
+                    })
+                  }
+                  defaultValue={foodNutrients.portion}
+                >
+                  {foodNutrients.portions.map((el, i) => (
+                    <option key={el.id} value={el.gramWeight}>
+                      {el.portionDescription}
+                    </option>
+                  ))}
+                </select>
               </label>
-              <select
-                name="portion-select"
-                id="portion-select"
-                onChange={(e) =>
-                  setFoodNutrients({
-                    ...foodNutrients,
-                    portion: +e.target.value,
-                  })
-                }
-                defaultValue={foodNutrients.portion}
-              >
-                {foodNutrients.portions.map((el, i) => (
-                  <option key={el.id} value={el.gramWeight}>
-                    {el.portionDescription}
-                  </option>
-                ))}
-              </select>
-            </>
+              <label>
+                <p> Quantity</p>
+                <input
+                  onChange={(e) => {
+                    const num = +e.target.value > 0 ? +e.target.value : '';
+                    setQuantity(num);
+                  }}
+                  value={quantity}
+                  type="number"
+                  min={1}
+                />
+              </label>
+            </InputGroupStyles>
           ) : (
             <ControledInput
               label={'weight in OZ'}
@@ -188,13 +210,14 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             className="btn bg-green"
             tabIndex="1"
             onClick={() => {
-              returnData(foodNutrients);
+              returnData(foodNutrients, quantity);
               handleClick();
             }}
           >
             <span className="modal-calories-dislpay">
               Add{' '}
-              {Math.round(foodNutrients.kcal * (foodNutrients.portion / 100))}
+              {Math.round(foodNutrients.kcal * (foodNutrients.portion / 100)) *
+                (quantity > 0 ? quantity : 1)}
               Kcal
             </span>
           </ButtonStyle>

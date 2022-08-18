@@ -17,6 +17,7 @@ const PaginationStyles = styled.nav`
     appearance: none;
     border: 2px solid var(--purple);
     border-radius: 3px;
+    color: var(--text-color);
 
     cursor: pointer;
     &.active {

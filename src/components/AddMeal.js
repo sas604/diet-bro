@@ -36,9 +36,10 @@ export default function AddMeal() {
     setFoodItemId(e.target.id);
   };
 
-  const updateFoodState = (food) => {
+  const updateFoodState = (food, quantity = 1) => {
     const energy =
-      Math.round(food.portion && (food.kcal / 100) * food.portion * 10) / 10;
+      (Math.round(food.portion && (food.kcal / 100) * food.portion * 10) / 10) *
+      quantity;
     postMealToFirebase({ name: food.name, energy: energy || food.kcal }, date);
     history('/dashboard');
   };

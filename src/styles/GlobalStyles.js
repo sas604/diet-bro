@@ -70,7 +70,7 @@ html {
     box-shadow:0 0 0 50px var(--bg-primary) inset; 
     -webkit-text-fill-color: var(--text-primary);
   }
-  input {
+  input, select {
     color: var(--text-primary);
     color-scheme: ${({ theme }) => theme} ;
   }
