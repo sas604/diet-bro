@@ -4,7 +4,7 @@ import { setColorScheme } from '../features/userData/userDataSlice';
 import { setToLS } from '../utils/getUserColorSchema';
 import { MdNightlight, MdLightbulb } from 'react-icons/md';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const handleThemeChange = (theme) => (dispatch, getState) => {
   const newTheme = theme === THEME.LIGHT ? THEME.DARK : THEME.LIGHT;

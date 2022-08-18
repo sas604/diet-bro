@@ -1,5 +1,5 @@
 const dataTypes = {
-  survey: 'Survey%20(FNDDS)',
+  survey: ['Survey (FNDDS)'],
   branded: 'Branded',
 };
 
@@ -9,6 +9,6 @@ export const fdaUrl = (term, pageNumber = 1, pageSize = 5) => {
   if (!isNaN(term)) {
     type = dataTypes.branded;
   }
-  const query = term.trim().replace(' ', '%20');
-  return `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.REACT_APP_API_KEY}&query=${query}&dataType=${type}&pageSize=${pageSize}&pageNumber=${pageNumber}`;
+  const query = term.trim().replace(' ', '%20%2B');
+  return `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${process.env.REACT_APP_API_KEY}&query=%2B${query}&dataType=${type}&pageSize=${pageSize}&pageNumber=${pageNumber}`;
 };
