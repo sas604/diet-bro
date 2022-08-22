@@ -23,6 +23,7 @@ export const useFetch = (url) => {
   const [loading, setPending] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [_, refetch] = useState(null);
 
   useEffect(() => {
     if (!url) {
@@ -57,9 +58,9 @@ export const useFetch = (url) => {
       setData(null);
       setError(null);
     };
-  }, [url]);
+  }, [url, refetch]);
 
-  return { loading, data, error };
+  return { loading, data, error, refetch };
 };
 
 export const useHandleLogInTestUser = (history) =>

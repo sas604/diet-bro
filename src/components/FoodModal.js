@@ -64,16 +64,14 @@ const InputGroupStyles = styled.div`
 `;
 export default function FoodModal({ handleClick, foodId, returnData }) {
   // path to the fda api
-  const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208`;
-  // fetch data
+  const url = `https://api.nal.usda.gov/fdc/v1/food/${foodId}?api_key=${process.env.REACT_APP_API_KEY}&nutrients=208,203,204,269,205`;
   const { loading, data, error } = useFetch(url);
-  const [foodNutrients, setFoodNutrients] = useState(null);
   const [select, setSelect] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [prevData, setPrevData] = useState(data);
+  let foodNutrients;
 
-  // revrite it to calculate on render
-  if (data && data !== prevData) {
+  if (data && data.foodPortions) {
+    console.log(data);
     // filter empty portions
     const portions = data.foodPortions.length
       ? data.foodPortions.filter(
@@ -88,23 +86,22 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
         ];
 
     // format response
-    setFoodNutrients({
+    foodNutrients = {
       kcal: data.foodNutrients[0].amount,
       portions: portions,
+      nutrients: data.foodNutrients,
       name: data.description,
       portion: portions[0]?.gramWeight,
-    });
-    setPrevData(data);
+    };
   }
 
-  if (error)
+  if (error || (data && !data.foodPortions))
     return (
       <ModalWrapperStyles className="modal-wrapper">
         <ModalStyles className="modal">
           <button
             className="close-btn"
             onClick={() => {
-              setFoodNutrients(null);
               handleClick();
             }}
           >
@@ -130,7 +127,6 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
           <button
             className="close-btn"
             onClick={() => {
-              setFoodNutrients(null);
               handleClick();
             }}
           >
@@ -165,7 +161,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
                   name="portion-select"
                   id="portion-select"
                   onChange={(e) =>
-                    setFoodNutrients({
+                    (foodNutrients = {
                       ...foodNutrients,
                       portion: +e.target.value,
                     })
@@ -198,7 +194,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
               type={'number'}
               suffix={'OZ'}
               handeler={(e) =>
-                setFoodNutrients({
+                (foodNutrients = {
                   ...foodNutrients,
                   portion: +e.target.value * 28,
                 })
@@ -215,7 +211,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             }}
           >
             <span className="modal-calories-dislpay">
-              Add{' '}
+              Add
               {Math.round(foodNutrients.kcal * (foodNutrients.portion / 100)) *
                 (quantity > 0 ? quantity : 1)}
               Kcal

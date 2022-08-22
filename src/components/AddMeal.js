@@ -33,6 +33,7 @@ export default function AddMeal() {
   const [searchTerm, setSearchTearm] = useState('');
 
   const getFoodItem = (e) => {
+    console.log(e.target.id);
     setFoodItemId(e.target.id);
   };
 
@@ -40,7 +41,10 @@ export default function AddMeal() {
     const energy =
       (Math.round(food.portion && (food.kcal / 100) * food.portion * 10) / 10) *
       quantity;
-    postMealToFirebase({ name: food.name, energy: energy || food.kcal }, date);
+    postMealToFirebase(
+      { ...food, energy: energy || food.kcal, quantity },
+      date
+    );
     history('/dashboard');
   };
 
