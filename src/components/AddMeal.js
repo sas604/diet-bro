@@ -4,21 +4,22 @@ import FoodModal from './FoodModal';
 import ManualFoodEntry from './ManualFoodEntry';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import CardStyles from '../styles/CardStyles';
 import { TabsStyle } from '../styles/CardStyles';
 import { postMealToFirebase } from './firebase';
 import { useSelector } from 'react-redux';
 import { BarcodeReader } from './BarcodeReader';
 import { LayoutStyles } from '../styles/LayoutStyles';
 
-const AddFoodStyles = styled(CardStyles)`
+const AddFoodStyles = styled.div`
   max-width: 800px;
   min-height: 550px;
   margin: 0;
   input {
     margin-bottom: 1rem;
   }
+
   @media (max-width: 700px) {
+    margin-bottom: 3rem;
     min-height: 70vh;
     align-items: flex-start;
   }
@@ -31,11 +32,6 @@ export default function AddMeal() {
   const { date } = useSelector((state) => state);
   const history = useNavigate();
   const [searchTerm, setSearchTearm] = useState('');
-
-  const getFoodItem = (e) => {
-    console.log(e.target.id);
-    setFoodItemId(e.target.id);
-  };
 
   const updateFoodState = (food, quantity = 1) => {
     const energy =
@@ -89,7 +85,7 @@ export default function AddMeal() {
         </TabsStyle>
         {select ? (
           <FoodSearch
-            handleClick={getFoodItem}
+            handleClick={setFoodItemId}
             searchTerm={searchTerm}
             setSearchTearm={setSearchTearm}
             scanning={scanning}

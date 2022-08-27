@@ -29,21 +29,24 @@ const ChevronBtn = styled.button`
 `;
 
 const ListItemStyles = styled.li`
+  border: 1px solid var(--gray);
+  padding: var(--space-xs);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: var(--radius);
+  background-color: var(--bg-primary);
+  + li {
+    margin-top: var(--space-sm);
+  }
   .list-item-main {
-    padding: 0.5em 0em 0;
     display: flex;
     gap: var(--space-sm);
     align-items: center;
   }
 
-  + li {
-    margin-top: 0.5em;
-    border-top: 3px solid var(--gray);
-  }
   p {
     margin: 0;
   }
-  P:last-of-type {
+  p:last-of-type {
     flex: 1;
     text-align: right;
   }
@@ -53,19 +56,19 @@ const DropDownStyles = styled(motion.div)`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0 var(--space-md);
-  padding: 0 1em;
+  padding: 0 1em 0 calc(1em + 24px);
   div:nth-of-type(n + 3),
   div:nth-of-type(n + 4) {
     margin-top: var(--space-sm);
     padding-top: var(--space-sm);
     border-top: 1px solid var(--gray);
   }
-  div {
-    padding: 1em 0;
-  }
-  div p + p {
+
+  && .nutrient-amount {
     margin-top: var(--space-xs);
     font-weight: 800;
+    text-align: left;
+    padding-bottom: var(--space-xs);
   }
 `;
 
@@ -81,7 +84,7 @@ export default function SearchResult({ el, handleClick, open, setOpen }) {
         <AddButtonStyle
           type="button"
           id={el.id}
-          onClick={(e) => handleClick(e)}
+          onClick={(e) => handleClick(el.fdcId)}
           title="add food"
         >
           <FaPlus />
@@ -100,19 +103,19 @@ export default function SearchResult({ el, handleClick, open, setOpen }) {
           >
             <div>
               <p>Protein/100g</p>
-              <p>{el.foodNutrients[0].value}</p>
+              <p className="nutrient-amount">{el.foodNutrients[0].value}</p>
             </div>
             <div>
               <p>Tota Fat/100g</p>
-              <p>{el.foodNutrients[1].value}</p>
+              <p className="nutrient-amount">{el.foodNutrients[1].value}</p>
             </div>
             <div>
               <p>Carbohydrate/100g</p>
-              <p>{el.foodNutrients[2].value}</p>
+              <p className="nutrient-amount">{el.foodNutrients[2].value}</p>
             </div>
             <div>
               <p>Total Sugar/100g</p>
-              <p>{el.foodNutrients[8].value}</p>
+              <p className="nutrient-amount">{el.foodNutrients[8].value}</p>
             </div>
           </DropDownStyles>
         )}

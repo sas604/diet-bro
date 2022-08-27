@@ -46,11 +46,8 @@ const SearchStyles = styled.div`
   }
   .search-list {
     flex: 1;
-    overflow-y: scroll;
+    list-style: none;
     padding: 0;
-    @media (max-width: 700px) {
-      max-height: 50vh;
-    }
   }
 `;
 
@@ -66,7 +63,6 @@ export default function FoodSearch({
   const [open, setOpen] = useState(false);
   const { data, loading, error } = useFetch(fdaUrl(searchTerm, page, 10));
 
-  // if there is a query value send request to api
   const handleSearch = (e) => {
     setScanning(false);
     setSearchTearm(e.target.value);
@@ -108,7 +104,7 @@ export default function FoodSearch({
             </button>
           )}
         </form>
-        <motion.ul className="search-list">
+        <ul className="search-list">
           {loading ? (
             <li style={{ justifyContent: 'center' }}>
               <Loader
@@ -134,7 +130,7 @@ export default function FoodSearch({
           )}
           {data && !data.foods.length && <li>No Results</li>}
           {error && <li>{error.message}</li>}
-        </motion.ul>
+        </ul>
 
         {data && (
           <Pagination

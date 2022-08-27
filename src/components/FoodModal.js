@@ -47,6 +47,7 @@ const ModalStyles = styled(CardStyles)`
     max-width: 200px;
     align-self: center;
   }
+
   @media (max-width: 700px) {
     margin: 0 1rem;
   }
@@ -71,7 +72,6 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
   let foodNutrients;
 
   if (data && data.foodPortions) {
-    console.log(data);
     // filter empty portions
     const portions = data.foodPortions.length
       ? data.foodPortions.filter(
@@ -211,9 +211,9 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             }}
           >
             <span className="modal-calories-dislpay">
-              Add
+              Add{' '}
               {Math.round(foodNutrients.kcal * (foodNutrients.portion / 100)) *
-                (quantity > 0 ? quantity : 1)}
+                (quantity > 0 ? quantity : 1)}{' '}
               Kcal
             </span>
           </ButtonStyle>
