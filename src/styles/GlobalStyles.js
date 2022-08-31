@@ -56,11 +56,11 @@ html {
 }
 
  /* Scrollbar Styles */
- body::-webkit-scrollbar , ul::-webkit-scrollbar {
+ 
+    body::-webkit-scrollbar , ul::-webkit-scrollbar {
     width: 12px;
-    
-
   }
+
   html, ul {
     scrollbar-width: thin;
     scrollbar-color: var(--purple) ;

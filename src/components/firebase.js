@@ -49,6 +49,17 @@ export async function deleteMealFromFirebase(stamp) {
     console.log(error);
   }
 }
+export async function updateMealFromFirebase(stamp, data) {
+  const { date } = store.getState();
+  const firebase = ref(
+    db,
+    `users/${authFireBase.currentUser.uid}/mealHistory/${date}`
+  );
+  const error = await update(firebase, { [stamp]: data });
+  if (error) {
+    console.log(error);
+  }
+}
 export async function weightEntryFirebase(stamp, data = null) {
   const firebase = ref(db, `users/${authFireBase.currentUser.uid}/weight`);
   const error = await update(firebase, { [stamp]: data });

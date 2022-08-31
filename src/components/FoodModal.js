@@ -69,8 +69,8 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
   const { loading, data, error } = useFetch(url);
   const [select, setSelect] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [foodPortion, setPortion] = useState(0);
   let foodNutrients;
-
   if (data && data.foodPortions) {
     // filter empty portions
     const portions = data.foodPortions.length
@@ -91,8 +91,8 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
       portions: portions,
       nutrients: data.foodNutrients,
       name: data.description,
-      portion: portions[0]?.gramWeight,
     };
+    if (foodPortion === 0) setPortion(foodNutrients.portions[0].gramWeight);
   }
 
   if (error || (data && !data.foodPortions))
@@ -160,13 +160,8 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
                 <select
                   name="portion-select"
                   id="portion-select"
-                  onChange={(e) =>
-                    (foodNutrients = {
-                      ...foodNutrients,
-                      portion: +e.target.value,
-                    })
-                  }
-                  defaultValue={foodNutrients.portion}
+                  value={foodPortion}
+                  onChange={(e) => setPortion(+e.target.value)}
                 >
                   {foodNutrients.portions.map((el, i) => (
                     <option key={el.id} value={el.gramWeight}>
@@ -193,12 +188,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
               label={'weight in OZ'}
               type={'number'}
               suffix={'OZ'}
-              handeler={(e) =>
-                (foodNutrients = {
-                  ...foodNutrients,
-                  portion: +e.target.value * 28,
-                })
-              }
+              handeler={(e) => setPortion(+e.target.value * 28)}
             />
           )}
 
@@ -206,13 +196,13 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             className="btn bg-green"
             tabIndex="1"
             onClick={() => {
-              returnData(foodNutrients, quantity);
+              returnData(foodNutrients, quantity, foodPortion);
               handleClick();
             }}
           >
             <span className="modal-calories-dislpay">
-              Add{' '}
-              {Math.round(foodNutrients.kcal * (foodNutrients.portion / 100)) *
+              Add
+              {Math.round(foodNutrients.kcal * (foodPortion / 100)) *
                 (quantity > 0 ? quantity : 1)}{' '}
               Kcal
             </span>
