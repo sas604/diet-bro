@@ -10,6 +10,7 @@ import { useFetch } from './hooks';
 import { AiOutlineScan } from 'react-icons/ai';
 import { ButtonStyle } from '../styles/CardStyles';
 import Pagination from './Pagination';
+import { motion } from 'framer-motion';
 
 const ScannerButton = styled(ButtonStyle)`
   display: flex;
@@ -45,29 +46,8 @@ const SearchStyles = styled.div`
   }
   .search-list {
     flex: 1;
-    overflow-y: scroll;
+    list-style: none;
     padding: 0;
-    @media (max-width: 700px) {
-      max-height: 50vh;
-    }
-
-    li {
-      padding: 0.5em 1em 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    li + li {
-      margin-top: 0.5em;
-      border-top: 3px solid var(--gray);
-    }
-    p {
-      margin: 0;
-    }
-    p:last-of-type {
-      margin-left: auto;
-      margin-right: 0.5em;
-    }
   }
 `;
 
@@ -80,9 +60,9 @@ export default function FoodSearch({
   setScanning,
 }) {
   const [page, setPage] = useState(1);
+  const [open, setOpen] = useState(false);
   const { data, loading, error } = useFetch(fdaUrl(searchTerm, page, 10));
 
-  // if there is a query value send request to api
   const handleSearch = (e) => {
     setScanning(false);
     setSearchTearm(e.target.value);
@@ -140,17 +120,18 @@ export default function FoodSearch({
             data?.foods &&
             data.foods.map((el) => (
               <SearchResult
-                calories={el?.foodNutrients[3]?.value}
-                key={el.fdcId}
-                id={el.fdcId}
+                el={el}
                 handleClick={handleClick}
-                name={el.description}
+                open={open === el.fdcId}
+                setOpen={setOpen}
+                key={el.fdcId}
               />
             ))
           )}
           {data && !data.foods.length && <li>No Results</li>}
           {error && <li>{error.message}</li>}
         </ul>
+
         {data && (
           <Pagination
             pages={data.pageList}

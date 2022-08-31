@@ -10,6 +10,7 @@ const DashStyles = styled.div`
   margin: 0 auto;
   padding-right: var(--space-xl);
   @media (max-width: 700px) {
+    padding-bottom: 3rem;
     padding-left: var(--space-sm);
     padding-right: var(--space-sm);
   }
