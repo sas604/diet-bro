@@ -1,8 +1,7 @@
-import { useContext } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../Auth';
+
 import * as ROUTES from '../constants/routes';
-import { useForm, useHandleLogInTestUser } from './hooks';
+import { useForm, handleLogInTestUser } from './hooks';
 import { LandingStyles, SignIn } from '../styles/SignInStyles';
 import { ButtonStyle } from '../styles/CardStyles';
 import styled from 'styled-components';
@@ -12,7 +11,8 @@ import {
   signInWithEmailAndPassword,
   GithubAuthProvider,
 } from 'firebase/auth';
-import { authFireBase as auth } from './firebase';
+import { authFireBase as auth } from '../firebase';
+import { useSelector } from 'react-redux';
 
 const SignInStyles = styled(SignIn)`
   label {
@@ -27,8 +27,9 @@ const SignInStyles = styled(SignIn)`
 `;
 
 function SignInPage() {
+  const { currentUser } = useSelector((state) => state.authState);
   const history = useNavigate();
-  const logWithTest = useHandleLogInTestUser(history);
+  const logWithTest = handleLogInTestUser(history);
   const provider = new GithubAuthProvider();
 
   const { values, updateValue } = useForm({
@@ -57,13 +58,12 @@ function SignInPage() {
     }
   };
 
-  const { currentUser } = useContext(AuthContext);
   if (currentUser) {
     return <Navigate to={'/dashboard'} />;
   }
   return (
     <LandingStyles>
-      <SignInStyles className="container">
+      <SignInStyles className="container" data-testid="signinform">
         <ButtonStyle className="btn bg-green" onClick={handleGitHubLogin}>
           Login With Github
         </ButtonStyle>

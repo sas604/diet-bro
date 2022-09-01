@@ -6,11 +6,14 @@ import ControledInput from './ControledInput';
 import BackButton from './BackButton';
 import { SIGN_IN } from '../constants/routes';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { authFireBase as auth } from './firebase';
+import { authFireBase as auth } from '../firebase';
 
 const ResetPasswordStyles = styled(SignIn)`
   label {
     margin-top: 0;
+  }
+  .error {
+    color: var(--red);
   }
 `;
 
@@ -25,9 +28,6 @@ export default function PasswordRestore() {
       })
       .catch((error) => {
         setAlert('error');
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
       });
   }
   return (
@@ -51,7 +51,7 @@ export default function PasswordRestore() {
             An email with instructions was sent to the provided email address
           </p>
         )}{' '}
-        {alert === 'error' && <p> Something went wrong </p>}
+        {alert === 'error' && <p className="error"> Something went wrong </p>}
       </ResetPasswordStyles>
     </LandingStyles>
   );

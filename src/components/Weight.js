@@ -3,7 +3,7 @@ import { Audio as Loader } from 'react-loader-spinner';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import ControledInput from './ControledInput';
-import { weightEntryFirebase } from './firebase';
+import { weightEntryFirebase } from '../firebase';
 
 const AddWeightStyle = styled.div`
   border-top: 3px solid var(--gray);

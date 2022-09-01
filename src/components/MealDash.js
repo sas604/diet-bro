@@ -1,13 +1,15 @@
 import DatePicker from './DatePicker';
 import CaloriesDisplay from './CaloriesDisplay';
 import MealHistory from './MealHistory';
-import { useContext } from 'react';
-import { AuthContext } from '../Auth';
+
 import { Title } from './Title';
 import { LayoutStyles } from '../styles/LayoutStyles';
+import { useSelector } from 'react-redux';
 
 export default function MealDash() {
-  const { currentUser } = useContext(AuthContext);
+  const {
+    authState: { currentUser },
+  } = useSelector((state) => state);
 
   return (
     <>

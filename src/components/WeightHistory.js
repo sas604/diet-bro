@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import HistoryListStyles from '../styles/HistoryList';
-import { weightEntryFirebase } from './firebase';
+import { weightEntryFirebase } from '../firebase';
 
 const WeightHistoryStyles = styled(HistoryListStyles)`
   span {

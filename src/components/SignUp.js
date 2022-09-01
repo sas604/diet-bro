@@ -8,7 +8,7 @@ import { ButtonStyle } from '../styles/CardStyles';
 import { LandingStyles, SignIn } from '../styles/SignInStyles';
 import styled from 'styled-components';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { authFireBase } from './firebase';
+import { authFireBase } from '../firebase';
 
 const SignUpStyles = styled(SignIn)`
   label {

@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ButtonStyle } from '../styles/CardStyles';
 import ControledInput from './ControledInput';
 import styled from 'styled-components';
 import PopUp from './PopUp';
-import { AuthContext } from '../Auth';
 import { useSelector } from 'react-redux';
-import { updateUserDataFirebase } from './firebase';
+import { authFireBase, updateUserDataFirebase } from '../firebase';
 import { Title } from './Title';
 import { LayoutStyles } from '../styles/LayoutStyles';
+import { updateProfile } from 'firebase/auth';
 
 const AccountStyle = styled.div`
   position: relative;
@@ -28,8 +28,16 @@ const AccountStyle = styled.div`
 `;
 
 export default function Account() {
-  const { currentUser, updateName } = useContext(AuthContext);
-
+  const { currentUser } = authFireBase;
+  async function updateName(name) {
+    try {
+      const res = updateProfile(currentUser, {
+        displayName: name,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   // get state from the store
   const { userData } = useSelector((s) => s);
   const [energy, setEnergy] = useState(userData.targetEnergy);

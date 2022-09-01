@@ -63,25 +63,16 @@ export const useFetch = (url) => {
   return { loading, data, error, refetch };
 };
 
-export const useHandleLogInTestUser = (history) =>
-  useCallback(
-    async (event) => {
-      event.preventDefault();
-
-      try {
-        const auth = getAuth();
-        await signInWithEmailAndPassword(
-          auth,
-          'test@tagunovdesign.com',
-          '123456'
-        );
-        history('/');
-      } catch (error) {
-        alert(error);
-      }
-    },
-    [history]
-  );
+export const handleLogInTestUser = (history) => async (event) => {
+  event.preventDefault();
+  try {
+    const auth = getAuth();
+    await signInWithEmailAndPassword(auth, 'test@tagunovdesign.com', '123456');
+    history('/');
+  } catch (error) {
+    alert(error);
+  }
+};
 
 export const useTestData = () => {
   const makeWeek = () => {

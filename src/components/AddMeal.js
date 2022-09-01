@@ -5,7 +5,7 @@ import ManualFoodEntry from './ManualFoodEntry';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { TabsStyle } from '../styles/CardStyles';
-import { postMealToFirebase } from './firebase';
+import { postMealToFirebase } from '../firebase';
 import { useSelector } from 'react-redux';
 import { BarcodeReader } from './BarcodeReader';
 import { LayoutStyles } from '../styles/LayoutStyles';
@@ -34,7 +34,6 @@ export default function AddMeal() {
   const [searchTerm, setSearchTearm] = useState('');
 
   const updateFoodState = (food, quantity = 1, foodPortion) => {
-    console.log(food);
     const energy =
       (Math.round(foodPortion && (food.kcal / 100) * foodPortion * 10) / 10) *
       quantity;

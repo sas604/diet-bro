@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { MdOutlineFastfood, MdEdit } from 'react-icons/md';
-import { deleteMealFromFirebase, updateMealFromFirebase } from './firebase';
+import { deleteMealFromFirebase, updateMealFromFirebase } from '../firebase';
 import { nutrientMap } from '../constants/nutrients';
 
 const HistoryListItemStyles = styled.li`
