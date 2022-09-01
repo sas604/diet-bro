@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { GoSignOut, GoGear, GoGraph, GoHome } from 'react-icons/go';
 import { FaWeight } from 'react-icons/fa';
 import styled from 'styled-components';
-import { authFireBase } from './firebase';
+import { authFireBase } from '../firebase';
 import ThameSwitch from './ThemeSwitch';
 
 const NavStyles = styled.nav`

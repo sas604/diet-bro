@@ -1,10 +1,11 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, update } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
-import { setLoading } from '../features/meals/mealSlice';
+import { setLoading } from './features/meals/mealSlice';
 import { getTime } from 'date-fns';
-import { store } from '../store/store';
-
+import { store } from './store/store';
+import { onAuthStateChanged } from 'firebase/auth';
+import { setLoginStatus } from './features/userData/authSlice';
 const app = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -20,7 +21,9 @@ export const authFireBase = getAuth();
 export function firebasePathListner(firebase, onValue, action) {
   return (dispatch) => {
     dispatch(setLoading(true));
+    console.log(firebase);
     return onValue(firebase, (snapshot) => {
+      console.log(snapshot.val());
       dispatch(action(snapshot.val()));
       dispatch(setLoading(false));
     });
@@ -75,3 +78,16 @@ export async function updateUserDataFirebase(prop, data) {
     console.log(error);
   }
 }
+
+onAuthStateChanged(authFireBase, (auth) => {
+  const { dispatch } = store;
+  if (!auth) {
+    return dispatch(setLoginStatus(null));
+  }
+  const user = {
+    uid: auth.uid,
+    displayName: auth.displayName,
+    email: auth.email,
+  };
+  dispatch(setLoginStatus(user));
+});

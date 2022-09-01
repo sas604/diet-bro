@@ -3,8 +3,8 @@ import dateSlice from '../features/date/dateSlice';
 import loadingSlice from '../features/loading/loadingSlice';
 import mealSlice from '../features/meals/mealSlice';
 import searchSlice from '../features/search/searchSlice';
+import { authReducer } from '../features/userData/authSlice';
 import {
-  barcodeReducer,
   userColorScemaReducer,
   userReducer,
   weighReducer,
@@ -12,12 +12,12 @@ import {
 
 export const store = configureStore({
   reducer: {
+    authState: authReducer,
     mealHistory: mealSlice,
     date: dateSlice,
     loading: loadingSlice,
     userData: userReducer,
     weight: weighReducer,
-    barcode: barcodeReducer,
     search: searchSlice,
     theme: userColorScemaReducer,
   },

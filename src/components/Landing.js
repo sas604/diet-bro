@@ -1,12 +1,11 @@
-import React, { useContext } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
-import { AuthContext } from '../Auth';
 import { ReactComponent as UserSvg } from '../img/user-regular.svg';
-import { useHandleLogInTestUser } from './hooks';
+import { handleLogInTestUser } from './hooks';
 import styled from 'styled-components';
 import { ButtonStyle } from '../styles/CardStyles';
 import { LandingStyles } from '../styles/SignInStyles';
+import { useSelector } from 'react-redux';
 
 const SignIn = styled.div`
   display: flex;
@@ -36,8 +35,10 @@ const SignIn = styled.div`
 `;
 function Landing() {
   const history = useNavigate();
-  const { currentUser } = useContext(AuthContext);
-  const logInWithTest = useHandleLogInTestUser(history);
+  const {
+    authState: { currentUser },
+  } = useSelector((state) => state);
+  const logInWithTest = handleLogInTestUser(history);
   if (currentUser) {
     return <Navigate to={'/dashboard'} />;
   }
