@@ -33,10 +33,14 @@ export default function AddMeal() {
   const history = useNavigate();
   const [searchTerm, setSearchTearm] = useState('');
 
-  const updateFoodState = (food, quantity = 1, foodPortion = 1) => {
-    const energy =
-      (Math.round(foodPortion && (food.kcal / 100) * foodPortion * 10) / 10) *
-      quantity;
+  const updateFoodState = (food, quantity = 1, foodPortion = 0) => {
+    let energy;
+    if (foodPortion) {
+      energy =
+        (Math.round(foodPortion && (food.kcal / 100) * foodPortion * 10) / 10) *
+        quantity;
+    }
+
     postMealToFirebase(
       { ...food, energy: energy || food.kcal, quantity, portion: foodPortion },
       date
