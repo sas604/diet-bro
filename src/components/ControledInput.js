@@ -59,20 +59,22 @@ export default function ControledInput({
   max = null,
   min = null,
 }) {
+  const techLabel = label.toLowerCase().replaceAll(' ', '');
   return (
     <FieldStyles style={style}>
       <input
-        id={label}
+        id={techLabel}
         type={type}
-        name={label.toLowerCase()}
+        name={techLabel}
         required
         value={value}
         max={max}
+        min={min}
         onChange={(e) => handeler(e)}
         style={inputStyle}
       />
       <p className={`suffix`}>{suffix}</p>
-      <label className={value ? null : 'empty'} htmlFor="weight">
+      <label className={value ? null : 'empty'} htmlFor={techLabel}>
         {label}
       </label>
     </FieldStyles>

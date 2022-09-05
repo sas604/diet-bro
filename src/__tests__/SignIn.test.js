@@ -6,8 +6,6 @@ import { expect, test } from '@jest/globals';
 import { render } from '@testing-library/react';
 import SignInPage from '../components/SignIn';
 import { BrowserRouter as Router } from 'react-router-dom';
-
-import React from 'react';
 import { useSelector } from 'react-redux';
 
 const mockDispatch = jest.fn();
