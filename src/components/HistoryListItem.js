@@ -153,7 +153,7 @@ export default function HistoryListItem({ item, id, open, setOpen }) {
       </div>
       <NutrientsListStyles>
         {item.nutrients
-          ?.filter(({ nutrient }) => nutrient.number !== '208')
+          ?.filter(({ nutrient }) => nutrientMap[nutrient.number])
           .map((nutrient) => (
             <div key={nutrient.id}>
               <p>{nutrientMap[nutrient.nutrient.number]}</p>

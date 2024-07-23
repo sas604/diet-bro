@@ -71,6 +71,7 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
   const [quantity, setQuantity] = useState(1);
   const [foodPortion, setPortion] = useState(0);
   let foodNutrients;
+  console.log(data);
   if (data && data.foodPortions) {
     // filter empty portions
     const portions = data.foodPortions.length
@@ -87,13 +88,15 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
 
     // format response
     foodNutrients = {
-      kcal: data.foodNutrients[0].amount,
+      kcal: data.foodNutrients[3].amount,
       portions: portions,
       nutrients: data.foodNutrients,
       name: data.description,
     };
     if (foodPortion === 0) setPortion(foodNutrients.portions[0].gramWeight);
   }
+
+  console.log(foodNutrients);
 
   if (error || (data && !data.foodPortions))
     return (
@@ -185,10 +188,10 @@ export default function FoodModal({ handleClick, foodId, returnData }) {
             </InputGroupStyles>
           ) : (
             <ControledInput
-              label={'weight in OZ'}
+              label={'weight in g'}
               type={'number'}
-              suffix={'OZ'}
-              handeler={(e) => setPortion(+e.target.value * 28)}
+              suffix={'G'}
+              handeler={(e) => setPortion(+e.target.value)}
             />
           )}
 
