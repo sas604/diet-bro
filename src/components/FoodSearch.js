@@ -118,7 +118,7 @@ export default function FoodSearch({
             </li>
           ) : (
             data?.foods &&
-            data.foods.s((el) => (
+            data.foods.map((el) => (
               <SearchResult
                 el={el}
                 handleClick={handleClick}
